@@ -30,14 +30,28 @@
             "type": "object",
             "properties": {
               "answers": { "type": "array", "items": { "type": "string" }, "default": [] },
-              "entities": { "type": "object", "properties": {}, "additionalProperties": true, "default": {} }
+              "entities": {
+                "type": "object",
+                "patternProperties": {
+                  ".*": { "type": "string" }
+                },
+                "additionalProperties": false,
+                "default": {}
+              }
             },
             "required": ["answers", "entities"],
             "additionalProperties": false
           },
           "greenFlags": { "type": "array", "items": { "type": "string" }, "default": [] },
           "redFlags": { "type": "array", "items": { "type": "string" }, "default": [] },
-          "metadata": { "type": "object", "properties": {}, "additionalProperties": true, "default": {} }
+          "metadata": {
+            "type": "object",
+            "patternProperties": {
+              ".*": { "type": ["string", "number", "boolean"] }
+            },
+            "additionalProperties": false,
+            "default": {}
+          }
         },
         "required": [
           "question_id",
@@ -52,8 +66,22 @@
       }
     },
     "misc_or_unclear": { "type": "array", "items": { "type": "integer" }, "default": [] },
-    "pre_inferred_facts_global": { "type": "object", "properties": {}, "additionalProperties": true, "default": {} },
-    "meta": { "type": "object", "properties": {}, "additionalProperties": true, "default": {} }
+    "pre_inferred_facts_global": {
+      "type": "object",
+      "patternProperties": {
+        ".*": { "type": ["string", "number", "boolean", "array", "object"] }
+      },
+      "additionalProperties": false,
+      "default": {}
+    },
+    "meta": {
+      "type": "object",
+      "patternProperties": {
+        ".*": { "type": ["string", "number", "boolean", "array", "object"] }
+      },
+      "additionalProperties": false,
+      "default": {}
+    }
   },
   "required": ["groups", "misc_or_unclear", "pre_inferred_facts_global"],
   "additionalProperties": false
