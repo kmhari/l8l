@@ -32,23 +32,19 @@
               "answers": { "type": "array", "items": { "type": "string" }, "default": [] },
               "entities": {
                 "type": "object",
-                "patternProperties": {
-                  ".*": { "type": "string" }
-                },
+                "properties": {},
                 "additionalProperties": false,
                 "default": {}
               }
             },
-            "required": ["answers", "entities"],
+            "required": ["answers"],
             "additionalProperties": false
           },
           "greenFlags": { "type": "array", "items": { "type": "string" }, "default": [] },
           "redFlags": { "type": "array", "items": { "type": "string" }, "default": [] },
           "metadata": {
             "type": "object",
-            "patternProperties": {
-              ".*": { "type": ["string", "number", "boolean"] }
-            },
+            "properties": {},
             "additionalProperties": false,
             "default": {}
           }
@@ -62,8 +58,7 @@
           "turn_indices",
           "facts",
           "greenFlags",
-          "redFlags",
-          "metadata"
+          "redFlags"
         ],
         "additionalProperties": false
       }
@@ -71,17 +66,13 @@
     "misc_or_unclear": { "type": "array", "items": { "type": "integer" }, "default": [] },
     "pre_inferred_facts_global": {
       "type": "object",
-      "patternProperties": {
-        ".*": { "type": ["string", "number", "boolean", "array", "object"] }
-      },
+      "properties": {},
       "additionalProperties": false,
       "default": {}
     },
     "meta": {
       "type": "object",
-      "patternProperties": {
-        ".*": { "type": ["string", "number", "boolean", "array", "object"] }
-      },
+      "properties": {},
       "additionalProperties": false,
       "default": {}
     }
