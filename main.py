@@ -29,8 +29,31 @@ def parse_structured_output(response: str, expected_keys: List[str] = None) -> d
                 return parsed
         else:
             return parsed
-    except json.JSONDecodeError:
-        pass
+    except json.JSONDecodeError as e:
+        print(f"🔍 Direct JSON parsing failed: {str(e)}")
+        print(f"📄 Response length: {len(response)} chars")
+
+    # Try to find the largest valid JSON object in the response
+    try:
+        # Look for JSON that starts with { and try to find the matching }
+        start_idx = response.find('{')
+        if start_idx != -1:
+            # Try different end positions to find valid JSON
+            for end_idx in range(len(response), start_idx, -1):
+                candidate = response[start_idx:end_idx].strip()
+                try:
+                    parsed = json.loads(candidate)
+                    if expected_keys:
+                        if all(key in parsed for key in expected_keys):
+                            print(f"✅ Found valid JSON at position {start_idx}:{end_idx}")
+                            return parsed
+                    else:
+                        print(f"✅ Found valid JSON at position {start_idx}:{end_idx}")
+                        return parsed
+                except json.JSONDecodeError:
+                    continue
+    except Exception as e:
+        print(f"⚠️ JSON scanning failed: {str(e)}")
 
     # Fallback to extraction for non-structured responses
     import re
@@ -58,48 +81,114 @@ def parse_structured_output(response: str, expected_keys: List[str] = None) -> d
     # If all else fails, try to repair incomplete JSON
     try:
         repaired = repair_incomplete_json(response)
-        return json.loads(repaired)
-    except:
+        parsed = json.loads(repaired)
+        print(f"✅ Successfully repaired incomplete JSON")
+        return parsed
+    except Exception as e:
+        print(f"⚠️ JSON repair failed: {str(e)}")
         raise ValueError(f"Could not parse JSON from response: {response[:200]}...")
 
 def repair_incomplete_json(json_text: str) -> str:
     """Attempt to repair incomplete JSON by adding missing closing braces and quotes"""
+    import re
+
     if not json_text.strip():
         return "{}"
 
-    # Count opening and closing braces
-    open_braces = json_text.count('{')
-    close_braces = json_text.count('}')
-
-    # Count opening and closing brackets
-    open_brackets = json_text.count('[')
-    close_brackets = json_text.count(']')
-
-    # Count quotes to see if there's an unterminated string
-    quote_count = json_text.count('"')
-
     repaired = json_text.strip()
 
-    # If we have an odd number of quotes, we likely have an unterminated string
-    if quote_count % 2 != 0:
-        # Find the last quote and see if it's followed by content that looks like it should be quoted
-        last_quote_pos = repaired.rfind('"')
-        if last_quote_pos != -1:
-            remaining = repaired[last_quote_pos + 1:]
-            # If there's content after the last quote that doesn't look like JSON structure
-            if remaining and not any(c in remaining for c in ['{', '}', '[', ']', ':']):
-                # Try to close the string
-                repaired += '"'
+    # Find the last complete, valid JSON structure
+    max_valid_pos = 0
+    for i in range(len(repaired), 0, -1):
+        candidate = repaired[:i]
+        try:
+            # Try to parse what we have so far
+            json.loads(candidate)
+            # If it parses, this is our longest valid JSON
+            return candidate
+        except json.JSONDecodeError:
+            continue
 
-    # Add missing closing brackets
-    while close_brackets < open_brackets:
+    # If no valid JSON found, try incremental repair
+
+    # First, handle basic structural issues
+    # Remove any trailing commas before closing braces/brackets
+    repaired = re.sub(r',(\s*[}\]])', r'\1', repaired)
+
+    # Find where we are in the JSON structure
+    brace_count = 0
+    bracket_count = 0
+    in_string = False
+    last_complete_pos = 0
+
+    for i, char in enumerate(repaired):
+        if char == '"' and (i == 0 or repaired[i-1] != '\\'):
+            in_string = not in_string
+        elif not in_string:
+            if char == '{':
+                brace_count += 1
+            elif char == '}':
+                brace_count -= 1
+                if brace_count == 0 and bracket_count == 0:
+                    last_complete_pos = i + 1
+            elif char == '[':
+                bracket_count += 1
+            elif char == ']':
+                bracket_count -= 1
+
+    # If we found a position where objects/arrays were balanced, use that
+    if last_complete_pos > len(repaired) // 2:  # Only if we got reasonably far
+        try:
+            candidate = repaired[:last_complete_pos]
+            json.loads(candidate)
+            return candidate
+        except json.JSONDecodeError:
+            pass
+
+    # Otherwise, try to repair by truncating at a safe point
+    # Look for the last complete key-value pair or array element
+    safe_endings = ['}",', '},', ']",', '],', '",', ',']
+
+    for ending in safe_endings:
+        pos = repaired.rfind(ending)
+        if pos != -1:
+            # Try truncating at this point and closing properly
+            truncated = repaired[:pos + len(ending) - 1]  # Remove the comma
+
+            # Count remaining open structures
+            open_braces = truncated.count('{') - truncated.count('}')
+            open_brackets = truncated.count('[') - truncated.count(']')
+
+            # Close them
+            while open_brackets > 0:
+                truncated += ']'
+                open_brackets -= 1
+            while open_braces > 0:
+                truncated += '}'
+                open_braces -= 1
+
+            # Test if this works
+            try:
+                json.loads(truncated)
+                return truncated
+            except json.JSONDecodeError:
+                continue
+
+    # If all else fails, try the original repair logic
+    if repaired.count('"') % 2 != 0:
+        repaired += '"'
+
+    # Close remaining structures
+    open_brackets = repaired.count('[') - repaired.count(']')
+    open_braces = repaired.count('{') - repaired.count('}')
+
+    while open_brackets > 0:
         repaired += ']'
-        close_brackets += 1
+        open_brackets -= 1
 
-    # Add missing closing braces
-    while close_braces < open_braces:
+    while open_braces > 0:
         repaired += '}'
-        close_braces += 1
+        open_braces -= 1
 
     return repaired
 
@@ -729,33 +818,69 @@ async def evaluate_question_group(group: Dict[str, Any], resume: Dict[str, Any],
             evaluation_data = parse_structured_output(evaluation_result, expected_keys=expected_keys)
             print(f"✅ Evaluation parsed successfully for group {group.get('question_id', 'Unknown')}")
         except Exception as e:
-            print(f"❌ Failed to parse evaluation for group {group.get('question_id', 'Unknown')}: {str(e)}")
-            print(f"📄 Raw response (first 1000 chars): {evaluation_result[:1000]}")
-            evaluation_data = {
-                "overall_assessment": {
-                    "recommendation": "No Hire",
-                    "confidence": "Low",
-                    "overall_score": 0,
-                    "summary": "Failed to parse evaluation response"
-                },
-                "competency_mapping": [],
-                "question_analysis": [],
-                "communication_assessment": {
-                    "verbal_articulation": "Fair",
-                    "logical_flow": "Fair",
-                    "professional_vocabulary": "Fair",
-                    "cultural_fit_indicators": []
-                },
-                "critical_analysis": {
-                    "red_flags": ["Evaluation parsing failed"],
-                    "exceptional_responses": [],
-                    "inconsistencies": [],
-                    "problem_solving_approach": "Unable to assess due to parsing failure"
-                },
-                "improvement_recommendations": ["Re-evaluate this response manually"],
-                "parsing_error": True,
-                "raw_response_preview": evaluation_result[:500] if len(evaluation_result) > 500 else evaluation_result
-            }
+            print(f"❌ Failed to parse complete evaluation for group {group.get('question_id', 'Unknown')}: {str(e)}")
+
+            # Try to parse as partial response (without requiring all expected keys)
+            try:
+                partial_data = parse_structured_output(evaluation_result, expected_keys=None)
+                print(f"🔧 Recovered partial evaluation data with keys: {list(partial_data.keys())}")
+
+                # Fill in missing required fields with defaults
+                evaluation_data = {
+                    "overall_assessment": partial_data.get("overall_assessment", {
+                        "recommendation": "No Hire",
+                        "confidence": "Low",
+                        "overall_score": 0,
+                        "summary": "Partial evaluation due to parsing issues"
+                    }),
+                    "competency_mapping": partial_data.get("competency_mapping", []),
+                    "question_analysis": partial_data.get("question_analysis", []),
+                    "communication_assessment": partial_data.get("communication_assessment", {
+                        "verbal_articulation": "Fair",
+                        "logical_flow": "Fair",
+                        "professional_vocabulary": "Fair",
+                        "cultural_fit_indicators": []
+                    }),
+                    "critical_analysis": partial_data.get("critical_analysis", {
+                        "red_flags": ["Incomplete evaluation due to parsing issues"],
+                        "exceptional_responses": [],
+                        "inconsistencies": [],
+                        "problem_solving_approach": "Partially assessed"
+                    }),
+                    "improvement_recommendations": partial_data.get("improvement_recommendations", ["Complete evaluation manually"]),
+                    "partial_response": True,
+                    "recovered_fields": list(partial_data.keys())
+                }
+                print(f"✅ Successfully recovered partial evaluation with {len(partial_data.keys())} fields")
+
+            except Exception as e2:
+                print(f"❌ Complete parsing failure: {str(e2)}")
+                print(f"📄 Raw response (first 1000 chars): {evaluation_result[:1000]}")
+                evaluation_data = {
+                    "overall_assessment": {
+                        "recommendation": "No Hire",
+                        "confidence": "Low",
+                        "overall_score": 0,
+                        "summary": "Failed to parse evaluation response"
+                    },
+                    "competency_mapping": [],
+                    "question_analysis": [],
+                    "communication_assessment": {
+                        "verbal_articulation": "Fair",
+                        "logical_flow": "Fair",
+                        "professional_vocabulary": "Fair",
+                        "cultural_fit_indicators": []
+                    },
+                    "critical_analysis": {
+                        "red_flags": ["Evaluation parsing failed"],
+                        "exceptional_responses": [],
+                        "inconsistencies": [],
+                        "problem_solving_approach": "Unable to assess due to parsing failure"
+                    },
+                    "improvement_recommendations": ["Re-evaluate this response manually"],
+                    "parsing_error": True,
+                    "raw_response_preview": evaluation_result[:500] if len(evaluation_result) > 500 else evaluation_result
+                }
 
         # Add group metadata
         evaluation_data["group_metadata"] = {
