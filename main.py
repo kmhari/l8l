@@ -9,6 +9,9 @@ from pathlib import Path
 from dotenv import load_dotenv
 from scalar_fastapi import get_scalar_api_reference
 from llm_client import create_llm_client
+import asyncio
+from concurrent.futures import ThreadPoolExecutor
+from functools import partial
 
 # Load environment variables
 load_dotenv()
@@ -33,8 +36,7 @@ class LLMSettings(BaseModel):
             }
         }
 
-class GenerateRequest(BaseModel):
-    resume: Dict[str, Any]
+class GatherRequest(BaseModel):
     transcript: Dict[str, Any]
     technical_questions: str
     key_skill_areas: List[Dict[str, Any]]
@@ -47,7 +49,6 @@ class GenerateRequest(BaseModel):
                 return json.loads(Path("sample/gather.json").read_text())
             except:
                 return {
-                    "resume": {"candidate_name": "John Doe"},
                     "transcript": {"messages": []},
                     "technical_questions": "Sample questions...",
                     "key_skill_areas": [],
@@ -63,7 +64,7 @@ class QuestionData(BaseModel):
     green_flags: List[str]
     red_flags: List[str]
 
-class GenerateResponse(BaseModel):
+class GatherResponse(BaseModel):
     llm_output: Dict[str, Any]
 
     class Config:
@@ -208,8 +209,8 @@ def build_conversations_from_indices(groups: List[Dict], all_messages: List[Dict
 
     return processed_groups
 
-@app.post("/generate-report", response_model=GenerateResponse)
-async def generate_report(request: GenerateRequest):
+@app.post("/gather", response_model=GatherResponse)
+async def gather(request: GatherRequest):
     try:
         print("\n" + "="*50)
         print("🚀 Starting report generation...")
@@ -320,7 +321,7 @@ async def generate_report(request: GenerateRequest):
             llm_output = {"error": "Failed to parse LLM response", "raw_response": llm_response}
 
         print("📊 Generating final response...")
-        response = GenerateResponse(
+        response = GatherResponse(
             llm_output=llm_output
         )
         print("✅ Report generation completed successfully!")
@@ -333,12 +334,12 @@ async def generate_report(request: GenerateRequest):
         print("="*50 + "\n")
         raise HTTPException(status_code=500, detail=f"Error processing request: {str(e)}")
 
-@app.get("/sample", response_model=GenerateRequest)
+@app.get("/sample", response_model=GatherRequest)
 async def get_sample_data():
     """Get sample data for testing the API"""
     try:
         sample_data = json.loads(Path("sample/gather.json").read_text())
-        return GenerateRequest(**sample_data)
+        return GatherRequest(**sample_data)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error loading sample data: {str(e)}")
 

@@ -57,9 +57,9 @@ def test_sample_endpoint():
         print(f"❌ Error testing sample endpoint: {e}")
         return None
 
-def test_generate_report(sample_data, provider="openrouter", model="openai/gpt-oss-120b:nitro"):
-    """Test the /generate-report endpoint"""
-    print(f"\n🤖 Testing /generate-report endpoint...")
+def test_gather(sample_data, provider="openrouter", model="openai/gpt-oss-120b:nitro"):
+    """Test the /gather endpoint"""
+    print(f"\n🤖 Testing /gather endpoint...")
     print(f"   Provider: {provider}")
     print(f"   Model: {model}")
 
@@ -75,7 +75,7 @@ def test_generate_report(sample_data, provider="openrouter", model="openai/gpt-o
         start_time = time.time()
 
         response = requests.post(
-            f"{BASE_URL}/generate-report",
+            f"{BASE_URL}/gather",
             json=test_data,
             headers={"Content-Type": "application/json"},
             timeout=120  # 2 minute timeout for LLM processing
@@ -107,7 +107,7 @@ def test_generate_report(sample_data, provider="openrouter", model="openai/gpt-o
             return result
 
         else:
-            print(f"❌ Report generation failed: {response.status_code}")
+            print(f"❌ Gather endpoint failed: {response.status_code}")
             try:
                 error_detail = response.json()
                 print(f"   Error: {error_detail.get('detail', 'Unknown error')}")
@@ -119,7 +119,7 @@ def test_generate_report(sample_data, provider="openrouter", model="openai/gpt-o
         print("❌ Request timed out (>2 minutes)")
         return None
     except Exception as e:
-        print(f"❌ Error testing generate-report: {e}")
+        print(f"❌ Error testing gather endpoint: {e}")
         return None
 
 def save_results(results, filename="test_results.json"):
@@ -163,7 +163,7 @@ def main():
         model = config["model"]
 
         print(f"\n🔄 Testing {provider} with {model}")
-        result = test_generate_report(sample_data, provider, model)
+        result = test_gather(sample_data, provider, model)
 
         if result:
             results[f"{provider}_{model}"] = {
