@@ -30,14 +30,14 @@
             "type": "object",
             "properties": {
               "answers": { "type": "array", "items": { "type": "string" }, "default": [] },
-              "entities": { "type": "object", "additionalProperties": false, "default": {} }
+              "entities": { "type": "object", "properties": {}, "additionalProperties": true, "default": {} }
             },
             "required": ["answers", "entities"],
             "additionalProperties": false
           },
           "greenFlags": { "type": "array", "items": { "type": "string" }, "default": [] },
           "redFlags": { "type": "array", "items": { "type": "string" }, "default": [] },
-          "metadata": { "type": "object", "additionalProperties": false, "default": {} }
+          "metadata": { "type": "object", "properties": {}, "additionalProperties": true, "default": {} }
         },
         "required": [
           "question_id",
@@ -52,8 +52,8 @@
       }
     },
     "misc_or_unclear": { "type": "array", "items": { "type": "integer" }, "default": [] },
-    "pre_inferred_facts_global": { "type": "object", "additionalProperties": false, "default": {} },
-    "meta": { "type": "object", "additionalProperties": false, "default": {} }
+    "pre_inferred_facts_global": { "type": "object", "properties": {}, "additionalProperties": true, "default": {} },
+    "meta": { "type": "object", "properties": {}, "additionalProperties": true, "default": {} }
   },
   "required": ["groups", "misc_or_unclear", "pre_inferred_facts_global"],
   "additionalProperties": false
