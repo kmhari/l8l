@@ -36,6 +36,7 @@ class OpenAIProvider(LLMProvider):
                 "type": "json_schema",
                 "json_schema": {
                     "name": "response",
+                    "strict": True,
                     "schema": schema
                 }
             }
@@ -102,6 +103,8 @@ class OpenRouterProvider(LLMProvider):
         self.base_url = "https://openrouter.ai/api/v1"
 
     async def generate(self, messages: list, schema: Optional[Dict] = None) -> str:
+        print("🧠 Using OpenRouterProvider")
+        print("key", self.api_key + "..." if self.api_key else "No Key")
         headers = {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json"
@@ -110,24 +113,84 @@ class OpenRouterProvider(LLMProvider):
         payload = {
             "model": self.model,
             "messages": messages,
-            "temperature": 0.1
+            "temperature": 0.1,
+            "max_tokens": 8000,  # Increase token limit for complex JSON responses
+             'provider': {
+            'only': ['cerebras']
+                }
         }
 
         if schema:
-            system_prompt = messages[0]["content"] if messages and messages[0]["role"] == "system" else ""
-            system_prompt += f"\n\nIMPORTANT: You must respond with ONLY valid JSON matching this exact schema: {json.dumps(schema)}\n\nDo not include any thinking, explanation, or text outside the JSON. Only return the JSON object."
-            messages[0] = {"role": "system", "content": system_prompt}
+            # Try OpenRouter's structured outputs feature first
+            payload["response_format"] = {
+                "type": "json_schema",
+                "json_schema": {
+                    "name": "response",
+                    "strict": True,
+                    "schema": schema
+                }
+            }
 
         async with httpx.AsyncClient() as client:
-            response = await client.post(
-                f"{self.base_url}/chat/completions",
-                headers=headers,
-                json=payload,
-                timeout=60
-            )
-            response.raise_for_status()
-            data = response.json()
-            return data["choices"][0]["message"]["content"]
+            try:
+                response = await client.post(
+                    f"{self.base_url}/chat/completions",
+                    headers=headers,
+                    json=payload,
+                    timeout=120  # Increase timeout for thinking models
+                )
+                response.raise_for_status()
+                data = response.json()
+                content = data["choices"][0]["message"]["content"]
+
+                # Basic validation
+                if not content or content.strip() == "":
+                    raise ValueError("Empty response from API")
+
+                return content
+            except httpx.HTTPStatusError as e:
+                # If structured outputs fail, try fallback approach
+                response_text = str(e.response.text)
+                if (e.response.status_code == 400 and schema and
+                    ("Invalid schema" in response_text or "not supported" in response_text or "response_format" in response_text)):
+                    print("⚠️ Structured outputs failed, falling back to prompt-based approach...")
+                    return await self._fallback_generate(headers, client, messages, schema)
+                raise ValueError(f"HTTP error from OpenRouter API: {e.response.status_code} - {e.response.text}")
+            except httpx.TimeoutException:
+                raise TimeoutError("Request to OpenRouter API timed out")
+            except KeyError as e:
+                raise ValueError(f"Unexpected response format from OpenRouter API: missing {e}")
+            except Exception as e:
+                raise ValueError(f"Error calling OpenRouter API: {str(e)}")
+
+    async def _fallback_generate(self, headers, client, messages, schema):
+        """Fallback method using prompt-based JSON generation instead of structured outputs"""
+        import json
+
+        payload = {
+            "model": self.model,
+            "messages": messages,
+            "temperature": 0.1,
+            "max_tokens": 8000
+        }
+
+        # Add schema instruction to system prompt
+        system_prompt = messages[0]["content"] if messages and messages[0]["role"] == "system" else ""
+        system_prompt += f"\n\nIMPORTANT: Your response must be valid JSON matching this schema: {json.dumps(schema)}"
+
+        modified_messages = [{"role": "system", "content": system_prompt}] + messages[1:]
+
+        payload["messages"] = modified_messages
+
+        response = await client.post(
+            f"{self.base_url}/chat/completions",
+            headers=headers,
+            json=payload,
+            timeout=120
+        )
+        response.raise_for_status()
+        data = response.json()
+        return data["choices"][0]["message"]["content"]
 
 class LLMClient:
     def __init__(self, config: LLMConfig):
@@ -146,7 +209,7 @@ class LLMClient:
             raise ValueError(f"Unsupported provider: {config.provider}")
 
         return provider_class(config)
-
+        
     async def generate(self, messages: list, schema: Optional[Dict] = None) -> str:
         return await self.provider.generate(messages, schema)
 

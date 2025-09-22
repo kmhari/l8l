@@ -14,8 +14,97 @@ from llm_client import create_llm_client
 from concurrent.futures import ThreadPoolExecutor
 from functools import partial
 
+def parse_structured_output(response: str, expected_keys: List[str] = None) -> dict:
+    """
+    Parse JSON from structured output responses.
+    For structured outputs, the response should be clean JSON.
+    For non-structured responses, try to extract JSON from various formats.
+    """
+    # First try direct JSON parsing (for structured outputs)
+    try:
+        parsed = json.loads(response.strip())
+        if expected_keys:
+            # Verify expected structure
+            if all(key in parsed for key in expected_keys):
+                return parsed
+        else:
+            return parsed
+    except json.JSONDecodeError:
+        pass
+
+    # Fallback to extraction for non-structured responses
+    import re
+
+    json_patterns = [
+        r'```json\s*(\{.*?\})\s*```',  # JSON in code blocks
+        r'<json>\s*(\{.*?\})\s*</json>',  # JSON in XML tags
+        r'(\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\})',  # Any complete JSON object
+    ]
+
+    for pattern in json_patterns:
+        matches = re.findall(pattern, response, re.DOTALL)
+        if matches:
+            for match in matches:
+                try:
+                    parsed = json.loads(match)
+                    if expected_keys:
+                        if all(key in parsed for key in expected_keys):
+                            return parsed
+                    else:
+                        return parsed
+                except:
+                    continue
+
+    # If all else fails, try to repair incomplete JSON
+    try:
+        repaired = repair_incomplete_json(response)
+        return json.loads(repaired)
+    except:
+        raise ValueError(f"Could not parse JSON from response: {response[:200]}...")
+
+def repair_incomplete_json(json_text: str) -> str:
+    """Attempt to repair incomplete JSON by adding missing closing braces and quotes"""
+    if not json_text.strip():
+        return "{}"
+
+    # Count opening and closing braces
+    open_braces = json_text.count('{')
+    close_braces = json_text.count('}')
+
+    # Count opening and closing brackets
+    open_brackets = json_text.count('[')
+    close_brackets = json_text.count(']')
+
+    # Count quotes to see if there's an unterminated string
+    quote_count = json_text.count('"')
+
+    repaired = json_text.strip()
+
+    # If we have an odd number of quotes, we likely have an unterminated string
+    if quote_count % 2 != 0:
+        # Find the last quote and see if it's followed by content that looks like it should be quoted
+        last_quote_pos = repaired.rfind('"')
+        if last_quote_pos != -1:
+            remaining = repaired[last_quote_pos + 1:]
+            # If there's content after the last quote that doesn't look like JSON structure
+            if remaining and not any(c in remaining for c in ['{', '}', '[', ']', ':']):
+                # Try to close the string
+                repaired += '"'
+
+    # Add missing closing brackets
+    while close_brackets < open_brackets:
+        repaired += ']'
+        close_brackets += 1
+
+    # Add missing closing braces
+    while close_braces < open_braces:
+        repaired += '}'
+        close_braces += 1
+
+    return repaired
+
 # Load environment variables
-load_dotenv()
+load_dotenv(override=True)
 
 app = FastAPI(
     title="Interview Report Generator API",
@@ -59,7 +148,7 @@ class GatherRequest(BaseModel):
                     "llm_settings": {"provider": "openrouter", "model": "openai/gpt-oss-120b:nitro"}
                 }
 
-        schema_extra = {
+        json_schema_extra = {
             "example": _load_sample_data()
         }
 
@@ -141,7 +230,7 @@ class EvaluateRequest(BaseModel):
                     "llm_settings": {"provider": "openrouter", "model": "qwen/qwen3-235b-a22b-thinking-2507:nitro"}
                 }
 
-        schema_extra = {
+        json_schema_extra = {
             "example": _load_sample_data()
         }
 
@@ -507,79 +596,13 @@ async def gather(request: GatherRequest):
         # Parse response
         print("🔍 Parsing LLM response...")
         try:
-            # Try direct JSON parsing first
-            llm_output = json.loads(llm_response)
+            llm_output = parse_structured_output(llm_response, expected_keys=["groups"])
             groups_count = len(llm_output.get("groups", []))
             print(f"✅ Response parsed successfully ({groups_count} conversation groups)")
-        except json.JSONDecodeError:
-            # Handle thinking model responses that may have extra content
-            print("⚠️ Direct JSON parsing failed, attempting to extract JSON from response...")
-            try:
-                # Look for JSON content between common thinking model delimiters
-                import re
-
-                # Try to find JSON in various formats
-                json_patterns = [
-                    r'```json\s*(\{.*?\})\s*```',  # JSON in code blocks
-                    r'<json>\s*(\{.*?\})\s*</json>',  # JSON in XML tags
-                    r'(\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\})',  # Any complete JSON object
-                ]
-
-                extracted_json = None
-                for pattern in json_patterns:
-                    matches = re.findall(pattern, llm_response, re.DOTALL)
-                    if matches:
-                        # Try parsing each match
-                        for match in matches:
-                            try:
-                                test_parse = json.loads(match)
-                                if "groups" in test_parse:  # Verify it's our expected structure
-                                    extracted_json = match
-                                    break
-                            except:
-                                continue
-                        if extracted_json:
-                            break
-
-                if extracted_json:
-                    llm_output = json.loads(extracted_json)
-                    groups_count = len(llm_output.get("groups", []))
-                    print(f"✅ JSON extracted and parsed successfully ({groups_count} conversation groups)")
-                else:
-                    # Try to find any valid JSON in the response
-                    lines = llm_response.split('\n')
-                    json_lines = []
-                    brace_count = 0
-                    in_json = False
-
-                    for line in lines:
-                        stripped = line.strip()
-                        if stripped.startswith('{'):
-                            in_json = True
-                            brace_count = 0
-
-                        if in_json:
-                            json_lines.append(line)
-                            brace_count += line.count('{') - line.count('}')
-
-                            if brace_count == 0 and stripped.endswith('}'):
-                                break
-
-                    if json_lines:
-                        try:
-                            candidate_json = '\n'.join(json_lines)
-                            llm_output = json.loads(candidate_json)
-                            groups_count = len(llm_output.get("groups", []))
-                            print(f"✅ JSON reconstructed and parsed successfully ({groups_count} conversation groups)")
-                        except:
-                            raise json.JSONDecodeError("Could not extract valid JSON", llm_response, 0)
-                    else:
-                        raise json.JSONDecodeError("Could not find JSON in response", llm_response, 0)
-
-            except json.JSONDecodeError:
-                print("❌ Failed to extract and parse JSON from LLM response")
-                print(f"Raw response preview: {llm_response[:500]}...")
-                llm_output = {"error": "Failed to parse LLM response", "raw_response": llm_response}
+        except Exception as e:
+            print(f"❌ Failed to parse LLM response: {str(e)}")
+            print(f"Raw response preview: {llm_response[:500]}...")
+            llm_output = {"error": "Failed to parse LLM response", "raw_response": llm_response}
 
         # Post-process: Build conversations from indices (only if parsing succeeded)
         if "groups" in llm_output and "error" not in llm_output:
@@ -678,65 +701,46 @@ async def evaluate_question_group(group: Dict[str, Any], resume: Dict[str, Any],
         # Generate evaluation using thinking model
         evaluation_result = await llm_client.generate(evaluation_messages, evaluation_schema)
 
-        # Parse evaluation result with improved JSON extraction
+        # Debug: Log response length and preview
+        print(f"📋 Response for {group.get('question_id', 'Unknown')}: {len(evaluation_result)} chars")
+        if len(evaluation_result) < 100:
+            print(f"📄 Short response: {repr(evaluation_result)}")
+        else:
+            print(f"📄 Response preview: {evaluation_result[:200]}...")
+
+        # Parse evaluation result using structured output helper
         try:
-            evaluation_data = json.loads(evaluation_result)
-        except json.JSONDecodeError:
-            print(f"⚠️  JSON parsing failed for group {group.get('question_id', 'Unknown')}, attempting extraction...")
-
-            # Handle thinking model responses that may have extra content
-            import re
-
-            # More comprehensive JSON patterns
-            json_patterns = [
-                r'```json\s*(\{.*?\})\s*```',  # JSON in code blocks
-                r'<json>\s*(\{.*?\})\s*</json>',  # JSON in XML tags
-                r'<analysis>.*?</analysis>\s*(\{.*?\})',  # JSON after analysis tags
-                r'(?:^|\n)\s*(\{(?:[^{}]+|\{[^{}]*\})*\})\s*(?:\n|$)',  # Standalone JSON objects
-            ]
-
-            extracted_json = None
-            for pattern in json_patterns:
-                matches = re.findall(pattern, evaluation_result, re.DOTALL | re.MULTILINE)
-                if matches:
-                    for match in matches:
-                        try:
-                            test_parse = json.loads(match)
-                            # Check if it has evaluation structure
-                            if any(key in test_parse for key in ["overall_assessment", "competency_mapping", "question_analysis"]):
-                                extracted_json = match
-                                break
-                        except json.JSONDecodeError:
-                            continue
-                    if extracted_json:
-                        break
-
-            if extracted_json:
-                try:
-                    evaluation_data = json.loads(extracted_json)
-                    print(f"✅ JSON successfully extracted for group {group.get('question_id', 'Unknown')}")
-                except json.JSONDecodeError as e:
-                    print(f"❌ Extracted JSON still invalid for group {group.get('question_id', 'Unknown')}: {str(e)}")
-                    raise
-            else:
-                # Return minimal error structure instead of raising exception
-                print(f"❌ Could not extract valid JSON for group {group.get('question_id', 'Unknown')}")
-                evaluation_data = {
-                    "overall_assessment": {
-                        "overall_score": 0,
-                        "reasoning": "Failed to parse evaluation response"
-                    },
-                    "competency_mapping": [],
-                    "question_analysis": [],
-                    "critical_analysis": {
-                        "red_flags": ["Evaluation parsing failed"],
-                        "exceptional_responses": [],
-                        "inconsistencies": []
-                    },
-                    "improvement_recommendations": ["Re-evaluate this response manually"],
-                    "parsing_error": True,
-                    "raw_response_preview": evaluation_result[:500] if len(evaluation_result) > 500 else evaluation_result
-                }
+            expected_keys = ["overall_assessment", "competency_mapping", "question_analysis"]
+            evaluation_data = parse_structured_output(evaluation_result, expected_keys=expected_keys)
+            print(f"✅ Evaluation parsed successfully for group {group.get('question_id', 'Unknown')}")
+        except Exception as e:
+            print(f"❌ Failed to parse evaluation for group {group.get('question_id', 'Unknown')}: {str(e)}")
+            print(f"📄 Raw response (first 1000 chars): {evaluation_result[:1000]}")
+            evaluation_data = {
+                "overall_assessment": {
+                    "recommendation": "No Hire",
+                    "confidence": "Low",
+                    "overall_score": 0,
+                    "summary": "Failed to parse evaluation response"
+                },
+                "competency_mapping": [],
+                "question_analysis": [],
+                "communication_assessment": {
+                    "verbal_articulation": "Fair",
+                    "logical_flow": "Fair",
+                    "professional_vocabulary": "Fair",
+                    "cultural_fit_indicators": []
+                },
+                "critical_analysis": {
+                    "red_flags": ["Evaluation parsing failed"],
+                    "exceptional_responses": [],
+                    "inconsistencies": [],
+                    "problem_solving_approach": "Unable to assess due to parsing failure"
+                },
+                "improvement_recommendations": ["Re-evaluate this response manually"],
+                "parsing_error": True,
+                "raw_response_preview": evaluation_result[:500] if len(evaluation_result) > 500 else evaluation_result
+            }
 
         # Add group metadata
         evaluation_data["group_metadata"] = {
@@ -765,6 +769,11 @@ async def merge_evaluations(evaluations: List[Dict[str, Any]],
                           global_facts: Dict[str, Any]) -> Dict[str, Any]:
     """Merge individual group evaluations into a comprehensive report"""
     print("🔄 Merging individual evaluations into comprehensive report...")
+    print(f"📊 Received {len(evaluations)} evaluations to merge")
+
+    # Debug: Log evaluation types and structure
+    for i, eval_item in enumerate(evaluations):
+        print(f"🔍 Evaluation {i+1}: type={type(eval_item)}, keys={list(eval_item.keys()) if isinstance(eval_item, dict) else 'N/A'}")
 
     # Initialize merged report structure
     merged_report = {
@@ -930,6 +939,8 @@ async def generate_report(request: EvaluateRequest):
             env_key = env_key_map.get(request.llm_settings.provider.lower())
             if env_key:
                 api_key = os.getenv(env_key)
+        print(f"✅ Using API key from environment: {env_key}" if api_key else "⚠️  No API key found")
+        print(f"API Key: {api_key}")
 
         eval_llm_client = create_llm_client(
             provider=request.llm_settings.provider,
