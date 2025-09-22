@@ -710,9 +710,61 @@ async def evaluate_question_group(group: Dict[str, Any], resume: Dict[str, Any],
 
         # Parse evaluation result using structured output helper
         try:
-            expected_keys = ["overall_assessment", "competency_mapping", "question_analysis"]
-            evaluation_data = parse_structured_output(evaluation_result, expected_keys=expected_keys)
-            print(f"✅ Evaluation parsed successfully for group {group.get('question_id', 'Unknown')}")
+            # Try to parse JSON first, then check for required fields
+            evaluation_data = json.loads(evaluation_result.strip())
+            print(f"✅ JSON parsed successfully for group {group.get('question_id', 'Unknown')}")
+
+            # Ensure required fields exist
+            required_fields = ["overall_assessment", "competency_mapping", "question_analysis"]
+            for field in required_fields:
+                if field not in evaluation_data:
+                    print(f"   ⚠️ Missing {field}, adding empty structure")
+                    if field == "overall_assessment":
+                        evaluation_data[field] = {
+                            "recommendation": "No Hire",
+                            "confidence": "Low",
+                            "overall_score": 0,
+                            "summary": "Incomplete evaluation"
+                        }
+                    elif field == "competency_mapping":
+                        evaluation_data[field] = []
+                    elif field == "question_analysis":
+                        evaluation_data[field] = [{
+                            "question_id": group.get("question_id", "Unknown"),
+                            "question_text": group.get("question_title", "Unknown question"),
+                            "answer_quality": {
+                                "relevance_score": 0,
+                                "completeness": "Not Addressed",
+                                "clarity": "Poor",
+                                "depth": "None",
+                                "evidence_provided": False
+                            },
+                            "strengths": [],
+                            "concerns": ["No question analysis generated"],
+                            "green_flags": group.get("greenFlags", []),
+                            "red_flags": group.get("redFlags", []),
+                            "conversation": group.get("conversation", [])
+                        }]
+
+            # Debug: Check if question_analysis was actually generated
+            if "question_analysis" in evaluation_data:
+                qa_list = evaluation_data["question_analysis"]
+                if isinstance(qa_list, list) and qa_list:
+                    print(f"   📋 Generated {len(qa_list)} question analysis entries")
+                    for qa in qa_list:
+                        if isinstance(qa, dict) and "question_id" in qa:
+                            print(f"     - Question analysis for {qa['question_id']}")
+                else:
+                    print(f"   ⚠️ Question analysis is empty or not a list: {type(qa_list)}")
+            else:
+                print(f"   ❌ No question_analysis field in parsed evaluation")
+
+        except json.JSONDecodeError:
+            # Fallback to the original method if JSON parsing fails
+            try:
+                expected_keys = ["overall_assessment", "competency_mapping", "question_analysis"]
+                evaluation_data = parse_structured_output(evaluation_result, expected_keys=expected_keys)
+                print(f"✅ Fallback parsing successful for group {group.get('question_id', 'Unknown')}")
         except Exception as e:
             print(f"❌ Failed to parse evaluation for group {group.get('question_id', 'Unknown')}: {str(e)}")
             print(f"📄 Raw response (first 1000 chars): {evaluation_result[:1000]}")
@@ -801,10 +853,31 @@ async def merge_evaluations(evaluations: List[Dict[str, Any]],
     }
 
     # Collect all question analyses
-    for evaluation in evaluations:
+    print("🔍 Debug: Collecting question analyses from individual evaluations...")
+    for i, evaluation in enumerate(evaluations):
+        print(f"   Evaluation {i+1}: type={type(evaluation)}, has_error={'error' in evaluation if isinstance(evaluation, dict) else 'N/A'}")
+        if isinstance(evaluation, dict):
+            print(f"   Evaluation {i+1} keys: {list(evaluation.keys())}")
+            if "question_analysis" in evaluation:
+                qa_list = evaluation["question_analysis"]
+                print(f"   Evaluation {i+1} has question_analysis with {len(qa_list) if isinstance(qa_list, list) else 'non-list'} items")
+                if isinstance(qa_list, list) and qa_list:
+                    for qa in qa_list:
+                        if isinstance(qa, dict) and "question_id" in qa:
+                            print(f"     Found question analysis for {qa['question_id']}")
+            else:
+                print(f"   Evaluation {i+1} missing question_analysis field")
+
         if isinstance(evaluation, dict) and "error" not in evaluation and "question_analysis" in evaluation:
             if isinstance(evaluation["question_analysis"], list):
                 merged_report["question_analysis"].extend(evaluation["question_analysis"])
+                print(f"   ✅ Added {len(evaluation['question_analysis'])} question analyses from evaluation {i+1}")
+            else:
+                print(f"   ❌ Evaluation {i+1} question_analysis is not a list")
+        else:
+            print(f"   ⚠️ Skipping evaluation {i+1} (error={isinstance(evaluation, dict) and 'error' in evaluation}, has_qa={'question_analysis' in evaluation if isinstance(evaluation, dict) else False})")
+
+    print(f"📊 Total question analyses collected: {len(merged_report['question_analysis'])}")
 
     # Aggregate competency mappings by skill area
     skill_areas = {}
