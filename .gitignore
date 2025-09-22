@@ -61,3 +61,6 @@ test_results.json
 # Temporary files
 *.tmp
 *.temp
+/cache
+/output
+/output
