@@ -207,10 +207,7 @@ class GatherResponse(BaseModel):
         }
 
 class EvaluateRequest(BaseModel):
-    resume: Dict[str, Any]
     transcript: Dict[str, Any]
-    technical_questions: str
-    key_skill_areas: List[Dict[str, Any]]
     llm_settings: Optional[LLMSettings] = LLMSettings(
         provider="openrouter",
         model="qwen/qwen3-235b-a22b-thinking-2507:nitro"  # Use thinking model by default
@@ -220,13 +217,15 @@ class EvaluateRequest(BaseModel):
         @staticmethod
         def _load_sample_data():
             try:
-                return json.loads(Path("sample/evaluate.json").read_text())
+                # Load the full sample but only return the fields we need
+                full_sample = json.loads(Path("sample/evaluate.json").read_text())
+                return {
+                    "transcript": full_sample.get("transcript", {"messages": []}),
+                    "llm_settings": {"provider": "openrouter", "model": "qwen/qwen3-235b-a22b-thinking-2507:nitro"}
+                }
             except:
                 return {
-                    "resume": {"candidate_name": "John Doe"},
                     "transcript": {"messages": []},
-                    "technical_questions": "Sample questions...",
-                    "key_skill_areas": [],
                     "llm_settings": {"provider": "openrouter", "model": "qwen/qwen3-235b-a22b-thinking-2507:nitro"}
                 }
 
@@ -682,18 +681,24 @@ async def evaluate_question_group(group: Dict[str, Any], resume: Dict[str, Any],
     """Evaluate a single question group using the thinking model"""
     print(f"🔍 Evaluating question group: {group.get('question_id', 'Unknown')}")
 
-    # Prepare the input data for this specific group
+    # Populate the system prompt with candidate information
+    populated_prompt = evaluation_prompt.replace(
+        "{{RESUME_CONTENT}}", json.dumps(resume, indent=2)
+    ).replace(
+        "{{JOB_REQUIREMENTS}}", job_requirements
+    ).replace(
+        "{{KEY_SKILL_AREAS}}", json.dumps(key_skill_areas, indent=2)
+    )
+
+    # Prepare the input data for this specific group (without resume, job_requirements, key_skill_areas)
     evaluation_input = {
-        "resume": resume,
-        "job_requirements": job_requirements,
-        "key_skill_areas": key_skill_areas,
         "question_group": group,
         "transcript_messages": group.get("conversation", [])
     }
 
     # Create the evaluation prompt with specific data
     evaluation_messages = [
-        {"role": "system", "content": evaluation_prompt},
+        {"role": "system", "content": populated_prompt},
         {"role": "user", "content": f"Evaluate this specific question group: {json.dumps(evaluation_input)}"}
     ]
 
@@ -703,10 +708,10 @@ async def evaluate_question_group(group: Dict[str, Any], resume: Dict[str, Any],
 
         # Debug: Log response length and preview
         print(f"📋 Response for {group.get('question_id', 'Unknown')}: {len(evaluation_result)} chars")
-        if len(evaluation_result) < 100:
-            print(f"📄 Short response: {repr(evaluation_result)}")
-        else:
-            print(f"📄 Response preview: {evaluation_result[:200]}...")
+        # if len(evaluation_result) < 100:
+        print(f"📄 Short response: {evaluation_result}")
+        # else:
+            # print(f"📄 Response preview: {evaluation_result[:200]}...")
 
         # Parse evaluation result using structured output helper
         try:
@@ -889,6 +894,25 @@ async def merge_evaluations(evaluations: List[Dict[str, Any]],
     print("✅ Evaluation merging completed")
     return merged_report
 
+async def load_evaluation_config():
+    """Load resume, job requirements, and key skill areas from sample data"""
+    try:
+        sample_data = json.loads(Path("sample/evaluate.json").read_text())
+        return {
+            "resume": sample_data.get("resume", {}),
+            "job_requirements": sample_data.get("resume", {}).get("job_requirements", ""),
+            "technical_questions": sample_data.get("technical_questions", ""),
+            "key_skill_areas": sample_data.get("key_skill_areas", [])
+        }
+    except Exception as e:
+        print(f"⚠️  Failed to load evaluation config: {str(e)}")
+        return {
+            "resume": {"candidate_name": "Unknown", "job_requirements": "No job requirements specified"},
+            "job_requirements": "No job requirements specified",
+            "technical_questions": "No technical questions specified",
+            "key_skill_areas": []
+        }
+
 @app.post("/generate-report", response_model=EvaluateResponse)
 async def generate_report(request: EvaluateRequest):
     """Generate comprehensive evaluation report by calling gather endpoint and evaluating question groups"""
@@ -898,13 +922,18 @@ async def generate_report(request: EvaluateRequest):
         print(f"📊 Evaluation Provider: {request.llm_settings.provider}")
         print(f"🤖 Evaluation Model: {request.llm_settings.model}")
 
+        # Load evaluation configuration (resume, job requirements, key skill areas)
+        print("📋 Loading evaluation configuration...")
+        eval_config = await load_evaluation_config()
+        print("✅ Evaluation configuration loaded")
+
         # Step 1: Call gather endpoint to get question groups
         print("🔄 Step 1: Gathering question groups using /gather endpoint...")
         # Note: gather endpoint will enforce its own model settings regardless of what we pass
         gather_data = {
             "transcript": request.transcript,
-            "technical_questions": request.technical_questions,
-            "key_skill_areas": request.key_skill_areas,
+            "technical_questions": eval_config["technical_questions"],
+            "key_skill_areas": eval_config["key_skill_areas"],
             "llm_settings": {
                 "provider": "openrouter",
                 "model": "openai/gpt-oss-120b:nitro"  # This will be enforced anyway
@@ -957,9 +986,9 @@ async def generate_report(request: EvaluateRequest):
         for group in groups:
             task = evaluate_question_group(
                 group=group,
-                resume=request.resume,
-                job_requirements=request.resume.get("job_requirements", ""),
-                key_skill_areas=request.key_skill_areas,
+                resume=eval_config["resume"],
+                job_requirements=eval_config["job_requirements"],
+                key_skill_areas=eval_config["key_skill_areas"],
                 llm_client=eval_llm_client,
                 evaluation_prompt=evaluation_prompt,
                 evaluation_schema=evaluation_schema
@@ -1010,11 +1039,11 @@ async def generate_report(request: EvaluateRequest):
             output_data = {
                 "timestamp": timestamp,
                 "request_data": {
-                    "candidate_name": request.resume.get("candidate_name", "Unknown"),
-                    "job_title": request.resume.get("job_title", "Unknown"),
-                    "company": request.resume.get("company_name", "Unknown"),
+                    "candidate_name": eval_config["resume"].get("candidate_name", "Unknown"),
+                    "job_title": eval_config["resume"].get("job_title", "Unknown"),
+                    "company": eval_config["resume"].get("company_name", "Unknown"),
                     "transcript_messages_count": len(request.transcript.get("messages", [])),
-                    "key_skill_areas_count": len(request.key_skill_areas),
+                    "key_skill_areas_count": len(eval_config["key_skill_areas"]),
                     "llm_settings": request.llm_settings.dict()
                 },
                 "evaluation_report": final_evaluation,
@@ -1055,7 +1084,12 @@ async def get_evaluate_sample_data():
     """Get sample data for testing the evaluation API"""
     try:
         sample_data = json.loads(Path("sample/evaluate.json").read_text())
-        return EvaluateRequest(**sample_data)
+        # Only return the fields that are now required for EvaluateRequest
+        filtered_sample = {
+            "transcript": sample_data.get("transcript", {"messages": []}),
+            "llm_settings": sample_data.get("llm_settings", {"provider": "openrouter", "model": "qwen/qwen3-235b-a22b-thinking-2507:nitro"})
+        }
+        return EvaluateRequest(**filtered_sample)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error loading evaluate sample data: {str(e)}")
 
