@@ -23,24 +23,8 @@
           },
           "turn_indices": {
             "type": "array",
-            "items": { "type": "integer" }
-          },
-          "conversation": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "idx": { "type": "integer" },
-                "role": { "type": "string" },
-                "message": { "type": "string" },
-                "time": { "type": ["number", "string"] },
-                "endTime": { "type": ["number", "string"] },
-                "duration": { "type": ["number", "string"] },
-                "secondsFromStart": { "type": ["number", "string"] }
-              },
-              "required": ["idx", "role", "message"],
-              "additionalProperties": true
-            }
+            "items": { "type": "integer" },
+            "description": "List of turn indices that belong to this conversation group"
           },
           "facts": {
             "type": "object",
@@ -62,7 +46,6 @@
           "source",
           "time_range",
           "turn_indices",
-          "conversation",
           "facts"
         ],
         "additionalProperties": false

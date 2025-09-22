@@ -64,35 +64,11 @@ class QuestionData(BaseModel):
     red_flags: List[str]
 
 class GenerateResponse(BaseModel):
-    messages: List[Dict[str, Any]]
-    questions: List[QuestionData]
-    key_skill_areas: List[Dict[str, Any]]
-    llm_output: Optional[Dict[str, Any]] = None
+    llm_output: Dict[str, Any]
 
     class Config:
         schema_extra = {
             "example": {
-                "messages": [
-                    {
-                        "role": "agent",
-                        "time": 1758186131517,
-                        "message": "Hello, how are you today?"
-                    }
-                ],
-                "questions": [
-                    {
-                        "question": "How does Node.js handle async operations?",
-                        "green_flags": ["Mentions event loop", "Explains non-blocking I/O"],
-                        "red_flags": ["Confuses with browser JS", "Claims it's multithreaded"]
-                    }
-                ],
-                "key_skill_areas": [
-                    {
-                        "name": "Programming & Development",
-                        "subSkillAreas": ["Node.js", "TypeScript"],
-                        "difficultyLevel": "medium"
-                    }
-                ],
                 "llm_output": {
                     "groups": [
                         {
@@ -102,7 +78,18 @@ class GenerateResponse(BaseModel):
                             "source": "known_questions",
                             "time_range": {"start": 100, "end": 200},
                             "turn_indices": [5, 6, 7],
-                            "conversation": [],
+                            "conversation": [
+                                {
+                                    "idx": 5,
+                                    "role": "agent",
+                                    "message": "How does Node.js handle async operations?"
+                                },
+                                {
+                                    "idx": 6,
+                                    "role": "user",
+                                    "message": "Node.js uses event loop..."
+                                }
+                            ],
                             "facts": {
                                 "answers": ["Uses event loop for async operations"],
                                 "entities": {"experience_level": "intermediate"}
@@ -113,8 +100,13 @@ class GenerateResponse(BaseModel):
                     ],
                     "misc_or_unclear": [],
                     "pre_inferred_facts_global": {
-                        "candidate_name": "John Doe",
-                        "experience_years": 5
+                        "candidate_name": "Mohammed",
+                        "experience_years": 3,
+                        "current_location": "Coimbatore",
+                        "willing_to_relocate": true,
+                        "current_ctc": 7.3,
+                        "expected_ctc": 9.5,
+                        "notice_period": "10-15 days"
                     }
                 }
             }
@@ -188,6 +180,33 @@ async def prepare_known_questions(questions: List[QuestionData]) -> List[Dict]:
             "redFlags": q.red_flags
         })
     return known_questions
+
+def build_conversations_from_indices(groups: List[Dict], all_messages: List[Dict]) -> List[Dict]:
+    """Build conversation arrays from turn indices for performance optimization"""
+    processed_groups = []
+
+    for group in groups:
+        processed_group = group.copy()
+
+        # Build conversation from indices
+        conversation = []
+        for idx in group.get("turn_indices", []):
+            if idx < len(all_messages):
+                message = all_messages[idx]
+                conversation.append({
+                    "idx": idx,
+                    "role": message.get("role"),
+                    "message": message.get("message"),
+                    "time": message.get("time"),
+                    "endTime": message.get("endTime"),
+                    "duration": message.get("duration"),
+                    "secondsFromStart": message.get("secondsFromStart")
+                })
+
+        processed_group["conversation"] = conversation
+        processed_groups.append(processed_group)
+
+    return processed_groups
 
 @app.post("/generate-report", response_model=GenerateResponse)
 async def generate_report(request: GenerateRequest):
@@ -286,15 +305,22 @@ async def generate_report(request: GenerateRequest):
             llm_output = json.loads(llm_response)
             groups_count = len(llm_output.get("groups", []))
             print(f"✅ Response parsed successfully ({groups_count} conversation groups)")
+
+            # Post-process: Build conversations from indices
+            print("🔄 Building conversations from indices...")
+            if "groups" in llm_output:
+                llm_output["groups"] = build_conversations_from_indices(
+                    llm_output["groups"],
+                    messages
+                )
+                print(f"✅ Conversations built for {len(llm_output['groups'])} groups")
+
         except json.JSONDecodeError:
             print("❌ Failed to parse LLM response as JSON")
             llm_output = {"error": "Failed to parse LLM response", "raw_response": llm_response}
 
         print("📊 Generating final response...")
         response = GenerateResponse(
-            messages=messages,
-            questions=questions,
-            key_skill_areas=request.key_skill_areas,
             llm_output=llm_output
         )
         print("✅ Report generation completed successfully!")

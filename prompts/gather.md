@@ -50,7 +50,9 @@ Rules
 
 Output
 	•	groups: array of both Qn and custom:* groups (each numbered in order of appearance)
-	•	misc_or_unclear: indices that don’t fit any group
+	•	misc_or_unclear: indices that don't fit any group
 	•	pre_inferred_facts_global: key–value facts from the entire conversation
+
+IMPORTANT: For each group, only return the turn_indices array. DO NOT include the full conversation messages - they will be reconstructed programmatically from the indices for performance optimization.
 
 Return JSON that matches the schema below.
