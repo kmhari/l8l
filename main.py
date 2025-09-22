@@ -213,7 +213,7 @@ class EvaluateRequest(BaseModel):
     key_skill_areas: List[Dict[str, Any]]
     llm_settings: Optional[LLMSettings] = LLMSettings(
         provider="openrouter",
-        model="qwen/qwen3-235b-a22b-thinking-2507:nitro"  # Use thinking model by default
+        model="qwen/qwen3-235b-a22b-2507"  # Use instruct model by default
     )
 
     class Config:
@@ -227,7 +227,7 @@ class EvaluateRequest(BaseModel):
                     "transcript": {"messages": []},
                     "technical_questions": "Sample questions...",
                     "key_skill_areas": [],
-                    "llm_settings": {"provider": "openrouter", "model": "qwen/qwen3-235b-a22b-thinking-2507:nitro"}
+                    "llm_settings": {"provider": "openrouter", "model": "qwen/qwen3-235b-a22b-2507"}
                 }
 
         json_schema_extra = {
@@ -682,19 +682,34 @@ async def evaluate_question_group(group: Dict[str, Any], resume: Dict[str, Any],
     """Evaluate a single question group using the thinking model"""
     print(f"🔍 Evaluating question group: {group.get('question_id', 'Unknown')}")
 
-    # Prepare the input data for this specific group
-    evaluation_input = {
-        "resume": resume,
-        "job_requirements": job_requirements,
-        "key_skill_areas": key_skill_areas,
+    # Create enhanced system prompt with context data
+    enhanced_system_prompt = f"""{evaluation_prompt}
+
+## Context Information
+
+### Candidate Resume:
+{json.dumps(resume, indent=2)}
+
+### Job Requirements:
+{job_requirements}
+
+### Key Skill Areas to Evaluate:
+{json.dumps(key_skill_areas, indent=2)}
+
+## Instructions
+You are evaluating a SINGLE question group in this request. Generate ONE question analysis entry.
+Focus on the specific question group and conversation provided below."""
+
+    # Prepare minimal user input focusing only on the question group
+    user_input = {
         "question_group": group,
-        "transcript_messages": group.get("conversation", [])
+        "conversation": group.get("conversation", [])
     }
 
-    # Create the evaluation prompt with specific data
+    # Create the evaluation messages with enhanced system prompt
     evaluation_messages = [
-        {"role": "system", "content": evaluation_prompt},
-        {"role": "user", "content": f"Evaluate this specific question group: {json.dumps(evaluation_input)}"}
+        {"role": "system", "content": enhanced_system_prompt},
+        {"role": "user", "content": f"Evaluate this specific question group: {json.dumps(user_input)}"}
     ]
 
     try:
@@ -759,14 +774,16 @@ async def evaluate_question_group(group: Dict[str, Any], resume: Dict[str, Any],
             else:
                 print(f"   ❌ No question_analysis field in parsed evaluation")
 
-        except json.JSONDecodeError:
-            # Fallback to the original method if JSON parsing fails
+        except json.JSONDecodeError as json_error:
+            # Fallback to the original parsing method
             try:
                 expected_keys = ["overall_assessment", "competency_mapping", "question_analysis"]
                 evaluation_data = parse_structured_output(evaluation_result, expected_keys=expected_keys)
                 print(f"✅ Fallback parsing successful for group {group.get('question_id', 'Unknown')}")
             except Exception as fallback_error:
                 print(f"❌ Fallback parsing also failed for group {group.get('question_id', 'Unknown')}: {str(fallback_error)}")
+                print(f"   Original JSON error: {str(json_error)}")
+                print(f"   Fallback error: {str(fallback_error)}")
                 # Use the default error structure
                 evaluation_data = {
                     "overall_assessment": {

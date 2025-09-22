@@ -61,7 +61,7 @@ class AnthropicProvider(LLMProvider):
 
         kwargs = {
             "model": self.model,
-            "max_tokens": 4000,
+            "max_tokens": 14000,
             "temperature": 0.1,
             "messages": user_messages
         }
@@ -103,8 +103,6 @@ class OpenRouterProvider(LLMProvider):
         self.base_url = "https://openrouter.ai/api/v1"
 
     async def generate(self, messages: list, schema: Optional[Dict] = None) -> str:
-        print("🧠 Using OpenRouterProvider")
-        print("key", self.api_key + "..." if self.api_key else "No Key")
         headers = {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json"
@@ -114,14 +112,16 @@ class OpenRouterProvider(LLMProvider):
             "model": self.model,
             "messages": messages,
             "temperature": 0.1,
-            "max_tokens": 8000,  # Increase token limit for complex JSON responses
-             'provider': {
-            'only': ['cerebras']
-                }
+            "max_tokens": 20000,
+        }
+
+        # Use provider settings for better compatibility
+        payload['provider'] = {
+            'only': ["cerebras"]
         }
 
         if schema:
-            # Try OpenRouter's structured outputs feature first
+            # Try structured outputs first
             payload["response_format"] = {
                 "type": "json_schema",
                 "json_schema": {
@@ -133,6 +133,7 @@ class OpenRouterProvider(LLMProvider):
 
         async with httpx.AsyncClient() as client:
             try:
+                print("🚀 Sending request to OpenRouter...")
                 response = await client.post(
                     f"{self.base_url}/chat/completions",
                     headers=headers,
@@ -149,10 +150,12 @@ class OpenRouterProvider(LLMProvider):
 
                 return content
             except httpx.HTTPStatusError as e:
+                print("HTTP error:", e.response.status_code, e.response.text)
                 # If structured outputs fail, try fallback approach
                 response_text = str(e.response.text)
                 if (e.response.status_code == 400 and schema and
-                    ("Invalid schema" in response_text or "not supported" in response_text or "response_format" in response_text)):
+                    ("Invalid schema" in response_text or "not supported" in response_text or "response_format" in response_text or
+                     "incomplete_json_output" in response_text or "generation_error" in response_text or "Failed to generate JSON" in response_text)):
                     print("⚠️ Structured outputs failed, falling back to prompt-based approach...")
                     return await self._fallback_generate(headers, client, messages, schema)
                 raise ValueError(f"HTTP error from OpenRouter API: {e.response.status_code} - {e.response.text}")
@@ -171,15 +174,22 @@ class OpenRouterProvider(LLMProvider):
             "model": self.model,
             "messages": messages,
             "temperature": 0.1,
-            "max_tokens": 8000
+            "max_tokens": 18000,
+            # Remove provider constraint for fallback to try different providers
+            'provider': {
+                'allow_fallbacks': True
+            }
         }
 
-        # Add schema instruction to system prompt
+        # Simplify the schema instruction to avoid overwhelming the model
         system_prompt = messages[0]["content"] if messages and messages[0]["role"] == "system" else ""
-        system_prompt += f"\n\nIMPORTANT: Your response must be valid JSON matching this schema: {json.dumps(schema)}"
+        system_prompt += "\n\nIMPORTANT: Respond with valid JSON only. Do not include any explanations, reasoning, or additional text outside the JSON structure."
+
+        # Add a simplified schema example instead of the full schema
+        if schema and "properties" in schema:
+            system_prompt += f"\n\nExpected JSON structure with these main fields: {list(schema['properties'].keys())}"
 
         modified_messages = [{"role": "system", "content": system_prompt}] + messages[1:]
-
         payload["messages"] = modified_messages
 
         response = await client.post(
@@ -191,6 +201,7 @@ class OpenRouterProvider(LLMProvider):
         response.raise_for_status()
         data = response.json()
         return data["choices"][0]["message"]["content"]
+
 
 class LLMClient:
     def __init__(self, config: LLMConfig):

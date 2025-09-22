@@ -138,9 +138,11 @@ You are evaluating a SINGLE question group in this request. Generate ONE questio
    - Each conversation turn has: `role` (agent/user), `message` (content), `time`, `duration`, etc.
    - Use this conversation to make your assessments - it's the primary source of evidence
 
-## Output Format Example
+## Output Format Requirements
 
-Your response must be valid JSON. For the question_analysis array, generate exactly ONE entry that looks like this:
+**CRITICAL**: Your response must be valid JSON only. Do not include any explanations, reasoning, or additional text outside the JSON structure.
+
+**JSON Structure Requirements**: Your response must include ALL required fields. For the question_analysis array, generate exactly ONE entry that looks like this:
 
 ```json
 {

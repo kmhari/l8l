@@ -78,7 +78,7 @@ The application uses a plugin-based LLM provider architecture:
 
 ### Model Enforcement Strategy
 - **Gather endpoint**: Forces `openrouter/openai/gpt-oss-120b:nitro` for consistency
-- **Evaluate endpoint**: Allows flexible model selection, defaults to `qwen/qwen3-235b-a22b-thinking-2507:nitro`
+- **Evaluate endpoint**: Allows flexible model selection, defaults to `qwen/qwen3-235b-a22b-thinking-2507`
 
 ### Caching System
 - MD5-based cache keys generated from request content
@@ -100,7 +100,7 @@ Required API keys in `.env`:
 
 ### Default Models
 - **Gather**: `openai/gpt-oss-120b:nitro` (enforced)
-- **Evaluate**: `qwen/qwen3-235b-a22b-thinking-2507:nitro` (default)
+- **Evaluate**: `qwen/qwen3-235b-a22b-thinking-2507` (default)
 
 See `models.md` for complete list of supported models and usage examples.
 

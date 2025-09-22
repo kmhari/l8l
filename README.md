@@ -74,7 +74,7 @@ GROQ_API_KEY=your_groq_key                # Optional
 - Model: `openai/gpt-oss-120b:nitro`
 
 **Evaluation Endpoint** (Configurable):
-- Default: `qwen/qwen3-235b-a22b-thinking-2507:nitro`
+- Default: `qwen/qwen3-235b-a22b-thinking-2507`
 - Supports: All OpenRouter, OpenAI, Anthropic, Groq models
 
 ## 📚 API Documentation
