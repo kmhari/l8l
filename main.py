@@ -210,7 +210,7 @@ class EvaluateRequest(BaseModel):
     transcript: Dict[str, Any]
     llm_settings: Optional[LLMSettings] = LLMSettings(
         provider="openrouter",
-        model="qwen/qwen3-235b-a22b-thinking-2507:nitro"  # Use thinking model by default
+        model="qwen/qwen3-235b-a22b-2507"  # Use thinking model by default
     )
 
     class Config:
@@ -221,12 +221,12 @@ class EvaluateRequest(BaseModel):
                 full_sample = json.loads(Path("sample/evaluate.json").read_text())
                 return {
                     "transcript": full_sample.get("transcript", {"messages": []}),
-                    "llm_settings": {"provider": "openrouter", "model": "qwen/qwen3-235b-a22b-thinking-2507:nitro"}
+                    "llm_settings": {"provider": "openrouter", "model": "qwen/qwen3-235b-a22b-2507"}
                 }
             except:
                 return {
                     "transcript": {"messages": []},
-                    "llm_settings": {"provider": "openrouter", "model": "qwen/qwen3-235b-a22b-thinking-2507:nitro"}
+                    "llm_settings": {"provider": "openrouter", "model": "qwen/qwen3-235b-a22b-2507"}
                 }
 
         json_schema_extra = {
@@ -681,13 +681,23 @@ async def evaluate_question_group(group: Dict[str, Any], resume: Dict[str, Any],
     """Evaluate a single question group using the thinking model"""
     print(f"🔍 Evaluating question group: {group.get('question_id', 'Unknown')}")
 
-    # Populate the system prompt with candidate information
+    # Load sample response structure
+    try:
+        sample_response = json.loads(Path("prompts/sample_evaluation_response.json").read_text())
+        sample_response_str = json.dumps(sample_response, indent=2)
+    except Exception as e:
+        print(f"⚠️  Failed to load sample response structure: {str(e)}")
+        sample_response_str = "Error loading sample structure"
+
+    # Populate the system prompt with candidate information and sample structure
     populated_prompt = evaluation_prompt.replace(
         "{{RESUME_CONTENT}}", json.dumps(resume, indent=2)
     ).replace(
         "{{JOB_REQUIREMENTS}}", job_requirements
     ).replace(
         "{{KEY_SKILL_AREAS}}", json.dumps(key_skill_areas, indent=2)
+    ).replace(
+        "{{SAMPLE_RESPONSE_STRUCTURE}}", sample_response_str
     )
 
     # Prepare the input data for this specific group (without resume, job_requirements, key_skill_areas)
@@ -1087,7 +1097,7 @@ async def get_evaluate_sample_data():
         # Only return the fields that are now required for EvaluateRequest
         filtered_sample = {
             "transcript": sample_data.get("transcript", {"messages": []}),
-            "llm_settings": sample_data.get("llm_settings", {"provider": "openrouter", "model": "qwen/qwen3-235b-a22b-thinking-2507:nitro"})
+            "llm_settings": sample_data.get("llm_settings", {"provider": "openrouter", "model": "qwen/qwen3-235b-a22b-2507"})
         }
         return EvaluateRequest(**filtered_sample)
     except Exception as e:

@@ -138,45 +138,19 @@ You are evaluating a SINGLE question group in this request. Generate ONE questio
    - Each conversation turn has: `role` (agent/user), `message` (content), `time`, `duration`, etc.
    - Use this conversation to make your assessments - it's the primary source of evidence
 
-## Output Format Example
+## Expected Response Structure
 
-Your response must be valid JSON. For the question_analysis array, generate exactly ONE entry that looks like this:
+Your response must be valid JSON following the complete evaluation schema. Here's a comprehensive example showing the expected structure for individual questionnaire evaluation:
 
-```json
-{
-  "question_analysis": [
-    {
-      "question_id": "Q1",
-      "question_text": "How does Node.js handle asynchronous operations?",
-      "answer_quality": {
-        "relevance_score": 75,
-        "completeness": "Partial",
-        "clarity": "Good",
-        "depth": "Moderate",
-        "evidence_provided": true
-      },
-      "strengths": ["Mentioned event loop", "Provided specific examples"],
-      "concerns": ["Didn't explain error handling", "Lacked depth on callbacks"],
-      "green_flags": ["Mentions event loop", "Discusses libuv"],
-      "red_flags": ["Vague on error handling"],
-      "conversation": [
-        {
-          "idx": 0,
-          "role": "agent",
-          "message": "How does Node.js handle async operations?",
-          "time": 1234567890
-        },
-        {
-          "idx": 1,
-          "role": "user",
-          "message": "Node.js uses the event loop...",
-          "time": 1234567895
-        }
-      ]
-    }
-  ]
-}
-```
+{{SAMPLE_RESPONSE_STRUCTURE}}
+
+## Key Requirements for Your Response
+
+1. **Single Question Analysis**: Generate exactly ONE entry in the question_analysis array for the specific question group provided
+2. **Complete Evaluation**: Include all required sections: overall_assessment, competency_mapping, question_analysis, communication_assessment, critical_analysis, and improvement_recommendations
+3. **Evidence-Based**: All assessments must be backed by specific evidence from the conversation
+4. **Skill Mapping**: Evaluate each skill area and sub-skill from the Required Skill Areas section above
+5. **Structured Data**: Follow the exact JSON schema format without deviations
 
 ## General Special Instructions
 
