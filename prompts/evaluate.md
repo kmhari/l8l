@@ -40,6 +40,13 @@ The data will be provided in the user message as a JSON object. Extract and use 
 - Focus on hire-ability rather than perfection
 - Acknowledge that nervousness and interview pressure can affect performance
 
+**SKILL INFERENCE GUIDELINES:**
+- **Cross-reference experience**: If candidate has 3+ years experience, assume familiarity with common frameworks
+- **Industry standards**: Full-stack developers typically know Express.js, async patterns, and basic TypeScript
+- **Context clues**: Practical examples often indicate deeper knowledge than explicitly stated
+- **Resume correlation**: Match interview responses with claimed experience on resume
+- **Progressive complexity**: More advanced skills suggest foundational knowledge exists
+
 Analyze the interview performance using the following framework:
 
 ### 1. Answer-Question Alignment Analysis
@@ -112,11 +119,24 @@ Analyze the interview performance using the following framework:
 
 ## Special Instructions for Skill Assessment
 
+**CRITICAL: Apply generous interpretation when evaluating sub-skills**
+
 When evaluating competency_mapping:
 1. Create one entry for each skill area from key_skill_areas
-2. Within each skill area, evaluate ALL sub-skills individually
-3. Provide an overall assessment for the skill area based on sub-skill performance
-4. Note specific gaps identified for each skill area
+2. Within each skill area, evaluate ALL sub-skills individually using LENIENT CRITERIA:
+   - **Look for indirect evidence**: If a skill isn't directly mentioned, consider related experience
+   - **Infer from context**: Use practical experience to estimate proficiency levels
+   - **Give credit for partial knowledge**: Mark as "Basic" or "Entry" rather than "Not Demonstrated" if any understanding is shown
+   - **Consider transferable skills**: Related experience can indicate competency
+   - **Avoid "Not Demonstrated" unless absolutely no evidence exists**
+
+3. **Sub-skill evaluation guidelines**:
+   - If candidate shows ANY related experience → Mark as at least "Basic"
+   - If candidate mentions the technology/concept → Mark as at least "Entry"
+   - If candidate demonstrates understanding → Mark as "Intermediate" or higher
+   - Only use "Not Demonstrated" if there's absolutely zero evidence or mention
+
+4. Provide an overall assessment for the skill area based on sub-skill performance
 5. Consider the expected difficulty level when determining if the candidate meets requirements
 6. For assessment_notes, provide 1-5 key bullet points that:
    - Summarize the candidate's performance in this skill area
