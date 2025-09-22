@@ -2,12 +2,11 @@
 NIXPACKS_PYTHON_VERSION = "3.11"
 
 [phases.setup]
-nixPkgs = ["python311", "python311Packages.pip"]
+nixPkgs = ["python311", "python311Packages.pip", "uv"]
 
 [phases.install]
 cmds = [
-    "pip install uv",
-    "uv pip install -r requirements.txt"
+    "uv pip install --system -r requirements.txt"
 ]
 
 [phases.build]
