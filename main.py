@@ -765,6 +765,49 @@ async def evaluate_question_group(group: Dict[str, Any], resume: Dict[str, Any],
                 expected_keys = ["overall_assessment", "competency_mapping", "question_analysis"]
                 evaluation_data = parse_structured_output(evaluation_result, expected_keys=expected_keys)
                 print(f"✅ Fallback parsing successful for group {group.get('question_id', 'Unknown')}")
+            except Exception as fallback_error:
+                print(f"❌ Fallback parsing also failed for group {group.get('question_id', 'Unknown')}: {str(fallback_error)}")
+                # Use the default error structure
+                evaluation_data = {
+                    "overall_assessment": {
+                        "recommendation": "No Hire",
+                        "confidence": "Low",
+                        "overall_score": 0,
+                        "summary": "Failed to parse evaluation response"
+                    },
+                    "competency_mapping": [],
+                    "question_analysis": [{
+                        "question_id": group.get("question_id", "Unknown"),
+                        "question_text": group.get("question_title", "Unknown question"),
+                        "answer_quality": {
+                            "relevance_score": 0,
+                            "completeness": "Not Addressed",
+                            "clarity": "Poor",
+                            "depth": "None",
+                            "evidence_provided": False
+                        },
+                        "strengths": [],
+                        "concerns": ["Parsing failed - could not extract evaluation"],
+                        "green_flags": group.get("greenFlags", []),
+                        "red_flags": group.get("redFlags", []),
+                        "conversation": group.get("conversation", [])
+                    }],
+                    "communication_assessment": {
+                        "verbal_articulation": "Fair",
+                        "logical_flow": "Fair",
+                        "professional_vocabulary": "Fair",
+                        "cultural_fit_indicators": []
+                    },
+                    "critical_analysis": {
+                        "red_flags": ["Evaluation parsing failed"],
+                        "exceptional_responses": [],
+                        "inconsistencies": [],
+                        "problem_solving_approach": "Unable to assess due to parsing failure"
+                    },
+                    "improvement_recommendations": ["Re-evaluate this response manually"],
+                    "parsing_error": True,
+                    "raw_response_preview": evaluation_result[:500] if len(evaluation_result) > 500 else evaluation_result
+                }
         except Exception as e:
             print(f"❌ Failed to parse evaluation for group {group.get('question_id', 'Unknown')}: {str(e)}")
             print(f"📄 Raw response (first 1000 chars): {evaluation_result[:1000]}")
