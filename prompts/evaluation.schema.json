@@ -1,0 +1,231 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "InterviewEvaluationReport",
+  "type": "object",
+  "properties": {
+    "overall_assessment": {
+      "type": "object",
+      "properties": {
+        "recommendation": {
+          "type": "string",
+          "enum": ["Strong Hire", "Hire", "No Hire", "Strong No Hire"],
+          "description": "Final hiring recommendation"
+        },
+        "confidence": {
+          "type": "string",
+          "enum": ["High", "Medium", "Low"],
+          "description": "Confidence level in the assessment"
+        },
+        "overall_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Overall interview performance score"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Brief summary of candidate performance"
+        }
+      },
+      "required": ["recommendation", "confidence", "overall_score", "summary"],
+      "additionalProperties": false
+    },
+    "competency_mapping": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "skill_area": {
+            "type": "string",
+            "description": "Name of the skill area being evaluated"
+          },
+          "overall_assessment": {
+            "type": "string",
+            "enum": ["Expert", "Advanced", "Intermediate", "Basic", "Entry", "Not Demonstrated"],
+            "description": "Overall proficiency level for this skill area"
+          },
+          "meets_requirements": {
+            "type": "boolean",
+            "description": "Whether the candidate meets the job requirements for this skill area"
+          },
+          "confidence": {
+            "type": "string",
+            "enum": ["High", "Medium", "Low"],
+            "description": "Confidence level in this assessment"
+          },
+          "assessment_notes": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "1-5 key bullet points summarizing performance in this skill area"
+          },
+          "sub_skills": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Name of the sub-skill"
+                },
+                "proficiency": {
+                  "type": "string",
+                  "enum": ["Expert", "Advanced", "Intermediate", "Basic", "Entry", "Not Demonstrated"],
+                  "description": "Demonstrated proficiency level"
+                },
+                "demonstrated": {
+                  "type": "boolean",
+                  "description": "Whether this sub-skill was demonstrated in the interview"
+                },
+                "confidence": {
+                  "type": "string",
+                  "enum": ["High", "Medium", "Low"],
+                  "description": "Confidence level in this assessment"
+                },
+                "evidence": {
+                  "type": "string",
+                  "description": "Specific evidence or examples from the interview"
+                },
+                "gaps_identified": {
+                  "type": "array",
+                  "items": {"type": "string"},
+                  "description": "Specific knowledge gaps or areas for improvement"
+                }
+              },
+              "required": ["name", "proficiency", "demonstrated", "confidence"],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": ["skill_area", "overall_assessment", "meets_requirements", "confidence", "assessment_notes", "sub_skills"],
+        "additionalProperties": false
+      }
+    },
+    "question_analysis": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "question_id": {
+            "type": "string",
+            "description": "Identifier for the question"
+          },
+          "question_text": {
+            "type": "string",
+            "description": "The actual question asked"
+          },
+          "answer_quality": {
+            "type": "object",
+            "properties": {
+              "relevance_score": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100,
+                "description": "How directly the answer addressed the question"
+              },
+              "completeness": {
+                "type": "string",
+                "enum": ["Complete", "Partial", "Incomplete", "Not Addressed"],
+                "description": "Completeness of the response"
+              },
+              "clarity": {
+                "type": "string",
+                "enum": ["Excellent", "Good", "Fair", "Poor"],
+                "description": "Clarity and structure of the answer"
+              },
+              "depth": {
+                "type": "string",
+                "enum": ["Deep", "Moderate", "Surface", "None"],
+                "description": "Depth of understanding demonstrated"
+              },
+              "evidence_provided": {
+                "type": "boolean",
+                "description": "Whether specific examples or evidence were provided"
+              }
+            },
+            "required": ["relevance_score", "completeness", "clarity", "depth", "evidence_provided"],
+            "additionalProperties": false
+          },
+          "strengths": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Strengths demonstrated in this response"
+          },
+          "concerns": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Concerns or gaps identified in this response"
+          }
+        },
+        "required": ["question_id", "question_text", "answer_quality", "strengths", "concerns"],
+        "additionalProperties": false
+      }
+    },
+    "communication_assessment": {
+      "type": "object",
+      "properties": {
+        "verbal_articulation": {
+          "type": "string",
+          "enum": ["Excellent", "Good", "Fair", "Poor"],
+          "description": "Quality of verbal expression"
+        },
+        "logical_flow": {
+          "type": "string",
+          "enum": ["Excellent", "Good", "Fair", "Poor"],
+          "description": "Logical organization of thoughts"
+        },
+        "professional_vocabulary": {
+          "type": "string",
+          "enum": ["Excellent", "Good", "Fair", "Poor"],
+          "description": "Use of appropriate technical and professional vocabulary"
+        },
+        "cultural_fit_indicators": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Positive or negative cultural fit indicators observed"
+        }
+      },
+      "required": ["verbal_articulation", "logical_flow", "professional_vocabulary", "cultural_fit_indicators"],
+      "additionalProperties": false
+    },
+    "critical_analysis": {
+      "type": "object",
+      "properties": {
+        "red_flags": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Significant concerns or warning signs"
+        },
+        "exceptional_responses": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Outstanding answers or unique strengths demonstrated"
+        },
+        "inconsistencies": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Inconsistencies between resume, job requirements, and responses"
+        },
+        "problem_solving_approach": {
+          "type": "string",
+          "description": "Assessment of candidate's problem-solving methodology"
+        }
+      },
+      "required": ["red_flags", "exceptional_responses", "inconsistencies", "problem_solving_approach"],
+      "additionalProperties": false
+    },
+    "improvement_recommendations": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Specific, actionable recommendations for candidate improvement"
+    }
+  },
+  "required": [
+    "overall_assessment",
+    "competency_mapping",
+    "question_analysis",
+    "communication_assessment",
+    "critical_analysis",
+    "improvement_recommendations"
+  ],
+  "additionalProperties": false
+}
