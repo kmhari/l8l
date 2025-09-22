@@ -115,7 +115,7 @@ class OpenRouterProvider(LLMProvider):
 
         if schema:
             system_prompt = messages[0]["content"] if messages and messages[0]["role"] == "system" else ""
-            system_prompt += f"\n\nRespond with valid JSON matching this schema: {json.dumps(schema)}"
+            system_prompt += f"\n\nIMPORTANT: You must respond with ONLY valid JSON matching this exact schema: {json.dumps(schema)}\n\nDo not include any thinking, explanation, or text outside the JSON. Only return the JSON object."
             messages[0] = {"role": "system", "content": system_prompt}
 
         async with httpx.AsyncClient() as client:

@@ -1,0 +1,18 @@
+{
+  "timestamp": 1758547077,
+  "cache_key": "0d3b1453d7f658f8e11bf5293e1910ea",
+  "request_data": {
+    "transcript_messages_count": 72,
+    "technical_questions_count": 10,
+    "key_skill_areas_count": 2,
+    "llm_settings": {
+      "provider": "openrouter",
+      "model": "qwen/qwen3-235b-a22b-thinking-2507:nitro",
+      "api_key": null
+    }
+  },
+  "llm_output": {
+    "error": "Failed to parse LLM response",
+    "raw_response": ""
+  }
+}

@@ -624,7 +624,7 @@
         }
     ],
   "llm_settings": {
-    "provider": "openrouter",
-    "model": "openai/gpt-oss-120b:nitro"
+      "provider": "openrouter",
+    "model": "qwen/qwen3-235b-a22b-thinking-2507:nitro"
 }
   }

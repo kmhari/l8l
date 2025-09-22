@@ -5,11 +5,12 @@ import re
 import json
 import asyncio
 import os
+import time
+import hashlib
 from pathlib import Path
 from dotenv import load_dotenv
 from scalar_fastapi import get_scalar_api_reference
 from llm_client import create_llm_client
-import asyncio
 from concurrent.futures import ThreadPoolExecutor
 from functools import partial
 
@@ -40,7 +41,10 @@ class GatherRequest(BaseModel):
     transcript: Dict[str, Any]
     technical_questions: str
     key_skill_areas: List[Dict[str, Any]]
-    llm_settings: Optional[LLMSettings] = LLMSettings()
+    llm_settings: Optional[LLMSettings] = LLMSettings(
+        provider="openrouter",
+        model="openai/gpt-oss-120b:nitro"
+    )
 
     class Config:
         @staticmethod
@@ -104,7 +108,7 @@ class GatherResponse(BaseModel):
                         "candidate_name": "Mohammed",
                         "experience_years": 3,
                         "current_location": "Coimbatore",
-                        "willing_to_relocate": true,
+                        "willing_to_relocate": True,
                         "current_ctc": 7.3,
                         "expected_ctc": 9.5,
                         "notice_period": "10-15 days"
@@ -272,13 +276,150 @@ def build_conversations_from_indices(groups: List[Dict], all_messages: List[Dict
 
     return processed_groups
 
+def generate_cache_key(request: GatherRequest) -> str:
+    """Generate MD5 hash from the gather request input"""
+    # Create a normalized representation of the input data
+    cache_input = {
+        "transcript": request.transcript,
+        "technical_questions": request.technical_questions,
+        "key_skill_areas": request.key_skill_areas,
+        # Include model settings as they affect the output
+        "llm_settings": {
+            "provider": request.llm_settings.provider,
+            "model": request.llm_settings.model
+        }
+    }
+
+    # Convert to JSON string with sorted keys for consistent hashing
+    input_string = json.dumps(cache_input, sort_keys=True, separators=(',', ':'))
+
+    # Generate MD5 hash
+    return hashlib.md5(input_string.encode('utf-8')).hexdigest()
+
+def get_cache_path(cache_key: str) -> Path:
+    """Get the file path for a cache key"""
+    cache_dir = Path("cache/gather")
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    return cache_dir / f"{cache_key}.json"
+
+def load_from_cache(cache_key: str) -> Optional[Dict[str, Any]]:
+    """Load cached gather result if it exists"""
+    cache_path = get_cache_path(cache_key)
+
+    try:
+        if cache_path.exists():
+            with open(cache_path, 'r', encoding='utf-8') as f:
+                cached_data = json.load(f)
+
+            # Verify cache integrity
+            if "llm_output" in cached_data and "cache_key" in cached_data:
+                return cached_data
+            else:
+                print(f"⚠️  Invalid cache file format: {cache_path}")
+                cache_path.unlink()  # Remove corrupted cache file
+
+    except Exception as e:
+        print(f"⚠️  Error reading cache file {cache_path}: {str(e)}")
+        if cache_path.exists():
+            try:
+                cache_path.unlink()  # Remove corrupted cache file
+            except:
+                pass
+
+    return None
+
+def save_to_cache(cache_key: str, llm_output: Dict[str, Any], request_metadata: Dict[str, Any]) -> None:
+    """Save gather result to cache"""
+    cache_path = get_cache_path(cache_key)
+
+    try:
+        cache_data = {
+            "cache_key": cache_key,
+            "timestamp": int(time.time()),
+            "request_metadata": request_metadata,
+            "llm_output": llm_output
+        }
+
+        with open(cache_path, 'w', encoding='utf-8') as f:
+            json.dump(cache_data, f, indent=2, ensure_ascii=False)
+
+        print(f"✅ Result cached to: {cache_path}")
+
+    except Exception as e:
+        print(f"⚠️  Failed to save to cache: {str(e)}")
+
 @app.post("/gather", response_model=GatherResponse)
 async def gather(request: GatherRequest):
     try:
         print("\n" + "="*50)
         print("🚀 Starting report generation...")
+
+        # Enforce default model for gather endpoint - do not allow override
+        original_provider = request.llm_settings.provider
+        original_model = request.llm_settings.model
+
+        # Force the use of the specified model for gather
+        request.llm_settings.provider = "openrouter"
+        request.llm_settings.model = "openai/gpt-oss-120b:nitro"
+
+        if original_provider != request.llm_settings.provider or original_model != request.llm_settings.model:
+            print(f"⚠️  Model override detected - enforcing gather default:")
+            print(f"   Requested: {original_provider}/{original_model}")
+            print(f"   Using: {request.llm_settings.provider}/{request.llm_settings.model}")
+
         print(f"📊 Provider: {request.llm_settings.provider}")
         print(f"🤖 Model: {request.llm_settings.model}")
+
+        # Generate cache key for this request
+        print("🔑 Generating cache key...")
+        cache_key = generate_cache_key(request)
+        print(f"✅ Cache key: {cache_key}")
+
+        # Check if result is already cached
+        print("🔍 Checking cache...")
+        cached_result = load_from_cache(cache_key)
+        if cached_result:
+            print("🎯 Cache hit! Returning cached result...")
+            cached_timestamp = cached_result.get("timestamp", 0)
+            age_minutes = (time.time() - cached_timestamp) / 60
+            print(f"📅 Cache age: {age_minutes:.1f} minutes")
+
+            # Return cached result
+            response = GatherResponse(llm_output=cached_result["llm_output"])
+
+            # Also save to output directory with current timestamp for consistency
+            try:
+                output_dir = Path("output")
+                output_dir.mkdir(exist_ok=True)
+                timestamp = int(time.time())
+                filename = f"gather_output_{timestamp}_cached.json"
+                output_path = output_dir / filename
+
+                output_data = {
+                    "timestamp": timestamp,
+                    "cached_from": cached_result["timestamp"],
+                    "cache_key": cache_key,
+                    "request_data": {
+                        "transcript_messages_count": len(request.transcript.get("messages", [])),
+                        "technical_questions_count": len(parse_technical_questions(request.technical_questions)),
+                        "key_skill_areas_count": len(request.key_skill_areas),
+                        "llm_settings": request.llm_settings.dict()
+                    },
+                    "llm_output": cached_result["llm_output"]
+                }
+
+                with open(output_path, 'w', encoding='utf-8') as f:
+                    json.dump(output_data, f, indent=2, ensure_ascii=False)
+
+                print(f"✅ Cached result also saved to: {output_path}")
+            except Exception as e:
+                print(f"⚠️  Failed to save cached result to output: {str(e)}")
+
+            print("✅ Report generation completed (from cache)!")
+            print("="*50 + "\n")
+            return response
+
+        print("💾 Cache miss - proceeding with LLM generation...")
 
         # Parse technical questions into structured format
         print("📝 Parsing technical questions...")
@@ -366,27 +507,136 @@ async def gather(request: GatherRequest):
         # Parse response
         print("🔍 Parsing LLM response...")
         try:
+            # Try direct JSON parsing first
             llm_output = json.loads(llm_response)
             groups_count = len(llm_output.get("groups", []))
             print(f"✅ Response parsed successfully ({groups_count} conversation groups)")
-
-            # Post-process: Build conversations from indices
-            print("🔄 Building conversations from indices...")
-            if "groups" in llm_output:
-                llm_output["groups"] = build_conversations_from_indices(
-                    llm_output["groups"],
-                    messages
-                )
-                print(f"✅ Conversations built for {len(llm_output['groups'])} groups")
-
         except json.JSONDecodeError:
-            print("❌ Failed to parse LLM response as JSON")
-            llm_output = {"error": "Failed to parse LLM response", "raw_response": llm_response}
+            # Handle thinking model responses that may have extra content
+            print("⚠️ Direct JSON parsing failed, attempting to extract JSON from response...")
+            try:
+                # Look for JSON content between common thinking model delimiters
+                import re
+
+                # Try to find JSON in various formats
+                json_patterns = [
+                    r'```json\s*(\{.*?\})\s*```',  # JSON in code blocks
+                    r'<json>\s*(\{.*?\})\s*</json>',  # JSON in XML tags
+                    r'(\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\})',  # Any complete JSON object
+                ]
+
+                extracted_json = None
+                for pattern in json_patterns:
+                    matches = re.findall(pattern, llm_response, re.DOTALL)
+                    if matches:
+                        # Try parsing each match
+                        for match in matches:
+                            try:
+                                test_parse = json.loads(match)
+                                if "groups" in test_parse:  # Verify it's our expected structure
+                                    extracted_json = match
+                                    break
+                            except:
+                                continue
+                        if extracted_json:
+                            break
+
+                if extracted_json:
+                    llm_output = json.loads(extracted_json)
+                    groups_count = len(llm_output.get("groups", []))
+                    print(f"✅ JSON extracted and parsed successfully ({groups_count} conversation groups)")
+                else:
+                    # Try to find any valid JSON in the response
+                    lines = llm_response.split('\n')
+                    json_lines = []
+                    brace_count = 0
+                    in_json = False
+
+                    for line in lines:
+                        stripped = line.strip()
+                        if stripped.startswith('{'):
+                            in_json = True
+                            brace_count = 0
+
+                        if in_json:
+                            json_lines.append(line)
+                            brace_count += line.count('{') - line.count('}')
+
+                            if brace_count == 0 and stripped.endswith('}'):
+                                break
+
+                    if json_lines:
+                        try:
+                            candidate_json = '\n'.join(json_lines)
+                            llm_output = json.loads(candidate_json)
+                            groups_count = len(llm_output.get("groups", []))
+                            print(f"✅ JSON reconstructed and parsed successfully ({groups_count} conversation groups)")
+                        except:
+                            raise json.JSONDecodeError("Could not extract valid JSON", llm_response, 0)
+                    else:
+                        raise json.JSONDecodeError("Could not find JSON in response", llm_response, 0)
+
+            except json.JSONDecodeError:
+                print("❌ Failed to extract and parse JSON from LLM response")
+                print(f"Raw response preview: {llm_response[:500]}...")
+                llm_output = {"error": "Failed to parse LLM response", "raw_response": llm_response}
+
+        # Post-process: Build conversations from indices (only if parsing succeeded)
+        if "groups" in llm_output and "error" not in llm_output:
+            print("🔄 Building conversations from indices...")
+            llm_output["groups"] = build_conversations_from_indices(
+                llm_output["groups"],
+                messages
+            )
+            print(f"✅ Conversations built for {len(llm_output['groups'])} groups")
 
         print("📊 Generating final response...")
         response = GatherResponse(
             llm_output=llm_output
         )
+
+        # Save to cache and disk
+        print("💾 Saving results to cache and disk...")
+
+        # Prepare request metadata
+        request_metadata = {
+            "transcript_messages_count": len(messages),
+            "technical_questions_count": len(questions),
+            "key_skill_areas_count": len(request.key_skill_areas),
+            "llm_settings": request.llm_settings.dict()
+        }
+
+        # Save to cache (only if LLM generation was successful)
+        if "error" not in llm_output:
+            save_to_cache(cache_key, llm_output, request_metadata)
+
+        # Save to output directory
+        try:
+            # Create output directory if it doesn't exist
+            output_dir = Path("output")
+            output_dir.mkdir(exist_ok=True)
+
+            # Generate filename with timestamp
+            timestamp = int(time.time())
+            filename = f"gather_output_{timestamp}.json"
+            output_path = output_dir / filename
+
+            # Save the complete response
+            output_data = {
+                "timestamp": timestamp,
+                "cache_key": cache_key,
+                "request_data": request_metadata,
+                "llm_output": llm_output
+            }
+
+            with open(output_path, 'w', encoding='utf-8') as f:
+                json.dump(output_data, f, indent=2, ensure_ascii=False)
+
+            print(f"✅ Gather output saved to: {output_path}")
+
+        except Exception as e:
+            print(f"⚠️  Failed to save gather output: {str(e)}")
+
         print("✅ Report generation completed successfully!")
         print("="*50 + "\n")
 
@@ -427,7 +677,66 @@ async def evaluate_question_group(group: Dict[str, Any], resume: Dict[str, Any],
     try:
         # Generate evaluation using thinking model
         evaluation_result = await llm_client.generate(evaluation_messages, evaluation_schema)
-        evaluation_data = json.loads(evaluation_result)
+
+        # Parse evaluation result with improved JSON extraction
+        try:
+            evaluation_data = json.loads(evaluation_result)
+        except json.JSONDecodeError:
+            print(f"⚠️  JSON parsing failed for group {group.get('question_id', 'Unknown')}, attempting extraction...")
+
+            # Handle thinking model responses that may have extra content
+            import re
+
+            # More comprehensive JSON patterns
+            json_patterns = [
+                r'```json\s*(\{.*?\})\s*```',  # JSON in code blocks
+                r'<json>\s*(\{.*?\})\s*</json>',  # JSON in XML tags
+                r'<analysis>.*?</analysis>\s*(\{.*?\})',  # JSON after analysis tags
+                r'(?:^|\n)\s*(\{(?:[^{}]+|\{[^{}]*\})*\})\s*(?:\n|$)',  # Standalone JSON objects
+            ]
+
+            extracted_json = None
+            for pattern in json_patterns:
+                matches = re.findall(pattern, evaluation_result, re.DOTALL | re.MULTILINE)
+                if matches:
+                    for match in matches:
+                        try:
+                            test_parse = json.loads(match)
+                            # Check if it has evaluation structure
+                            if any(key in test_parse for key in ["overall_assessment", "competency_mapping", "question_analysis"]):
+                                extracted_json = match
+                                break
+                        except json.JSONDecodeError:
+                            continue
+                    if extracted_json:
+                        break
+
+            if extracted_json:
+                try:
+                    evaluation_data = json.loads(extracted_json)
+                    print(f"✅ JSON successfully extracted for group {group.get('question_id', 'Unknown')}")
+                except json.JSONDecodeError as e:
+                    print(f"❌ Extracted JSON still invalid for group {group.get('question_id', 'Unknown')}: {str(e)}")
+                    raise
+            else:
+                # Return minimal error structure instead of raising exception
+                print(f"❌ Could not extract valid JSON for group {group.get('question_id', 'Unknown')}")
+                evaluation_data = {
+                    "overall_assessment": {
+                        "overall_score": 0,
+                        "reasoning": "Failed to parse evaluation response"
+                    },
+                    "competency_mapping": [],
+                    "question_analysis": [],
+                    "critical_analysis": {
+                        "red_flags": ["Evaluation parsing failed"],
+                        "exceptional_responses": [],
+                        "inconsistencies": []
+                    },
+                    "improvement_recommendations": ["Re-evaluate this response manually"],
+                    "parsing_error": True,
+                    "raw_response_preview": evaluation_result[:500] if len(evaluation_result) > 500 else evaluation_result
+                }
 
         # Add group metadata
         evaluation_data["group_metadata"] = {
@@ -484,22 +793,32 @@ async def merge_evaluations(evaluations: List[Dict[str, Any]],
 
     # Collect all question analyses
     for evaluation in evaluations:
-        if "error" not in evaluation and "question_analysis" in evaluation:
-            merged_report["question_analysis"].extend(evaluation["question_analysis"])
+        if isinstance(evaluation, dict) and "error" not in evaluation and "question_analysis" in evaluation:
+            if isinstance(evaluation["question_analysis"], list):
+                merged_report["question_analysis"].extend(evaluation["question_analysis"])
 
     # Aggregate competency mappings by skill area
     skill_areas = {}
     for evaluation in evaluations:
-        if "error" not in evaluation and "competency_mapping" in evaluation:
-            for competency in evaluation["competency_mapping"]:
-                skill_area = competency["skill_area"]
-                if skill_area not in skill_areas:
-                    skill_areas[skill_area] = competency
-                else:
-                    # Merge sub-skills and aggregate assessments
-                    existing = skill_areas[skill_area]
-                    existing["sub_skills"].extend(competency["sub_skills"])
-                    existing["assessment_notes"].extend(competency["assessment_notes"])
+        if isinstance(evaluation, dict) and "error" not in evaluation and "competency_mapping" in evaluation:
+            if isinstance(evaluation["competency_mapping"], list):
+                for competency in evaluation["competency_mapping"]:
+                    if isinstance(competency, dict) and "skill_area" in competency:
+                        skill_area = competency["skill_area"]
+                        if skill_area not in skill_areas:
+                            skill_areas[skill_area] = competency.copy()
+                            # Ensure lists exist
+                            if "sub_skills" not in skill_areas[skill_area]:
+                                skill_areas[skill_area]["sub_skills"] = []
+                            if "assessment_notes" not in skill_areas[skill_area]:
+                                skill_areas[skill_area]["assessment_notes"] = []
+                        else:
+                            # Merge sub-skills and aggregate assessments
+                            existing = skill_areas[skill_area]
+                            if "sub_skills" in competency and isinstance(competency["sub_skills"], list):
+                                existing["sub_skills"].extend(competency["sub_skills"])
+                            if "assessment_notes" in competency and isinstance(competency["assessment_notes"], list):
+                                existing["assessment_notes"].extend(competency["assessment_notes"])
 
     merged_report["competency_mapping"] = list(skill_areas.values())
 
@@ -510,13 +829,17 @@ async def merge_evaluations(evaluations: List[Dict[str, Any]],
     all_recommendations = []
 
     for evaluation in evaluations:
-        if "error" not in evaluation:
-            if "critical_analysis" in evaluation:
-                all_red_flags.extend(evaluation["critical_analysis"].get("red_flags", []))
-                all_exceptional_responses.extend(evaluation["critical_analysis"].get("exceptional_responses", []))
-                all_inconsistencies.extend(evaluation["critical_analysis"].get("inconsistencies", []))
+        if isinstance(evaluation, dict) and "error" not in evaluation:
+            if "critical_analysis" in evaluation and isinstance(evaluation["critical_analysis"], dict):
+                critical_analysis = evaluation["critical_analysis"]
+                if "red_flags" in critical_analysis and isinstance(critical_analysis["red_flags"], list):
+                    all_red_flags.extend(critical_analysis["red_flags"])
+                if "exceptional_responses" in critical_analysis and isinstance(critical_analysis["exceptional_responses"], list):
+                    all_exceptional_responses.extend(critical_analysis["exceptional_responses"])
+                if "inconsistencies" in critical_analysis and isinstance(critical_analysis["inconsistencies"], list):
+                    all_inconsistencies.extend(critical_analysis["inconsistencies"])
 
-            if "improvement_recommendations" in evaluation:
+            if "improvement_recommendations" in evaluation and isinstance(evaluation["improvement_recommendations"], list):
                 all_recommendations.extend(evaluation["improvement_recommendations"])
 
     merged_report["critical_analysis"]["red_flags"] = list(set(all_red_flags))
@@ -525,7 +848,16 @@ async def merge_evaluations(evaluations: List[Dict[str, Any]],
     merged_report["improvement_recommendations"] = list(set(all_recommendations))
 
     # Calculate overall scores and recommendations
-    valid_evaluations = [e for e in evaluations if "error" not in e and "overall_assessment" in e]
+    valid_evaluations = []
+    for e in evaluations:
+        if (isinstance(e, dict) and
+            "error" not in e and
+            "overall_assessment" in e and
+            isinstance(e["overall_assessment"], dict) and
+            "overall_score" in e["overall_assessment"] and
+            isinstance(e["overall_assessment"]["overall_score"], (int, float))):
+            valid_evaluations.append(e)
+
     if valid_evaluations:
         avg_score = sum(e["overall_assessment"]["overall_score"] for e in valid_evaluations) / len(valid_evaluations)
         merged_report["overall_assessment"]["overall_score"] = round(avg_score, 1)
@@ -539,6 +871,11 @@ async def merge_evaluations(evaluations: List[Dict[str, Any]],
             merged_report["overall_assessment"]["recommendation"] = "No Hire"
         else:
             merged_report["overall_assessment"]["recommendation"] = "Strong No Hire"
+
+        # Add summary
+        successful_evaluations = len(valid_evaluations)
+        total_evaluations = len(evaluations)
+        merged_report["overall_assessment"]["summary"] = f"Evaluation based on {successful_evaluations}/{total_evaluations} successfully processed question groups."
 
     print("✅ Evaluation merging completed")
     return merged_report
@@ -554,11 +891,15 @@ async def generate_report(request: EvaluateRequest):
 
         # Step 1: Call gather endpoint to get question groups
         print("🔄 Step 1: Gathering question groups using /gather endpoint...")
+        # Note: gather endpoint will enforce its own model settings regardless of what we pass
         gather_data = {
             "transcript": request.transcript,
             "technical_questions": request.technical_questions,
             "key_skill_areas": request.key_skill_areas,
-            "llm_settings": request.llm_settings.dict()
+            "llm_settings": {
+                "provider": "openrouter",
+                "model": "openai/gpt-oss-120b:nitro"  # This will be enforced anyway
+            }
         }
 
         question_groups_result = await call_gather_endpoint(gather_data)
@@ -642,6 +983,43 @@ async def generate_report(request: EvaluateRequest):
             question_groups=question_groups_result
         )
 
+        # Save evaluation report to disk
+        print("💾 Saving evaluation report to disk...")
+        try:
+            # Create output directory if it doesn't exist
+            output_dir = Path("output")
+            output_dir.mkdir(exist_ok=True)
+
+            # Generate filename with timestamp
+            timestamp = int(time.time())
+            filename = f"evaluation_report_{timestamp}.json"
+            output_path = output_dir / filename
+
+            # Save the complete response
+            output_data = {
+                "timestamp": timestamp,
+                "request_data": {
+                    "candidate_name": request.resume.get("candidate_name", "Unknown"),
+                    "job_title": request.resume.get("job_title", "Unknown"),
+                    "company": request.resume.get("company_name", "Unknown"),
+                    "transcript_messages_count": len(request.transcript.get("messages", [])),
+                    "key_skill_areas_count": len(request.key_skill_areas),
+                    "llm_settings": request.llm_settings.dict()
+                },
+                "evaluation_report": final_evaluation,
+                "question_groups": question_groups_result,
+                "individual_evaluations_count": len(valid_evaluations),
+                "successful_evaluations": len([e for e in valid_evaluations if "error" not in e])
+            }
+
+            with open(output_path, 'w', encoding='utf-8') as f:
+                json.dump(output_data, f, indent=2, ensure_ascii=False)
+
+            print(f"✅ Evaluation report saved to: {output_path}")
+
+        except Exception as e:
+            print(f"⚠️  Failed to save evaluation report: {str(e)}")
+
         print("✅ Comprehensive report generation completed successfully!")
         print("="*50 + "\n")
 
@@ -669,6 +1047,96 @@ async def get_evaluate_sample_data():
         return EvaluateRequest(**sample_data)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error loading evaluate sample data: {str(e)}")
+
+@app.get("/cache/stats")
+async def get_cache_stats():
+    """Get cache statistics"""
+    try:
+        cache_dir = Path("cache/gather")
+        if not cache_dir.exists():
+            return {
+                "cache_enabled": True,
+                "cache_directory": str(cache_dir),
+                "total_cached_items": 0,
+                "total_cache_size_mb": 0,
+                "cached_files": []
+            }
+
+        # Get all cache files
+        cache_files = list(cache_dir.glob("*.json"))
+        total_size = sum(f.stat().st_size for f in cache_files)
+
+        # Get details of cached files
+        cached_items = []
+        for cache_file in cache_files:
+            try:
+                stat = cache_file.stat()
+                cached_items.append({
+                    "cache_key": cache_file.stem,
+                    "created": stat.st_ctime,
+                    "size_bytes": stat.st_size,
+                    "age_hours": (time.time() - stat.st_ctime) / 3600
+                })
+            except Exception:
+                continue
+
+        # Sort by creation time (newest first)
+        cached_items.sort(key=lambda x: x["created"], reverse=True)
+
+        return {
+            "cache_enabled": True,
+            "cache_directory": str(cache_dir),
+            "total_cached_items": len(cached_items),
+            "total_cache_size_mb": round(total_size / (1024 * 1024), 2),
+            "cached_files": cached_items
+        }
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error getting cache stats: {str(e)}")
+
+@app.delete("/cache/clear")
+async def clear_cache():
+    """Clear all cached gather results"""
+    try:
+        cache_dir = Path("cache/gather")
+        if not cache_dir.exists():
+            return {"message": "Cache directory does not exist", "files_deleted": 0}
+
+        # Get all cache files
+        cache_files = list(cache_dir.glob("*.json"))
+        deleted_count = 0
+
+        for cache_file in cache_files:
+            try:
+                cache_file.unlink()
+                deleted_count += 1
+            except Exception as e:
+                print(f"Failed to delete {cache_file}: {e}")
+
+        return {
+            "message": f"Cache cleared successfully",
+            "files_deleted": deleted_count
+        }
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error clearing cache: {str(e)}")
+
+@app.delete("/cache/{cache_key}")
+async def delete_cache_item(cache_key: str):
+    """Delete a specific cached item"""
+    try:
+        cache_path = get_cache_path(cache_key)
+
+        if not cache_path.exists():
+            raise HTTPException(status_code=404, detail=f"Cache item not found: {cache_key}")
+
+        cache_path.unlink()
+        return {"message": f"Cache item deleted: {cache_key}"}
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error deleting cache item: {str(e)}")
 
 @app.get("/scalar", include_in_schema=False)
 async def scalar_html():
