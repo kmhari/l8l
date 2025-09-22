@@ -60,7 +60,10 @@
           "source",
           "time_range",
           "turn_indices",
-          "facts"
+          "facts",
+          "greenFlags",
+          "redFlags",
+          "metadata"
         ],
         "additionalProperties": false
       }
@@ -83,6 +86,6 @@
       "default": {}
     }
   },
-  "required": ["groups", "misc_or_unclear", "pre_inferred_facts_global"],
+  "required": ["groups", "misc_or_unclear", "pre_inferred_facts_global", "meta"],
   "additionalProperties": false
 }
