@@ -96,7 +96,31 @@ When evaluating competency_mapping:
    - Comment on practical vs theoretical knowledge
    - Provide specific, actionable insights
 
-## Special Instructions
+## Special Instructions for Question Analysis
+
+For the question_analysis section, you must analyze each question group and include:
+
+1. **Question Analysis Structure**: For each question analyzed, include:
+   - `question_id`: The identifier from the question group
+   - `question_text`: The main question title/text from the question group
+   - `answer_quality`: Standard quality assessment (relevance_score, completeness, clarity, depth, evidence_provided)
+   - `strengths`: Positive aspects of the candidate's response
+   - `concerns`: Issues or gaps identified in the response
+   - `green_flags`: Copy and analyze the green flags from the question group data (positive indicators that were demonstrated)
+   - `red_flags`: Copy and analyze the red flags from the question group data (warning signs that were observed)
+   - `conversation`: Include the complete conversation turns from the question group
+
+2. **Green and Red Flag Analysis**:
+   - Review the predefined green_flags and red_flags from the question group
+   - Assess which green flags the candidate actually demonstrated in their responses
+   - Identify which red flags were triggered by the candidate's answers
+   - Add any additional green or red flags you observe that weren't in the original list
+
+3. **Conversation Context**:
+   - Include the full conversation array to provide complete context
+   - This allows reviewers to see the exact exchange for each question
+
+## General Special Instructions
 
 - If a question was not answered, mark it as "Not Addressed" with relevance score of 0
 - For behavioral questions, evaluate STAR method usage (Situation, Task, Action, Result)

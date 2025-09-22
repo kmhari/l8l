@@ -1,0 +1,203 @@
+{
+  "timestamp": 1758550312,
+  "cache_key": "8caf3de6913f4db9788c1097cb6c8df7",
+  "request_data": {
+    "transcript_messages_count": 4,
+    "technical_questions_count": 1,
+    "key_skill_areas_count": 1,
+    "llm_settings": {
+      "provider": "openrouter",
+      "model": "openai/gpt-oss-120b:nitro",
+      "api_key": null
+    }
+  },
+  "llm_output": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "ConversationSegregationOutput",
+    "type": "object",
+    "properties": {
+      "groups": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "question_id": {
+              "type": "string"
+            },
+            "question_title": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            },
+            "source": {
+              "type": "string"
+            },
+            "time_range": {
+              "type": "object",
+              "properties": {
+                "start": {
+                  "type": "number"
+                },
+                "end": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "start",
+                "end"
+              ],
+              "additionalProperties": false
+            },
+            "turn_indices": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              }
+            },
+            "facts": {
+              "type": "object",
+              "properties": {
+                "answers": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "default": []
+                },
+                "entities": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "default": {}
+                }
+              },
+              "required": [
+                "answers",
+                "entities"
+              ],
+              "additionalProperties": false
+            },
+            "greenFlags": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "default": []
+            },
+            "redFlags": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "default": []
+            },
+            "metadata": {
+              "type": "object",
+              "additionalProperties": false,
+              "default": {}
+            }
+          },
+          "required": [
+            "question_id",
+            "question_title",
+            "type",
+            "source",
+            "time_range",
+            "turn_indices",
+            "facts"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "misc_or_unclear": {
+        "type": "array",
+        "items": {
+          "type": "integer"
+        },
+        "default": []
+      },
+      "pre_inferred_facts_global": {
+        "type": "object",
+        "additionalProperties": false,
+        "default": {}
+      },
+      "meta": {
+        "type": "object",
+        "additionalProperties": false,
+        "default": {}
+      }
+    },
+    "required": [
+      "groups",
+      "misc_or_unclear",
+      "pre_inferred_facts_global"
+    ],
+    "additionalProperties": false,
+    "example": {
+      "groups": [
+        {
+          "question_id": "Q1",
+          "question_title": "Question 1",
+          "type": "technical",
+          "source": "known_questions",
+          "time_range": {
+            "start": 0.0,
+            "end": 25.0
+          },
+          "turn_indices": [
+            0,
+            1
+          ],
+          "facts": {
+            "answers": [
+              "Node.js uses the event loop with phases (timers, poll, check) and libuv for I/O to handle asynchronous operations."
+            ],
+            "entities": {
+              "eventLoop": "handles async operations",
+              "libuv": "provides I/O handling",
+              "phases": "timers, poll, check"
+            }
+          },
+          "greenFlags": [
+            "Mentions event loop",
+            "Discusses libuv",
+            "Explains phases"
+          ],
+          "redFlags": [
+            "Vague explanations",
+            "Avoids follow-up questions"
+          ],
+          "metadata": {}
+        },
+        {
+          "question_id": "custom:Group1",
+          "question_title": "Custom:Unrelated Follow‑up",
+          "type": "other",
+          "source": "inferred",
+          "time_range": {
+            "start": 25.0,
+            "end": 35.0
+          },
+          "turn_indices": [
+            2,
+            3
+          ],
+          "facts": {
+            "answers": [],
+            "entities": {}
+          },
+          "greenFlags": [],
+          "redFlags": [],
+          "metadata": {}
+        }
+      ],
+      "misc_or_unclear": [],
+      "pre_inferred_facts_global": {
+        "eventLoop": "handles async operations",
+        "libuv": "provides I/O handling",
+        "phases": "timers, poll, check"
+      },
+      "meta": {}
+    }
+  }
+}

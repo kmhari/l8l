@@ -154,9 +154,37 @@
             "type": "array",
             "items": {"type": "string"},
             "description": "Concerns or gaps identified in this response"
+          },
+          "green_flags": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Positive indicators or strong points demonstrated in this response"
+          },
+          "red_flags": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Warning signs or concerning aspects identified in this response"
+          },
+          "conversation": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "idx": {"type": "integer", "description": "Turn index in the conversation"},
+                "role": {"type": "string", "description": "Speaker role (agent/user)"},
+                "message": {"type": "string", "description": "The actual message content"},
+                "time": {"type": "number", "description": "Timestamp when message started"},
+                "endTime": {"type": "number", "description": "Timestamp when message ended"},
+                "duration": {"type": "number", "description": "Duration of the message in milliseconds"},
+                "secondsFromStart": {"type": "number", "description": "Seconds from start of interview"}
+              },
+              "required": ["idx", "role", "message"],
+              "additionalProperties": false
+            },
+            "description": "Complete conversation turns for this question group"
           }
         },
-        "required": ["question_id", "question_text", "answer_quality", "strengths", "concerns"],
+        "required": ["question_id", "question_text", "answer_quality", "strengths", "concerns", "green_flags", "red_flags", "conversation"],
         "additionalProperties": false
       }
     },

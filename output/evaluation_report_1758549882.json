@@ -1,0 +1,2409 @@
+{
+  "timestamp": 1758549882,
+  "request_data": {
+    "candidate_name": "Mohammed",
+    "job_title": "Senior Nodejs Developer",
+    "company": "F22 Labs",
+    "transcript_messages_count": 72,
+    "key_skill_areas_count": 2,
+    "llm_settings": {
+      "provider": "openrouter",
+      "model": "qwen/qwen3-235b-a22b-thinking-2507:nitro",
+      "api_key": null
+    }
+  },
+  "evaluation_report": {
+    "overall_assessment": {
+      "recommendation": "Strong No Hire",
+      "confidence": "Medium",
+      "overall_score": 43.9,
+      "summary": "Evaluation based on 12/12 successfully processed question groups."
+    },
+    "competency_mapping": [
+      {
+        "skill_area": "Programming & Development",
+        "overall_assessment": "Basic",
+        "meets_requirements": false,
+        "confidence": "High",
+        "assessment_notes": [
+          "Demonstrates surface-level awareness of Node.js being single-threaded and using callbacks/promises",
+          "Shows significant confusion about event loop phases and execution priorities",
+          "Fails to distinguish between microtask queue, macrotask queue, and process.nextTick queue",
+          "Lacks depth in explaining libuv's actual implementation and role in Node.js architecture",
+          "For a senior role, expected Advanced proficiency in core Node.js mechanics is not demonstrated",
+          "Lacks knowledge of standard Express.js middleware for common tasks like rate limiting",
+          "Confused Express.js with Next.js framework, indicating fundamental knowledge gaps",
+          "Unable to correctly identify HTTP status codes relevant to rate limiting (429)",
+          "Shows theoretical understanding but no practical implementation experience",
+          "Critical knowledge gaps make candidate unsuitable for senior role requiring 3-5 years experience",
+          "Demonstrates basic awareness of GraphQL but lacks practical understanding of core concepts",
+          "Unable to articulate key differentiators between REST and GraphQL architectures",
+          "Admitted limited hands-on experience with GraphQL implementation",
+          "Shows theoretical knowledge but lacks practical application examples",
+          "Needs significant development in modern API design patterns for senior role",
+          "Demonstrated basic familiarity with Node.js debugging through console logs and VS Code debugger",
+          "Lacked depth in Node.js runtime-specific performance characteristics and advanced debugging tools",
+          "No evidence of TypeScript expertise despite resume claiming 'Expert proficiency'",
+          "Surface-level understanding of asynchronous programming patterns related to performance issues",
+          "Needs significant improvement in diagnosing and resolving complex performance bottlenecks",
+          "Shows basic understanding of try-catch error handling patterns but lacks architectural depth",
+          "Mentions generic error typing conceptually but without implementation specifics",
+          "Fails to demonstrate comprehensive knowledge of Node.js error handling mechanisms expected at senior level",
+          "Practical experience appears limited to surface-level implementations rather than robust system design",
+          "Communication issues obscured technical understanding during explanation",
+          "No opportunity to demonstrate Node.js, TypeScript, or framework-specific knowledge in this question group",
+          "Candidate's response focused solely on database concepts without connecting to application-level implementation",
+          "No examples provided of how backend code would interact with the optimized database queries",
+          "No opportunity to demonstrate Node.js or TypeScript expertise in this specific question",
+          "Response focused solely on database aspects without connecting to application code",
+          "Failed to discuss how backend code structure impacts query performance",
+          "No mention of asynchronous patterns for handling slow queries in Node.js",
+          "Lacked integration of database optimization with overall application architecture",
+          "No technical demonstration visible in provided transcript segment",
+          "Resume claims 3-5 years experience but no evidence provided in available data",
+          "Unable to verify Node.js or TypeScript proficiency from closing remarks",
+          "Critical gap: No opportunity to assess framework expertise (Express.js/NestJS)",
+          "Assessment limited to wrap-up conversation only"
+        ],
+        "sub_skills": [
+          {
+            "name": "Node.js Runtime",
+            "proficiency": "Basic",
+            "demonstrated": true,
+            "confidence": "High",
+            "evidence": "Candidate correctly identifies Node.js as single-threaded but misrepresents how it handles concurrency through libuv. States: 'Node is kind of a single-threaded programming language. That means like the program can run from one by one. That means a line by line.'",
+            "gaps_identified": [
+              "Confuses JavaScript execution model with Node.js runtime capabilities",
+              "Fails to explain how libuv's thread pool enables non-blocking I/O",
+              "Doesn't mention V8 engine's role in the runtime"
+            ]
+          },
+          {
+            "name": "TypeScript Advanced Patterns",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "No discussion of TypeScript patterns in the interview transcript",
+            "gaps_identified": [
+              "No opportunity to demonstrate TypeScript knowledge in this question set",
+              "Job description requires 'Expert proficiency in TypeScript' for senior role"
+            ]
+          },
+          {
+            "name": "Express.js/NestJS Frameworks",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "No discussion of frameworks in the interview transcript",
+            "gaps_identified": [
+              "No opportunity to demonstrate framework experience in this question set",
+              "Job description lists Express.js/NestJS as 'highly preferred'"
+            ]
+          },
+          {
+            "name": "Asynchronous Programming",
+            "proficiency": "Basic",
+            "demonstrated": true,
+            "confidence": "High",
+            "evidence": "Candidate attempts to explain asynchronous operations but confuses execution order: 'first the top-level code is executed and then the microtask queue... And after that promise, it will precedence to the setTimeout and setInterval.' Actual priority is microtasks before timers.",
+            "gaps_identified": [
+              "Fundamental misunderstanding of event loop phases",
+              "Confuses process.nextTick with microtask queue",
+              "Cannot accurately explain the relationship between libuv and the event loop"
+            ]
+          },
+          {
+            "name": "GraphQL Implementation",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "No discussion of GraphQL in the interview transcript",
+            "gaps_identified": [
+              "No opportunity to demonstrate GraphQL knowledge in this question set"
+            ]
+          },
+          {
+            "name": "Node.js Runtime",
+            "proficiency": "Basic",
+            "demonstrated": true,
+            "confidence": "Medium",
+            "evidence": "Mentioned Node.js initialization but showed no understanding of runtime characteristics relevant to rate limiting implementation",
+            "gaps_identified": [
+              "No discussion of event loop implications for rate limiting",
+              "Lack of understanding about memory management in rate limiting scenarios"
+            ]
+          },
+          {
+            "name": "TypeScript Advanced Patterns",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "",
+            "gaps_identified": [
+              "No mention of TypeScript in any response despite job requirement for 'Expert proficiency'"
+            ]
+          },
+          {
+            "name": "Express.js/NestJS Frameworks",
+            "proficiency": "Basic",
+            "demonstrated": true,
+            "confidence": "High",
+            "evidence": "Incorrectly referenced Next.js instead of Express.js and suggested non-standard 'app.useMiddleware' syntax",
+            "gaps_identified": [
+              "Fundamental confusion between Express.js and Next.js frameworks",
+              "Unaware of standard middleware patterns in Express.js"
+            ]
+          },
+          {
+            "name": "Asynchronous Programming",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "",
+            "gaps_identified": [
+              "No discussion of how asynchronous patterns affect rate limiting implementation",
+              "Failed to address callback/Promise/async-await considerations for rate limiting"
+            ]
+          },
+          {
+            "name": "GraphQL Implementation",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "",
+            "gaps_identified": [
+              "Not addressed in interview responses"
+            ]
+          },
+          {
+            "name": "Node.js Runtime",
+            "proficiency": "Intermediate",
+            "demonstrated": false,
+            "confidence": "Low",
+            "evidence": "Not directly addressed in this question group",
+            "gaps_identified": [
+              "No evidence of Node.js runtime expertise demonstrated in this exchange"
+            ]
+          },
+          {
+            "name": "TypeScript Advanced Patterns",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "Low",
+            "evidence": "Not addressed in this question group",
+            "gaps_identified": []
+          },
+          {
+            "name": "Express.js/NestJS Frameworks",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "Low",
+            "evidence": "Not addressed in this question group",
+            "gaps_identified": []
+          },
+          {
+            "name": "Asynchronous Programming",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "Low",
+            "evidence": "Not addressed in this question group",
+            "gaps_identified": []
+          },
+          {
+            "name": "GraphQL Implementation",
+            "proficiency": "Basic",
+            "demonstrated": true,
+            "confidence": "Medium",
+            "evidence": "Candidate mentioned GraphQL has 'inbuilt data validation' and schema definition, but admitted limited experience and couldn't discuss over-fetching/under-fetching when prompted",
+            "gaps_identified": [
+              "Fundamental misunderstanding of where data validation occurs in GraphQL",
+              "No knowledge of over-fetching/under-fetching concepts",
+              "Inability to articulate use cases for choosing GraphQL over REST",
+              "Lacks understanding of GraphQL's primary advantages for API design"
+            ]
+          },
+          {
+            "name": "Node.js Runtime",
+            "proficiency": "Intermediate",
+            "demonstrated": true,
+            "confidence": "Medium",
+            "evidence": "Mentioned using Node.js debugger and console logs for troubleshooting, but no discussion of event loop, libuv, or Node.js-specific performance characteristics",
+            "gaps_identified": [
+              "No knowledge of advanced Node.js profiling tools like clinic.js",
+              "Lacked understanding of how Node.js runtime affects performance issues",
+              "Didn't explain connection between runtime behavior and the deadlock issue"
+            ]
+          },
+          {
+            "name": "TypeScript Advanced Patterns",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "No mention of TypeScript in the response despite job requirement for 'Expert proficiency' and resume claim",
+            "gaps_identified": [
+              "Failed to discuss any TypeScript-specific patterns or features",
+              "No evidence of TypeScript usage in the described debugging scenario"
+            ]
+          },
+          {
+            "name": "Express.js/NestJS Frameworks",
+            "proficiency": "Basic",
+            "demonstrated": true,
+            "confidence": "Medium",
+            "evidence": "Mentioned working with 'Node.js express application' but provided no framework-specific details",
+            "gaps_identified": [
+              "No discussion of framework-specific middleware or error handling",
+              "Lacked understanding of how Express.js might contribute to or help resolve performance issues"
+            ]
+          },
+          {
+            "name": "Asynchronous Programming",
+            "proficiency": "Intermediate",
+            "demonstrated": true,
+            "confidence": "Medium",
+            "evidence": "Referenced ACID transactions but didn't connect to Node.js async patterns; mentioned queries repeatedly checking rows",
+            "gaps_identified": [
+              "No explanation of callback patterns, promises, or async/await in relation to the issue",
+              "Didn't demonstrate understanding of how async operations affect performance bottlenecks"
+            ]
+          },
+          {
+            "name": "GraphQL Implementation",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "No mention of GraphQL in the response despite it being listed in key skills",
+            "gaps_identified": [
+              "No discussion of GraphQL-related performance issues or optimizations"
+            ]
+          },
+          {
+            "name": "Node.js Runtime",
+            "proficiency": "Basic",
+            "demonstrated": true,
+            "confidence": "Medium",
+            "evidence": "Mentioned try-catch and uncaught exceptions conceptually, but confused 'cache error' with 'catch error' and couldn't explain process-level handlers when prompted",
+            "gaps_identified": [
+              "No explanation of process.uncaughtException or process.unhandledRejection handlers",
+              "Lack of understanding about domain-specific error handling",
+              "Inability to describe how to properly prevent server crashes from uncaught exceptions"
+            ]
+          },
+          {
+            "name": "TypeScript Advanced Patterns",
+            "proficiency": "Basic",
+            "demonstrated": true,
+            "confidence": "Low",
+            "evidence": "Referenced 'generic types' for error categorization but provided no concrete implementation details or examples of custom error classes",
+            "gaps_identified": [
+              "No demonstration of TypeScript-specific error handling patterns",
+              "Lack of examples showing typed error objects or inheritance patterns",
+              "Vague description of error categorization system"
+            ]
+          },
+          {
+            "name": "Express.js/NestJS Frameworks",
+            "proficiency": "Entry",
+            "demonstrated": true,
+            "confidence": "Low",
+            "evidence": "Mentioned 'proper access to error handling methods' but failed to describe Express error middleware pattern (err, req, res, next) when directly questioned",
+            "gaps_identified": [
+              "No explanation of framework-specific error handling middleware",
+              "Lack of knowledge about error handling middleware chain execution",
+              "Inability to describe how to implement centralized error handling in Express"
+            ]
+          },
+          {
+            "name": "Asynchronous Programming",
+            "proficiency": "Basic",
+            "demonstrated": true,
+            "confidence": "Medium",
+            "evidence": "Mentioned try-catch with async/await but didn't elaborate on Promise rejection handling or async error propagation",
+            "gaps_identified": [
+              "No discussion of error handling in Promise chains",
+              "Lack of understanding about async error propagation patterns",
+              "Insufficient explanation of handling errors in asynchronous operations"
+            ]
+          },
+          {
+            "name": "GraphQL Implementation",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "Question did not address GraphQL error handling",
+            "gaps_identified": []
+          },
+          {
+            "name": "Node.js Runtime",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "",
+            "gaps_identified": []
+          },
+          {
+            "name": "TypeScript Advanced Patterns",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "",
+            "gaps_identified": []
+          },
+          {
+            "name": "Express.js/NestJS Frameworks",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "",
+            "gaps_identified": []
+          },
+          {
+            "name": "Asynchronous Programming",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "",
+            "gaps_identified": []
+          },
+          {
+            "name": "GraphQL Implementation",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "",
+            "gaps_identified": []
+          },
+          {
+            "name": "Node.js Runtime",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "No discussion of Node.js-specific approaches to handling slow database queries",
+            "gaps_identified": [
+              "No mention of stream processing for large result sets",
+              "Lacked understanding of event loop implications for database operations",
+              "Failed to discuss worker threads for CPU-intensive query processing"
+            ]
+          },
+          {
+            "name": "TypeScript Advanced Patterns",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "No opportunity to demonstrate TypeScript knowledge in this response",
+            "gaps_identified": []
+          },
+          {
+            "name": "Express.js/NestJS Frameworks",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "No discussion of framework-specific approaches to query optimization",
+            "gaps_identified": [
+              "No mention of middleware for query monitoring",
+              "Lacked understanding of service layer patterns for database operations"
+            ]
+          },
+          {
+            "name": "Asynchronous Programming",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "No discussion of async patterns for handling slow queries",
+            "gaps_identified": [
+              "No reference to promise chaining or async/await for query optimization",
+              "Failed to discuss error handling in asynchronous database operations"
+            ]
+          },
+          {
+            "name": "GraphQL Implementation",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "No mention of GraphQL-specific performance considerations",
+            "gaps_identified": [
+              "No awareness of N+1 query problem in GraphQL",
+              "Lacked understanding of dataloaders for query batching"
+            ]
+          },
+          {
+            "name": "Node.js Runtime",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "Low",
+            "evidence": "No discussion of Node.js runtime environment, event loop, or core modules in available transcript",
+            "gaps_identified": [
+              "Unable to verify understanding of Node.js architecture"
+            ]
+          },
+          {
+            "name": "TypeScript Advanced Patterns",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "Low",
+            "evidence": "No TypeScript code examples or pattern discussion visible",
+            "gaps_identified": [
+              "Cannot assess generics, decorators, or advanced type system knowledge"
+            ]
+          },
+          {
+            "name": "Express.js/NestJS Frameworks",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "Low",
+            "evidence": "No framework-specific implementation details shared",
+            "gaps_identified": [
+              "Unable to verify middleware architecture or module system understanding"
+            ]
+          },
+          {
+            "name": "Asynchronous Programming",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "Low",
+            "evidence": "No discussion of async patterns, promises, or event-driven architecture",
+            "gaps_identified": [
+              "Cannot assess knowledge of callback hell solutions or async/await patterns"
+            ]
+          },
+          {
+            "name": "GraphQL Implementation",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "Low",
+            "evidence": "No mention of GraphQL schema design or resolver patterns",
+            "gaps_identified": [
+              "Unable to verify experience with query optimization or federation"
+            ]
+          }
+        ]
+      },
+      {
+        "skill_area": "Data Management",
+        "overall_assessment": "Not Demonstrated",
+        "meets_requirements": false,
+        "confidence": "High",
+        "assessment_notes": [
+          "No questions related to database technologies were asked in this segment",
+          "Candidate had no opportunity to demonstrate SQL/NoSQL knowledge",
+          "Job description requires proficiency with PostgreSQL, MongoDB, and Redis",
+          "For a senior role, database optimization skills are critical but untested here",
+          "Resume shows no specific database experience details",
+          "No discussion of storage mechanisms for rate limiting, which is critical for production implementation",
+          "Failed to mention Redis or other caching solutions relevant to distributed rate limiting",
+          "Lacks understanding of data persistence requirements for rate limiting counters",
+          "No evidence of practical database knowledge despite job requirements",
+          "No opportunity to demonstrate database or caching expertise in this question group",
+          "The question focused exclusively on API design patterns",
+          "No evidence provided of SQL/NoSQL or Redis knowledge in this exchange",
+          "Identified a deadlock issue related to database queries and null values",
+          "Showed basic understanding of transaction concepts through ACID reference",
+          "Lacked specific technical details about query optimization and indexing strategies",
+          "Initial solution approach (vertical scaling) indicated limited database optimization expertise",
+          "Needs development in advanced SQL optimization techniques for senior-level role",
+          "No relevant questions asked about database error handling or data-related exceptions",
+          "Candidate did not volunteer any information about database error handling patterns",
+          "No opportunity to demonstrate SQL/NoSQL error handling knowledge",
+          "Demonstrated basic understanding of database indexing concepts but missed PostgreSQL-specific optimization features",
+          "Lacked knowledge of proper implementation techniques for case-insensitive searches in PostgreSQL",
+          "Proposed general database concepts rather than PostgreSQL-specific solutions expected for senior role",
+          "No mention of verification methods like EXPLAIN ANALYZE to measure optimization effectiveness",
+          "Communication of technical concepts was imprecise and disorganized",
+          "Demonstrated only surface-level knowledge of SQL optimization techniques despite the role requiring proficiency in PostgreSQL",
+          "Able to mention indexing as a solution but couldn't articulate specific trade-offs or implementation details",
+          "Lacked knowledge of advanced optimization strategies like materialized views which are essential for report queries",
+          "No evidence of experience with query analysis tools (EXPLAIN ANALYZE) or partitioning strategies for large datasets",
+          "Theoretical understanding appears limited compared to the practical expertise expected for a senior role",
+          "Demonstrated only surface-level understanding of Redis caching implementation",
+          "Confused Redis data structures with traditional database indexing concepts",
+          "Failed to articulate cache invalidation strategies or TTL implementation",
+          "Lacked practical examples of Redis implementation from professional experience",
+          "Theoretical knowledge appears stronger than practical application",
+          "Demonstrated only fundamental understanding of database optimization techniques",
+          "Mentioned indexing as a solution but lacked specific implementation details",
+          "Failed to discuss advanced optimization strategies expected for senior role",
+          "No evidence of practical experience with PostgreSQL optimization as required",
+          "Response showed theoretical awareness but no demonstration of hands-on expertise",
+          "No database-related discussion visible in wrap-up segment",
+          "Resume claims SQL/NoSQL experience but no evidence in available data",
+          "Unable to assess query optimization or data modeling skills",
+          "Critical gap: No demonstration of Redis caching implementation",
+          "Assessment severely limited by transcript scope"
+        ],
+        "sub_skills": [
+          {
+            "name": "SQL Database Optimization (PostgreSQL)",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "No discussion of SQL databases in the interview transcript",
+            "gaps_identified": [
+              "No opportunity to demonstrate database optimization skills",
+              "Job description lists PostgreSQL as required technology"
+            ]
+          },
+          {
+            "name": "NoSQL Data Modeling (MongoDB)",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "No discussion of NoSQL databases in the interview transcript",
+            "gaps_identified": [
+              "No opportunity to demonstrate NoSQL data modeling skills",
+              "Job description lists MongoDB as required technology"
+            ]
+          },
+          {
+            "name": "Caching Strategies (Redis)",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "No discussion of caching strategies in the interview transcript",
+            "gaps_identified": [
+              "No opportunity to demonstrate Redis or caching knowledge",
+              "Job description lists Redis as required technology"
+            ]
+          },
+          {
+            "name": "SQL Database Optimization (PostgreSQL)",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "",
+            "gaps_identified": [
+              "No mention of SQL databases in rate limiting context"
+            ]
+          },
+          {
+            "name": "NoSQL Data Modeling (MongoDB)",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "",
+            "gaps_identified": [
+              "No discussion of NoSQL solutions for rate limiting storage"
+            ]
+          },
+          {
+            "name": "Caching Strategies (Redis)",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "",
+            "gaps_identified": [
+              "Failed to mention Redis despite it being industry standard for rate limiting storage",
+              "No understanding of distributed rate limiting requirements"
+            ]
+          },
+          {
+            "name": "SQL Database Optimization (PostgreSQL)",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "Low",
+            "evidence": "Not addressed in this question group",
+            "gaps_identified": []
+          },
+          {
+            "name": "NoSQL Data Modeling (MongoDB)",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "Low",
+            "evidence": "Not addressed in this question group",
+            "gaps_identified": []
+          },
+          {
+            "name": "Caching Strategies (Redis)",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "Low",
+            "evidence": "Not addressed in this question group",
+            "gaps_identified": []
+          },
+          {
+            "name": "SQL Database Optimization (PostgreSQL)",
+            "proficiency": "Intermediate",
+            "demonstrated": true,
+            "confidence": "Medium",
+            "evidence": "Described deadlock issue and mentioned trying to increase DB size; identified null value handling as root cause",
+            "gaps_identified": [
+              "No discussion of specific query structures or execution plans",
+              "Lacked knowledge of indexing strategies to prevent deadlocks",
+              "Didn't explain transaction isolation levels or locking mechanisms"
+            ]
+          },
+          {
+            "name": "NoSQL Data Modeling (MongoDB)",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "No mention of MongoDB or NoSQL databases in the response",
+            "gaps_identified": [
+              "No discussion of NoSQL-specific performance issues or optimizations"
+            ]
+          },
+          {
+            "name": "Caching Strategies (Redis)",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "No mention of Redis or caching strategies in addressing the performance issue",
+            "gaps_identified": [
+              "Didn't consider caching as a potential solution to the deadlock problem"
+            ]
+          },
+          {
+            "name": "SQL Database Optimization (PostgreSQL)",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "No discussion of database error handling or optimization",
+            "gaps_identified": []
+          },
+          {
+            "name": "NoSQL Data Modeling (MongoDB)",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "No discussion of NoSQL error handling patterns",
+            "gaps_identified": []
+          },
+          {
+            "name": "Caching Strategies (Redis)",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "Candidate mistakenly referred to 'cache error' but no actual caching discussion occurred",
+            "gaps_identified": []
+          },
+          {
+            "name": "SQL Database Optimization (PostgreSQL)",
+            "proficiency": "Basic",
+            "demonstrated": true,
+            "confidence": "Medium",
+            "evidence": "Mentioned creating index on last_name column but didn't specify PostgreSQL features like partial indexes, expression indexes, or EXPLAIN ANALYZE command. Suggested replica sets for read/write separation which is relevant for scalability but not specific to query optimization.",
+            "gaps_identified": [
+              "Lack of knowledge about PostgreSQL-specific optimization techniques beyond basic indexing",
+              "Inability to explain proper implementation of case-insensitive searches using PostgreSQL features (citext extension, ILIKE operator)",
+              "Didn't mention verification methods for query performance optimization",
+              "No discussion of index types appropriate for this scenario (e.g., B-tree, partial indexes)"
+            ]
+          },
+          {
+            "name": "NoSQL Data Modeling (MongoDB)",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "",
+            "gaps_identified": []
+          },
+          {
+            "name": "Caching Strategies (Redis)",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "",
+            "gaps_identified": []
+          },
+          {
+            "name": "SQL Database Optimization (PostgreSQL)",
+            "proficiency": "Basic",
+            "demonstrated": true,
+            "confidence": "High",
+            "evidence": "Mentioned using indexes on IDs and emails as a solution for scanning millions of rows, but explanation was vague and lacked technical specifics about index types or implementation",
+            "gaps_identified": [
+              "Unable to articulate specific trade-offs of indexing (write performance impact, storage overhead)",
+              "No mention of query analysis techniques using EXPLAIN",
+              "Lacked knowledge of partitioning strategies for large tables",
+              "Unfamiliar with materialized views for report optimization"
+            ]
+          },
+          {
+            "name": "NoSQL Data Modeling (MongoDB)",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "This question focused solely on PostgreSQL optimization; no opportunity to demonstrate MongoDB knowledge",
+            "gaps_identified": []
+          },
+          {
+            "name": "Caching Strategies (Redis)",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "This question focused solely on PostgreSQL optimization; no opportunity to demonstrate Redis knowledge",
+            "gaps_identified": []
+          },
+          {
+            "name": "SQL Database Optimization (PostgreSQL)",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "Low",
+            "evidence": "No discussion of SQL databases or PostgreSQL in responses",
+            "gaps_identified": [
+              "No opportunity to demonstrate this sub-skill in the interview segment"
+            ]
+          },
+          {
+            "name": "NoSQL Data Modeling (MongoDB)",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "Low",
+            "evidence": "No discussion of MongoDB or NoSQL data modeling in responses",
+            "gaps_identified": [
+              "No opportunity to demonstrate this sub-skill in the interview segment"
+            ]
+          },
+          {
+            "name": "Caching Strategies (Redis)",
+            "proficiency": "Basic",
+            "demonstrated": true,
+            "confidence": "Medium",
+            "evidence": "Mentioned using Redis as cache for user profiles but with incorrect terminology and conceptual errors. Referred to creating 'indexes' in Redis (which doesn't work that way) and described basic cache lookup pattern.",
+            "gaps_identified": [
+              "Fundamental misunderstanding of Redis architecture (confused with traditional database indexing)",
+              "No explanation of cache invalidation strategies",
+              "Failed to describe cache-aside pattern when specifically asked",
+              "No discussion of TTL settings, serialization formats, or error handling",
+              "Lacked practical implementation details expected for senior role"
+            ]
+          },
+          {
+            "name": "SQL Database Optimization (PostgreSQL)",
+            "proficiency": "Basic",
+            "demonstrated": true,
+            "confidence": "High",
+            "evidence": "Candidate mentioned checking for indexes and optimizing joins through indexing, but provided no specific PostgreSQL techniques or tools",
+            "gaps_identified": [
+              "No mention of EXPLAIN ANALYZE despite it being a green flag in the question metadata",
+              "Lacked discussion of query execution plans and their interpretation",
+              "No reference to specific PostgreSQL optimization features (e.g., partial indexes, materialized views)",
+              "Failed to discuss metrics for measuring query performance improvement"
+            ]
+          },
+          {
+            "name": "NoSQL Data Modeling (MongoDB)",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "No discussion of NoSQL optimization techniques in response to the database performance question",
+            "gaps_identified": [
+              "No mention of document structure optimization",
+              "No reference to MongoDB-specific indexing strategies",
+              "Lacked discussion of aggregation pipeline optimization"
+            ]
+          },
+          {
+            "name": "Caching Strategies (Redis)",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "High",
+            "evidence": "Candidate did not mention caching as a potential solution for slow report queries",
+            "gaps_identified": [
+              "No awareness of using Redis for query result caching",
+              "Lacked understanding of cache invalidation strategies",
+              "Failed to recognize caching as part of performance optimization"
+            ]
+          },
+          {
+            "name": "SQL Database Optimization (PostgreSQL)",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "Low",
+            "evidence": "No discussion of query optimization, indexing strategies, or execution plans",
+            "gaps_identified": [
+              "Cannot verify experience with complex joins or window functions"
+            ]
+          },
+          {
+            "name": "NoSQL Data Modeling (MongoDB)",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "Low",
+            "evidence": "No schema design examples or document structure discussion",
+            "gaps_identified": [
+              "Unable to assess understanding of embedding vs referencing patterns"
+            ]
+          },
+          {
+            "name": "Caching Strategies (Redis)",
+            "proficiency": "Not Demonstrated",
+            "demonstrated": false,
+            "confidence": "Low",
+            "evidence": "No mention of cache invalidation, TTL strategies, or data structures",
+            "gaps_identified": [
+              "Cannot verify experience with Redis pub/sub or Lua scripting"
+            ]
+          }
+        ]
+      }
+    ],
+    "question_analysis": [
+      {
+        "question_id": "Q1",
+        "question_text": "How does Node.js handle asynchronous operations, and what role does the event loop play in this process?",
+        "answer_quality": {
+          "relevance_score": 45,
+          "completeness": "Partial",
+          "clarity": "Fair",
+          "depth": "Surface",
+          "evidence_provided": false
+        },
+        "strengths": [
+          "Recognizes Node.js is single-threaded for JavaScript execution",
+          "Mentions use of callbacks and promises for asynchronous operations",
+          "References libuv as part of Node.js architecture"
+        ],
+        "concerns": [
+          "Fundamental misunderstanding of event loop mechanics",
+          "Confuses top-level code execution with event loop phases",
+          "Incorrectly states execution order (microtasks after timers)",
+          "Uses imprecise terminology ('Node-driven architecture')"
+        ]
+      },
+      {
+        "question_id": "Q2",
+        "question_text": "Can you explain the phases of the event loop in Node.js?",
+        "answer_quality": {
+          "relevance_score": 30,
+          "completeness": "Incomplete",
+          "clarity": "Poor",
+          "depth": "Surface",
+          "evidence_provided": false
+        },
+        "strengths": [
+          "Attempts to describe some components of the event loop",
+          "Mentions process.nextTick queue"
+        ],
+        "concerns": [
+          "Completely misrepresents the actual phases of the event loop",
+          "Confuses process.nextTick with microtask queue priority",
+          "States 'first the top-level code is going to be executed' as part of event loop (top-level code executes before event loop starts)",
+          "Fails to identify any of the six actual event loop phases (timers, I/O callbacks, idle/prepare, poll, check, close callbacks)"
+        ]
+      },
+      {
+        "question_id": "Q3",
+        "question_text": "Can you elaborate on how the libuv library is implemented in Node.js to handle asynchronous operations?",
+        "answer_quality": {
+          "relevance_score": 25,
+          "completeness": "Incomplete",
+          "clarity": "Poor",
+          "depth": "None",
+          "evidence_provided": false
+        },
+        "strengths": [
+          "Correctly identifies libuv is built with C++",
+          "Recognizes it handles asynchronous operations"
+        ],
+        "concerns": [
+          "Fails to explain libuv's actual implementation details",
+          "Doesn't mention the thread pool or how it interfaces with Node.js",
+          "Repeats basic execution order confusion without addressing libuv specifics",
+          "No concrete examples of how libuv enables non-blocking I/O"
+        ]
+      },
+      {
+        "question_id": "Q2",
+        "question_text": "Describe how you would implement a rate-limiting mechanism for an API endpoint in Express.js.",
+        "answer_quality": {
+          "relevance_score": 25,
+          "completeness": "Incomplete",
+          "clarity": "Poor",
+          "depth": "Surface",
+          "evidence_provided": false
+        },
+        "strengths": [],
+        "concerns": [
+          "Confused rate limiting with throttling conceptually",
+          "Mistakenly referenced Next.js instead of Express.js framework",
+          "Incorrectly suggested using 502/402 HTTP status codes instead of 429",
+          "Unaware of standard middleware like express-rate-limit",
+          "Proposed custom implementation rather than industry-standard solutions"
+        ]
+      },
+      {
+        "question_id": "Q3",
+        "question_text": "When might you choose to use GraphQL over REST for an API, and what are the trade-offs?",
+        "answer_quality": {
+          "relevance_score": 30,
+          "completeness": "Incomplete",
+          "clarity": "Fair",
+          "depth": "Surface",
+          "evidence_provided": false
+        },
+        "strengths": [
+          "Candidate was honest about their limited GraphQL experience",
+          "Attempted to discuss schema definition aspect of GraphQL"
+        ],
+        "concerns": [
+          "Fundamental misunderstanding about data validation occurring client-side in GraphQL",
+          "Could not articulate primary reasons for choosing GraphQL (over/under-fetching, flexible querying)",
+          "Unable to discuss any trade-offs between the two approaches",
+          "Admitted no knowledge when asked about over-fetching/under-fetching in follow-up"
+        ]
+      },
+      {
+        "question_id": "Q4",
+        "question_text": "Describe a challenging performance issue you resolved in a Node.js application, including how you diagnosed and fixed it.",
+        "answer_quality": {
+          "relevance_score": 70,
+          "completeness": "Partial",
+          "clarity": "Fair",
+          "depth": "Surface",
+          "evidence_provided": true
+        },
+        "strengths": [
+          "Provided a real-world scenario involving performance issues",
+          "Identified null value handling as a root cause of the deadlock issue",
+          "Demonstrated basic debugging approach using logs and breakpoints",
+          "Acknowledged initial scaling solution was ineffective before finding root cause"
+        ],
+        "concerns": [
+          "Lacked specific metrics when directly asked about CPU usage or response times",
+          "No mention of Node.js-specific performance tools like clinic.js despite being asked",
+          "Vague explanation of the technical issue with unclear connection between null values and deadlock",
+          "Initial solution approach was vertical scaling rather than addressing root cause",
+          "No discussion of TypeScript despite resume claiming expert proficiency"
+        ]
+      },
+      {
+        "question_id": "Q5",
+        "question_text": "How would you implement proper error handling in a TypeScript Node.js application to prevent uncaught exceptions from crashing the server?",
+        "answer_quality": {
+          "relevance_score": 65,
+          "completeness": "Partial",
+          "clarity": "Fair",
+          "depth": "Surface",
+          "evidence_provided": true
+        },
+        "strengths": [
+          "Recognized the importance of try-catch blocks for error handling",
+          "Attempted to categorize errors and return appropriate status codes",
+          "Mentioned the concept of generic error types for better error management"
+        ],
+        "concerns": [
+          "Confused 'cache error' with 'catch error' indicating terminology issues",
+          "Failed to explain how uncaught exceptions are specifically prevented from crashing the server",
+          "Lacked concrete implementation details or code examples",
+          "No mention of Express error middleware pattern despite it being a key requirement"
+        ]
+      },
+      {
+        "question_id": "Q5-followup",
+        "question_text": "I see can you explain how you would use the process uncaught exception handler in your node.js application",
+        "answer_quality": {
+          "relevance_score": 40,
+          "completeness": "Incomplete",
+          "clarity": "Fair",
+          "depth": "Surface",
+          "evidence_provided": true
+        },
+        "strengths": [
+          "Acknowledged experience with unhandled error exceptions",
+          "Identified schema validation as a preventative measure for type issues"
+        ],
+        "concerns": [
+          "Did not actually explain how to implement process.uncaughtException handler",
+          "Focused on schema validation (a preventative measure) rather than error handling after exceptions occur",
+          "No discussion of proper cleanup procedures when using process-level handlers",
+          "Failed to mention that process.uncaughtException should be used as last resort with server restart"
+        ]
+      },
+      {
+        "question_id": "Q6",
+        "question_text": "You have a users table with 1M records where searches by last name are frequent. How would you optimize these queries using PostgreSQL features?",
+        "answer_quality": {
+          "relevance_score": 65,
+          "completeness": "Partial",
+          "clarity": "Fair",
+          "depth": "Surface",
+          "evidence_provided": false
+        },
+        "strengths": [
+          "Correctly identified the need for indexing on the last_name column",
+          "Mentioned the concept of different index types (single field, compound)",
+          "Suggested read/write separation using replica sets for scalability"
+        ],
+        "concerns": [
+          "Lacked specific PostgreSQL optimization features expected for senior role",
+          "Inaccurate description of case-insensitive search implementation",
+          "Disorganized explanation with excessive filler words ('like', 'at all', 'sorry')",
+          "Didn't mention verification methods like EXPLAIN ANALYZE to measure optimization effectiveness",
+          "Proposed manual conversion to lowercase rather than using PostgreSQL's built-in capabilities"
+        ]
+      },
+      {
+        "question_id": "Q7",
+        "question_text": "When optimizing a slow report query scanning millions of rows in PostgreSQL, what approaches would you consider and what trade-offs exist?",
+        "answer_quality": {
+          "relevance_score": 45,
+          "completeness": "Partial",
+          "clarity": "Fair",
+          "depth": "Surface",
+          "evidence_provided": false
+        },
+        "strengths": [
+          "Recognized indexing as a potential solution for large dataset queries",
+          "Mentioned using specific IDs rather than names for better performance",
+          "Attempted to discuss composite indexing on multiple fields"
+        ],
+        "concerns": [
+          "Failed to articulate specific trade-offs of indexing strategies",
+          "Used imprecise terminology ('genetic specific IDs', 'fees indexing')",
+          "Could not discuss alternative optimization approaches beyond basic indexing",
+          "Admitted no knowledge of materialized views when directly asked",
+          "Response lacked technical depth expected for senior role"
+        ]
+      },
+      {
+        "question_id": "Q9",
+        "question_text": "your application has a frequently accessed but slowly generated user profile view. How would you implement Redis caching for this",
+        "answer_quality": {
+          "relevance_score": 55,
+          "completeness": "Partial",
+          "clarity": "Fair",
+          "depth": "Surface",
+          "evidence_provided": false
+        },
+        "strengths": [
+          "Recognized the basic concept of using cache to avoid repeated database queries",
+          "Attempted to provide a concrete example with user profiles"
+        ],
+        "concerns": [
+          "Fundamental misunderstanding of Redis architecture (referred to 'serverled state database' and 'indexes')",
+          "Confused Redis data structures with traditional database concepts",
+          "No mention of critical implementation details like TTL, serialization, or cache invalidation",
+          "Repetitive explanations without adding clarity or depth"
+        ]
+      },
+      {
+        "question_id": "Q9-followup",
+        "question_text": "understood can you explain the cache aside pattern and how it would apply to your redis caching implementation",
+        "answer_quality": {
+          "relevance_score": 30,
+          "completeness": "Incomplete",
+          "clarity": "Poor",
+          "depth": "Surface",
+          "evidence_provided": false
+        },
+        "strengths": [
+          "Attempted to continue the discussion rather than admitting lack of knowledge"
+        ],
+        "concerns": [
+          "Failed to define or explain cache-aside pattern despite direct request",
+          "Continued to describe incorrect implementation approach with 'indexes'",
+          "No connection between described approach and cache-aside pattern",
+          "Lacked understanding of standard caching patterns and terminology"
+        ]
+      },
+      {
+        "question_id": "Q10",
+        "question_text": "Given a slow-running report query, what specific steps would you take to diagnose and improve its performance?",
+        "answer_quality": {
+          "relevance_score": 62,
+          "completeness": "Partial",
+          "clarity": "Fair",
+          "depth": "Surface",
+          "evidence_provided": false
+        },
+        "strengths": [
+          "Identified indexing as a potential solution for slow queries",
+          "Recognized that text search operations can impact performance",
+          "Mentioned consideration of join operations in query optimization"
+        ],
+        "concerns": [
+          "Response lacked structured diagnostic approach",
+          "No mention of specific tools like EXPLAIN ANALYZE despite being a green flag",
+          "Failed to discuss how to measure performance improvements",
+          "No concrete examples from personal experience",
+          "Limited understanding of comprehensive query optimization techniques"
+        ]
+      },
+      {
+        "question_id": "custom:WrapUp (Group 2)",
+        "question_text": "Closing remarks and opportunity for candidate questions",
+        "answer_quality": {
+          "relevance_score": 30,
+          "completeness": "Incomplete",
+          "clarity": "Fair",
+          "depth": "Surface",
+          "evidence_provided": false
+        },
+        "strengths": [
+          "Candidate showed engagement by asking about performance"
+        ],
+        "concerns": [
+          "Premature inquiry about performance before interviewer provided feedback",
+          "No substantive questions about role, team, or technology stack",
+          "Limited opportunity to demonstrate communication skills due to brief exchange"
+        ]
+      }
+    ],
+    "communication_assessment": {
+      "verbal_articulation": "Fair",
+      "logical_flow": "Fair",
+      "professional_vocabulary": "Fair",
+      "cultural_fit_indicators": []
+    },
+    "critical_analysis": {
+      "red_flags": [
+        "Resume claims 'Expert proficiency in TypeScript' but candidate didn't mention TypeScript at all in technical discussion",
+        "Resume shows incomplete work experience details (repeated 'at present/present' without company names)",
+        "Proposing custom solutions instead of established patterns",
+        "Fundamental misunderstanding of Redis architecture (referring to 'indexes' which Redis doesn't implement like traditional databases)",
+        "Inability to correctly identify HTTP status codes (429 for rate limiting)",
+        "Inability to explain basic cache patterns like cache-aside when prompted",
+        "Superficial understanding of database optimization inconsistent with senior-level expectations (3-5 years experience)",
+        "Evaluation parsing failed",
+        "Resume claims senior Node.js developer experience but demonstrated only basic Redis knowledge",
+        "Confuses basic JavaScript execution model with Node.js runtime mechanics",
+        "No mention of critical tools and techniques expected for SQL optimization",
+        "Lack of understanding of fundamental API design concepts expected for senior backend role",
+        "No technical demonstration visible despite senior role requirements",
+        "Lack of knowledge about standard middleware for common tasks",
+        "Fundamental confusion between Express.js and Next.js frameworks",
+        "No mention of industry-standard rate limiting libraries",
+        "Lack of specific technical details and real-world examples",
+        "Fundamental misunderstandings of core Node.js architecture expected for senior role",
+        "Resume shows no concrete work experience details despite applying for senior role",
+        "Response demonstrated only basic knowledge for a position requiring 3-5 years expertise",
+        "Inability to discuss over-fetching/under-fetching - a core differentiator between REST and GraphQL",
+        "Inability to explain process-level error handlers when directly questioned",
+        "Misconception that GraphQL performs client-side data validation (validation still occurs server-side)",
+        "Vague technical explanations with lack of specific metrics when directly asked",
+        "Lack of knowledge about materialized views, a fundamental technique for report optimization in PostgreSQL",
+        "Inability to accurately explain event loop phases despite being central to Node.js development",
+        "Admitted no experience with clinic.js, a common Node.js performance debugging tool",
+        "Surface-level understanding of database optimization techniques despite claimed experience",
+        "Inability to articulate precise technical solutions with confidence",
+        "Inability to explain trade-offs of proposed solutions demonstrates limited practical experience",
+        "Candidate prematurely asked about performance rather than asking role-specific questions",
+        "Lack of specific implementation details expected for senior-level position",
+        "Confusion between 'cache' and 'catch' error terminology",
+        "Initial solution was scaling rather than root cause analysis, indicating limited performance optimization expertise",
+        "Lack of specific implementation details expected for senior role",
+        "Resume shows incomplete work experience information ('present/present' entries)",
+        "Resume shows incomplete work history (all entries marked 'present/present')",
+        "Lack of PostgreSQL-specific knowledge expected for Senior Node.js Developer role"
+      ],
+      "exceptional_responses": [],
+      "inconsistencies": [
+        "Job description requires 'strong understanding of asynchronous programming' but candidate shows significant gaps",
+        "Resume claims senior Node.js experience but candidate lacks knowledge of modern API approaches mentioned in job description as 'plus'",
+        "Job description requires 'expert proficiency' but candidate shows intermediate/basic knowledge",
+        "Resume implies professional experience but response shows only basic knowledge of SQL optimization",
+        "Candidate claims 'I don't know that much experience working GraphQL' despite applying for role where API design knowledge is essential",
+        "Resume claims senior-level experience but responses demonstrate only basic understanding",
+        "Resume claims senior developer experience but no verifiable technical discussion in available transcript",
+        "Candidate mentions experience with unhandled exceptions but cannot explain implementation",
+        "Resume claims senior developer position but response lacks depth expected for 3-5 years experience",
+        "Resume claims senior experience but demonstrates only basic understanding of foundational concepts",
+        "Resume implies senior-level experience but response shows only basic SQL optimization knowledge",
+        "Candidate mentioned 'multiple joints' instead of 'joins', indicating possible terminology confusion",
+        "Described resolving deadlock issues but couldn't explain specific database locking mechanisms",
+        "Resume claims senior Node.js experience but candidate lacks basic framework knowledge",
+        "Job description requires 3-5 years experience with specific technologies but no evidence provided",
+        "Resume indicates senior Node.js developer position but response shows limited practical knowledge of Redis caching",
+        "Job description requires 'query optimization' proficiency but candidate couldn't discuss standard techniques beyond basic indexing",
+        "Job description requires 'proficiency' with PostgreSQL including query optimization, but candidate demonstrated only basic understanding",
+        "Job description requires proficiency with Redis but candidate demonstrated only basic understanding with conceptual errors",
+        "Job requires 'Proven experience with Node.js frameworks' but candidate shows minimal understanding",
+        "Job description requires 'proficiency with SQL including data modeling and query optimization' but response shows only fundamental understanding",
+        "Job description requires experience with debugging tools but candidate lacks experience with standard Node.js tools",
+        "Resume claims expert TypeScript knowledge but response only discussed JavaScript",
+        "Candidate claims to have implemented rate limiting but cannot describe standard approaches"
+      ],
+      "problem_solving_approach": ""
+    },
+    "improvement_recommendations": [
+      "Study PostgreSQL-specific optimization techniques including partial indexes, expression indexes, and the EXPLAIN command",
+      "Gain practical experience with standard rate limiting implementations using industry tools",
+      "Study Redis data structures (strings, hashes, lists, sets, sorted sets) and understand how they differ from traditional database indexing",
+      "Develop concrete examples of error handling implementations from past projects",
+      "Study the actual implementation of Node.js event loop, focusing on the six distinct phases and their execution order",
+      "Gain hands-on experience implementing Redis caching in a real project with focus on TTL settings, serialization, and cache invalidation strategies",
+      "Learn to verify optimization effectiveness using EXPLAIN ANALYZE and performance metrics",
+      "Practice articulating specific technical experiences that match job requirements",
+      "Complete detailed projects that require deep understanding of Node.js runtime to build concrete examples for interviews",
+      "Review the difference between microtask queue (promises) and macrotask queue (setTimeout) priorities",
+      "Differentiate between related concepts like rate limiting and throttling",
+      "Wait for interviewer to provide performance feedback rather than asking prematurely",
+      "Learn and practice the Express error middleware pattern (err, req, res, next)",
+      "Request full interview transcripts to better prepare for technical discussions",
+      "Study advanced PostgreSQL optimization techniques including materialized views, partitioning, and proper use of EXPLAIN ANALYZE",
+      "Gain practical experience with real-world large dataset optimization scenarios",
+      "Prepare specific code examples demonstrating TypeScript error typing patterns",
+      "Re-evaluate this response manually",
+      "Gain hands-on experience with Redis for distributed rate limiting solutions",
+      "Practice explaining technical concepts with precise terminology to avoid confusion",
+      "Build concrete examples of performance improvements with measurable results (e.g., 'reduced query time from 5s to 200ms by implementing X')",
+      "Prepare thoughtful questions about the role, team, and technology stack for future interviews",
+      "Practice structured responses using the STAR method to provide concrete examples of past optimization work",
+      "Practice articulating technical trade-offs using concrete examples from personal projects",
+      "Learn and practice explaining standard caching patterns (cache-aside, write-through, write-behind) with concrete examples",
+      "Gain hands-on experience with EXPLAIN ANALYZE and query execution plan interpretation in PostgreSQL",
+      "Gain hands-on experience with Node.js performance profiling tools like",
+      "Practice explaining technical concepts with precise terminology, avoiding filler words and vague statements",
+      "Study API design patterns with focus on practical differences between REST and GraphQL architectures",
+      "Practice articulating technical implementations with clear structure: problem, solution, implementation details, trade-offs",
+      "Develop structured approach to technical problem-solving using frameworks like STAR (Situation, Task, Action, Result)",
+      "Address fundamental misconceptions about where data validation occurs in GraphQL implementations",
+      "Study Node.js error handling documentation to understand process-level handlers and their proper usage",
+      "Gain hands-on experience with implementing case-insensitive search patterns in PostgreSQL using features like citext extension or ILIKE operator",
+      "Study advanced SQL optimization techniques beyond basic indexing (e.g., partial indexes, materialized views, query rewriting)",
+      "Learn proper HTTP status code usage, particularly 429 for rate limiting scenarios",
+      "Develop ability to articulate specific trade-offs of technical decisions (e.g., indexing improves read performance but impacts write speed and storage)",
+      "Ensure resume contains complete and verifiable work history with specific achievements",
+      "Study fundamental Express.js middleware patterns and common libraries like express-rate-limit",
+      "Practice articulating technical solutions with clear structure and specific examples from real projects",
+      "Practice articulating technical concepts clearly and concisely without excessive filler words",
+      "Gain hands-on experience with GraphQL by building a small project that demonstrates solving over-fetching/under-fetching problems",
+      "Develop structured diagnostic methodology for performance issues (e.g., identify bottleneck, measure current state, implement solution, verify improvement)",
+      "Review fundamental concepts of caching before interviews for senior positions requiring this expertise",
+      "Develop ability to discuss technical concepts with clearer structure and professional terminology",
+      "Gain hands-on experience with libuv to understand how it enables non-blocking I/O through its thread pool",
+      "Focus on deepening SQL expertise to match senior-level expectations, particularly for report-heavy workloads"
+    ]
+  },
+  "question_groups": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "ConversationSegregationOutput",
+    "type": "object",
+    "properties": {
+      "groups": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "question_id": {
+              "type": "string"
+            },
+            "question_title": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            },
+            "source": {
+              "type": "string"
+            },
+            "time_range": {
+              "type": "object",
+              "properties": {
+                "start": {
+                  "type": "number"
+                },
+                "end": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "start",
+                "end"
+              ],
+              "additionalProperties": false
+            },
+            "turn_indices": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              }
+            },
+            "facts": {
+              "type": "object",
+              "properties": {
+                "answers": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "default": []
+                },
+                "entities": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "default": {}
+                }
+              },
+              "required": [
+                "answers",
+                "entities"
+              ],
+              "additionalProperties": false
+            },
+            "greenFlags": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "default": []
+            },
+            "redFlags": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "default": []
+            },
+            "metadata": {
+              "type": "object",
+              "additionalProperties": true,
+              "default": {}
+            }
+          },
+          "required": [
+            "question_id",
+            "question_title",
+            "type",
+            "source",
+            "time_range",
+            "turn_indices",
+            "facts"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "misc_or_unclear": {
+        "type": "array",
+        "items": {
+          "type": "integer"
+        },
+        "default": []
+      },
+      "pre_inferred_facts_global": {
+        "type": "object",
+        "additionalProperties": true,
+        "default": {}
+      },
+      "meta": {
+        "type": "object",
+        "additionalProperties": true,
+        "default": {}
+      }
+    },
+    "required": [
+      "groups",
+      "misc_or_unclear",
+      "pre_inferred_facts_global"
+    ],
+    "additionalProperties": false,
+    "groups": [
+      {
+        "question_id": "Q1",
+        "question_title": "How does Node.js handle asynchronous operations, and what role does the event loop play in this process?",
+        "type": "technical",
+        "source": "known_questions",
+        "time_range": {
+          "start": 1758186321817,
+          "end": 1758186580816
+        },
+        "turn_indices": [
+          24,
+          25,
+          26,
+          27,
+          28,
+          29
+        ],
+        "facts": {
+          "answers": [],
+          "entities": {}
+        },
+        "greenFlags": [
+          "Clearly explains non-blocking I/O model",
+          "Mentions phases of event loop (timers, poll, check)",
+          "References libuv library implementation"
+        ],
+        "redFlags": [],
+        "metadata": {},
+        "conversation": [
+          {
+            "idx": 24,
+            "role": "agent",
+            "message": "How does Node.js handle asynchronous operations? And what role does the event loop play in this process?",
+            "time": 1758186321817,
+            "endTime": 1758186328817,
+            "duration": 7000,
+            "secondsFromStart": 190.3000030517578
+          },
+          {
+            "idx": 25,
+            "role": "user",
+            "message": "Sure. So, the Node.js handles the asynchronous operations and how it is being handled in the event loop plays a necessary role in this particular process. For example, like even Node.js is working with a Node-driven architecture actually. So, for example, like it has an event loop architecture thing. So, the event loop architecture thing is basically consists of like we have the code environment and then the execution context. The code environment is the place where the actually memory allocation is going to happen and the execution context is where the actual line of code is going to execute it. So, Node is kind of a single-threaded programming language. That means like the program can run from one by one. That means a line by line. So, it's not kind of a multi-threaded language. In order as to perform asynchronous operations, we will be using callbacks and promises. So, how it is being handling in the Node.js? Like Node.js first eventually check the top-level code. So, the top-level code is like kind of any file reading systems or any consoles, any import location, any import exporting. These are the top-level codes. Then it will look for the promises that is actually going to result. After that, it will resolve for the setTimeout and setTimeout. So, these are actually happening in the event loop with certain limitations actually. So, first the top-level code is executed and then the microtask queue. So, inside the microtask queue, it will have like the promises in it. Actually, like what are the promises is actually going to resolve. And after that promise, it will precedence to the setTimeout and setInterval. After that only, it will take to import IO operations actually. So, this is how the Node.js is handling the asynchronous operations. The Node.js actually handles the asynchronous operations using callbacks, promises. But eventually, it will be working in kind of an even loop architecture in Node.js. So, based on the preferences in the code execution level, it will get looped one by one after a particular task gets completed. So, Node.js also handles the multithreading with using libuv package, which is libuv that is inbuilt in Node.js. So, these are the topics that I would say for handling asynchronous operations in Node.js.",
+            "time": 1758186329817,
+            "endTime": 1758186454816,
+            "duration": 125000,
+            "secondsFromStart": 198.3000030517578
+          },
+          {
+            "idx": 26,
+            "role": "agent",
+            "message": "I see. Can you explain the phases of the event loop in Node.js?",
+            "time": 1758186454816,
+            "endTime": 1758186459816,
+            "duration": 5000,
+            "secondsFromStart": 323.29998779296875
+          },
+          {
+            "idx": 27,
+            "role": "user",
+            "message": "Sure. So, first the top-level code is going to be executed. Then the input-output operations and then the microtask queue. The microtask queue comes with the promises and the setTimeout. And then the microtask queue kind of like any process or next queue operations will have, that is going to be executed. The process or next queue also has some precedence. Even before the promises, any process or next queue is going to happen, then it will first get precedence with the process or next queue only. And after that only, it will get precedence to microtask queue and then the microtask queue.",
+            "time": 1758186459816,
+            "endTime": 1758186490816,
+            "duration": 31000,
+            "secondsFromStart": 328.29998779296875
+          },
+          {
+            "idx": 28,
+            "role": "agent",
+            "message": "Understood. Can you elaborate on how the libuv library is implemented in Node.js to handle asynchronous operations?",
+            "time": 1758186490816,
+            "endTime": 1758186505816,
+            "duration": 15000,
+            "secondsFromStart": 359.29998779296875
+          },
+          {
+            "idx": 29,
+            "role": "user",
+            "message": "Sure. So, Node.js is basically kind of a single-threaded environment. So, it will execute one line of code at one time. So, libuv plays a role like what it will actually build on based on C++ languages actually. First, it will allow some kind of stages to the particular code file to run. So, for example, like if I do have like DB connections and then the file reading system and then one more like process or next queue operations, these are kind of steps like there are certain process needs to be executed. For example, if a particular line of code actually has the first line with console.log and the next line with the promises and then the for loop and then what I can say like one more setTimeout interval. So, in that case, what actually it will have, first the console statement will get printed and then it will wait for the promises to get resolved because it is non-blocking the main thread actually. After that, it will go for the loop to execute. Then it will look for any macro task that is any setTimeout and setInterval is going to resolve. Then it will give precedent to setInterval and setTimeout actually.",
+            "time": 1758186505816,
+            "endTime": 1758186580816,
+            "duration": 75000,
+            "secondsFromStart": 374.29998779296875
+          }
+        ]
+      },
+      {
+        "question_id": "Q2",
+        "question_title": "Describe how you would implement a rate-limiting mechanism for an API endpoint in Express.js.",
+        "type": "technical",
+        "source": "known_questions",
+        "time_range": {
+          "start": 1758186583816,
+          "end": 1758186735797
+        },
+        "turn_indices": [
+          31,
+          32,
+          33,
+          34,
+          35,
+          36
+        ],
+        "facts": {
+          "answers": [],
+          "entities": {}
+        },
+        "greenFlags": [
+          "Mentions specific middleware like express-rate-limit",
+          "Discusses storage mechanisms (memory store vs Redis)",
+          "Explains HTTP status codes for rate limiting (429)"
+        ],
+        "redFlags": [],
+        "metadata": {},
+        "conversation": [
+          {
+            "idx": 31,
+            "role": "agent",
+            "message": "Describe how you would implement a rate limiting mechanism for an API endpoint in Express.js.",
+            "time": 1758186583816,
+            "endTime": 1758186590816,
+            "duration": 7000,
+            "secondsFromStart": 452.29998779296875
+          },
+          {
+            "idx": 32,
+            "role": "user",
+            "message": "Sure. So, the rate limiting thing what we can do, we have to write the rate limiting as a key function in main.js file or else main.js file actually. So, like for example, like it's kind of say throttling actually. So, the rate limiting comes with the concept of throttling only. For example, like if at all any 10 to 100 number of API request is going to happen for a second, we have to limit those requests actually. For example, this certain limit of time, this amount of API request is going to happen. So, for that, we have to make some throttling function in the main.js file or main.js file. In the Next.js application, it comes with the inbuilt throttling key in it actually. So, the throttling actually comes what actually it will do like, it will rate limiting the API request even before it is getting entered into the main.js file actually. So, in that way, we can easily manage the API request by using throttling.",
+            "time": 1758186592816,
+            "endTime": 1758186640816,
+            "duration": 48000,
+            "secondsFromStart": 461.29998779296875
+          },
+          {
+            "idx": 33,
+            "role": "agent",
+            "message": "Understood. Gita, can you explain the specific middleware you would use for rate limiting in Express.js?",
+            "time": 1758186647816,
+            "endTime": 1758186653816,
+            "duration": 6000,
+            "secondsFromStart": 516.2999877929688
+          },
+          {
+            "idx": 34,
+            "role": "user",
+            "message": "I'm not using any specific middlewares in Node.js to do the rate limiting. Instead of that, what we can do like, initially, we will be initializing our app using the Express framework actually. So, from the app itself, we have to configure the incoming API request. So, from the incoming API request, there is a possibility of middleware called app.useMiddleware. So, in that app.useMiddleware, we have to write some throttling functions to rate limiting the API request.",
+            "time": 1758186654816,
+            "endTime": 1758186681816,
+            "duration": 27000,
+            "secondsFromStart": 523.2999877929688
+          },
+          {
+            "idx": 35,
+            "role": "agent",
+            "message": "I see. How would you handle HTTP status codes for rate limiting, particularly when a user exceeds their limit?",
+            "time": 1758186691816,
+            "endTime": 1758186699816,
+            "duration": 8000,
+            "secondsFromStart": 560.2999877929688
+          },
+          {
+            "idx": 36,
+            "role": "user",
+            "message": "For example, like we can send with the 502 status code error because it's kind of a system error happening. Like, for example, they are keep on requesting for a certain amount of time, it will responding to them. But after sometimes, it is stopping responding for a particular API request. So, in that time, the correct useful way of status code to represent a particular error is kind of 402. It's a kind of an internal server error that you are limiting the rate limit up to 502. these things only so your API got failed in this time so try after sometimes sometimes something like that we can tell to the user",
+            "time": 1758186699816,
+            "endTime": 1758186735797,
+            "duration": 35981,
+            "secondsFromStart": 568.2999877929688
+          }
+        ]
+      },
+      {
+        "question_id": "Q3",
+        "question_title": "When might you choose to use GraphQL over REST for an API, and what are the trade-offs?",
+        "type": "technical",
+        "source": "known_questions",
+        "time_range": {
+          "start": 1758186735797,
+          "end": 1758186816156
+        },
+        "turn_indices": [
+          37,
+          38,
+          39,
+          40
+        ],
+        "facts": {
+          "answers": [],
+          "entities": {}
+        },
+        "greenFlags": [
+          "Identifies use cases like flexible client queries",
+          "Discusses over-fetching/under-fetching problems",
+          "Mentions schema evolution challenges"
+        ],
+        "redFlags": [],
+        "metadata": {},
+        "conversation": [
+          {
+            "idx": 37,
+            "role": "agent",
+            "message": "understood let's move on to the next question when might you choose to use GraphQL over REST for an API and what are the trade-offs",
+            "time": 1758186735797,
+            "endTime": 1758186744916,
+            "duration": 9119,
+            "secondsFromStart": 604.2800002098083
+          },
+          {
+            "idx": 38,
+            "role": "user",
+            "message": "so for example the GraphQL what actually it comes with some inbuilt data validation in it even even we are going with the REST APIs actually so the GraphQL actually what from the client itself they will have the possibilities to manage the data validations even before it is entering into the server actually so we will be redefining the schemas for each and every API request but in the REST APIs we are not going to do that whenever it's come to the main server like for example for any post request it will come to the server after that only we are going to validate that the data as it is coming for a particular but in GraphQL it is not the same so but I don't know that much experience working GraphQL but I don't know they do know the exact concept of how the GraphQL is actually working so this is I would say",
+            "time": 1758186749676,
+            "endTime": 1758186803237,
+            "duration": 53561,
+            "secondsFromStart": 618.1599998474121
+          },
+          {
+            "idx": 39,
+            "role": "agent",
+            "message": "thank you for your response can you discuss the issue of over fetching and under fetching in REST APIs compared to GraphQL",
+            "time": 1758186803237,
+            "endTime": 1758186813917,
+            "duration": 10680,
+            "secondsFromStart": 671.7200012207031
+          },
+          {
+            "idx": 40,
+            "role": "user",
+            "message": "sorry I don't have an idea about that",
+            "time": 1758186813917,
+            "endTime": 1758186816156,
+            "duration": 2239,
+            "secondsFromStart": 682.4000015258789
+          }
+        ]
+      },
+      {
+        "question_id": "Q4",
+        "question_title": "Describe a challenging performance issue you resolved in a Node.js application, including how you diagnosed and fixed it.",
+        "type": "technical",
+        "source": "known_questions",
+        "time_range": {
+          "start": 1758186803237,
+          "end": 1758187078997
+        },
+        "turn_indices": [
+          41,
+          42,
+          43,
+          44,
+          45,
+          46
+        ],
+        "facts": {
+          "answers": [],
+          "entities": {}
+        },
+        "greenFlags": [
+          "Provides specific metrics (CPU, memory, latency)",
+          "Describes debugging tools (clinic.js, Chrome DevTools)",
+          "Explains root cause like callback hell or memory leaks"
+        ],
+        "redFlags": [],
+        "metadata": {},
+        "conversation": [
+          {
+            "idx": 41,
+            "role": "agent",
+            "message": "that's all right let's move on to the next question describe a challenging performance issue you resolved in a node.js application including how you diagnosed and fixed it",
+            "time": 1758186819476,
+            "endTime": 1758186828877,
+            "duration": 9401,
+            "secondsFromStart": 687.9599990844727
+          },
+          {
+            "idx": 42,
+            "role": "user",
+            "message": "so I like I do have an experience in diagnosing one issues actually so for example we have a deployment around like 3 p.m. sorry 3 a.m. in the morning actually so I don't like after like 11 p.m. also we will still writing some changes in the code like but it should be deployed after 3 a.m. so at the time when we are testing the load testing using the k6 some deadlock issues actually gonna happen and then maybe it breaks the entire server so we don't have any idea about how it is actually gonna break and we will be clueless about the things so what we have to do what we have done like we'll be managing some write functions in the DBs and then like we'll be managing certain console logs in between the certain breakpoints actually by using the node.js debugger we'll be we'll be mounting some some specific points where actually it's gonna break so we have find out like one thing actually like it will keep on trying for the null values actually so we have written one query actually so that one query will keep on searching certain values in a particular table then it will log that particular table for a certain transactions to be get completed so for example like if it is taking the row first row then it will log that particular row for it's to complete the entire transaction until the transaction is completed it will keep on looking for the same rows only so like based on certain constraints we are failed to validate certain things so the concern is failing for a long time so it is keep on trying trying like until like the the memory the memory is actually gonna happen so in that way like what we have done we will be first consoling those table values and then we'll find where there is one null values is coming further on that so from that we'll be debugging and add one edge cases over there and then we will solve that issues actually so this is how I have an experience in solving the debugging issues in node.js express application",
+            "time": 1758186828877,
+            "endTime": 1758186951156,
+            "duration": 122279,
+            "secondsFromStart": 697.3600006103516
+          },
+          {
+            "idx": 43,
+            "role": "agent",
+            "message": "thank you for sharing that experience can you provide specific metrics you observed during this performance issue such as CPU usage or response times",
+            "time": 1758186951156,
+            "endTime": 1758186961916,
+            "duration": 10760,
+            "secondsFromStart": 819.6399993896484
+          },
+          {
+            "idx": 44,
+            "role": "user",
+            "message": "so the CPU usage is what yeah we have the use of like the DevOps team what actually we have done like when a particular transaction needs to be completed it will follow the ACID way of transaction that means atomicity, consistency, isolation, durability thing so like even after like there are like around 10,000 users gonna hit the API for a single instance so in that time the first hits you know fail then it will not allow this next users to fetch the data so in that like we don't have any idea about that particular thing where actually it is failing but we have noticed one thing like it is keep on searching the queries in the database unless it be it faces the CPU full usage this thing so it finally it occurred with the deadlock issue so when we try to solve that issue like we have increasing the scaling actually like using the vertical scale we increase the DB size even after also it is failing so then only we find out like we are this is query is failing because of it will try to fetch the null values over that so in that metrics only we have found out the issue",
+            "time": 1758186961916,
+            "endTime": 1758187016277,
+            "duration": 54361,
+            "secondsFromStart": 830.3999938964844
+          },
+          {
+            "idx": 45,
+            "role": "agent",
+            "message": "understood can you describe the debugging tools you used during this process such as clinic.js or chrome dev tools",
+            "time": 1758187016277,
+            "endTime": 1758187032636,
+            "duration": 16359,
+            "secondsFromStart": 884.760009765625
+          },
+          {
+            "idx": 46,
+            "role": "user",
+            "message": "like I don't have experience in using the clinic.js and chrome dev tools but we do have like the winston logger thing so we'll be installing the winston logger in our application so from the logging logging things will be identifying whether actually particular error is gonna happen in a particular line of code or else we'll be using the debugging thing in run in the VS code editor so it's kind of thing like we'll be adding some breakpoints where actually it's gonna fail so from that will be identified but I don't have an experience in using clinic.js and clinic.js in node applications but I do have an experience in chrome chrome dev tools for rendering applications debugging",
+            "time": 1758187032636,
+            "endTime": 1758187078997,
+            "duration": 46361,
+            "secondsFromStart": 901.1199951171875
+          }
+        ]
+      },
+      {
+        "question_id": "Q5",
+        "question_title": "How would you implement proper error handling in a TypeScript Node.js application to prevent uncaught exceptions from crashing the server?",
+        "type": "technical",
+        "source": "known_questions",
+        "time_range": {
+          "start": 1758187078997,
+          "end": 1758187207916
+        },
+        "turn_indices": [
+          47,
+          48,
+          49,
+          50
+        ],
+        "facts": {
+          "answers": [],
+          "entities": {}
+        },
+        "greenFlags": [
+          "Discusses try/catch with async/await",
+          "Mentions process uncaughtException handler",
+          "References error middleware in Express"
+        ],
+        "redFlags": [],
+        "metadata": {},
+        "conversation": [
+          {
+            "idx": 47,
+            "role": "agent",
+            "message": "thank you for your response let's move on to the next question how would you implement proper error handling in a typescript node.js application to prevent uncaught exceptions from crashing the server",
+            "time": 1758187078997,
+            "endTime": 1758187088916,
+            "duration": 9919,
+            "secondsFromStart": 947.4800109863281
+          },
+          {
+            "idx": 48,
+            "role": "user",
+            "message": "so for example like we can we can handle the error by using try-catch mechanism and then what we have to do like we have to do some generic types actually so that generic types will be fall under two certain categories and it will return certain status code for a particular error is actually gonna happen so for example for an instance like if at all I am gonna fetch one users detail in that users detail the particular key I am looking it is not gonna found and then like the keys I am looking it is not actually present in the particular DB so it will cause a cache error over there so in that cache error like of by using the generic functions I need to return set in type of status type of error it is actually gonna happen if it is not a kind of error that is we predefined then we have to throw the unknown exceptions error so this unknown exception error actually not gonna break the servers but it will throw some useful error to the users so in that way we can possibly manage the server to crash when we are going with the proper error handling mechanism by using try-catch block and then the proper access to an error handling methods as well",
+            "time": 1758187088916,
+            "endTime": 1758187163196,
+            "duration": 74280,
+            "secondsFromStart": 957.3999938964844
+          },
+          {
+            "idx": 49,
+            "role": "agent",
+            "message": "I see can you explain how you would use the process uncaught exception handler in your node.js application",
+            "time": 1758187163196,
+            "endTime": 1758187167796,
+            "duration": 4600,
+            "secondsFromStart": 1031.6799926757812
+          },
+          {
+            "idx": 50,
+            "role": "user",
+            "message": "for example like I would say like I do have an experience in using the unhandled error exceptions when kind of a type issue actually happen for example the type I am actually gonna looking for a certain DB is int and the type I am actually gonna send this number so in that time the type it is actually get mismatched so it is kind of an payload which is coming from the frontend itself so I like I didn't handle the error properly so what I have done I will done some schema validations after that the uncaught error exception is gonna fixed before that it is gonna throw them like uncaught error uncaught error exceptions when I trying to hit that API",
+            "time": 1758187167796,
+            "endTime": 1758187207916,
+            "duration": 40120,
+            "secondsFromStart": 1036.2799987792969
+          }
+        ]
+      },
+      {
+        "question_id": "Q6",
+        "question_title": "You have a users table with 1M records where searches by last name are frequent. How would you optimize these queries using PostgreSQL features?",
+        "type": "technical",
+        "source": "known_questions",
+        "time_range": {
+          "start": 1758187207916,
+          "end": 1758187333597
+        },
+        "turn_indices": [
+          51,
+          52,
+          53,
+          54
+        ],
+        "facts": {
+          "answers": [],
+          "entities": {}
+        },
+        "greenFlags": [
+          "Recommends creating index on last_name column",
+          "Considers case-insensitive requirements (e.g., idx_last_name_lower)",
+          "Mentions EXPLAIN ANALYZE for verification"
+        ],
+        "redFlags": [],
+        "metadata": {},
+        "conversation": [
+          {
+            "idx": 51,
+            "role": "agent",
+            "message": "understood let's move on to the next question you have a users table with 1m records where searches by last name are frequent how would you optimize these queries using postgres SQL features",
+            "time": 1758187207916,
+            "endTime": 1758187225796,
+            "duration": 17880,
+            "secondsFromStart": 1076.3999938964844
+          },
+          {
+            "idx": 52,
+            "role": "user",
+            "message": "sure like if at all we are gonna use that a coding features for any postgres DB like what we have to do we need to write some indexing mechanism in the postgres DB so indexing it's come with like a single field index compound and something like that so if at all any if the particular API is gonna fetch that query from the DB based on the last name then we have to specifically add the index for the last name so in by adding the index it will have like much faster than comparing to non-indexing non-indexing DB query fetching and then like we can go with the replica sets of the DB like having different DBs for read and different DBs for write so in that way we can possibly do the optimizations over here",
+            "time": 1758187225796,
+            "endTime": 1758187284157,
+            "duration": 58361,
+            "secondsFromStart": 1094.2799987792969
+          },
+          {
+            "idx": 53,
+            "role": "agent",
+            "message": "I see can you explain how you would handle case in sensitive searches",
+            "time": 1758187284157,
+            "endTime": 1758187284157,
+            "duration": 0,
+            "secondsFromStart": 1141.8800048828125
+          },
+          {
+            "idx": 54,
+            "role": "agent",
+            "message": "for the last name in postgres KL for example like the indexing actually comes with the two lowercase thing sorry indexing actually comes with the non case-sensitive method only like for example it will not keep on looking for a particular case-sensitive values it is present in the DB or not but it will do some of the similarity search what we have to do like we have to ensure that DB value should be DB before it will enter into the DB query stage ensure it should be stored in a case-sensitive manner that means in lowercase if at all we not going to do that like first we have to change all the values in the lowercase format and then we'll be searching the indexing with the DBs and it will possibly avoid the case-sensitive method in indexing format",
+            "time": 1758187284157,
+            "endTime": 1758187333597,
+            "duration": 49440,
+            "secondsFromStart": 1152.6400146484375
+          }
+        ]
+      },
+      {
+        "question_id": "Q7",
+        "question_title": "When optimizing a slow report query scanning millions of rows in PostgreSQL, what approaches would you consider and what trade-offs exist?",
+        "type": "technical",
+        "source": "known_questions",
+        "time_range": {
+          "start": 1758187331517,
+          "end": 1758187399877
+        },
+        "turn_indices": [
+          55,
+          56,
+          57
+        ],
+        "facts": {
+          "answers": [],
+          "entities": {}
+        },
+        "greenFlags": [
+          "Evaluates indexing vs query rewriting",
+          "Considers materialized views for aggregates",
+          "Mentions partitioning for large tables"
+        ],
+        "redFlags": [],
+        "metadata": {},
+        "conversation": [
+          {
+            "idx": 55,
+            "role": "agent",
+            "message": "understood let's move on to the next question when optimizing a slow report query scanning millions of rows in PostgreSQL what approaches would you consider and what trade-offs exist",
+            "time": 1758187331517,
+            "endTime": 1758187348916,
+            "duration": 17399,
+            "secondsFromStart": 1200.0
+          },
+          {
+            "idx": 56,
+            "role": "user",
+            "message": "so basically like indexing is the best way to scanning the million hour of queue and then what are the trade-off it's actually gonna exist like we can go with some other fees indexing also for example like these users also have some genetic specific IDs over there instead of checking with the name so first we'll targeting with the IDs and then go with the emails that means the single field index we have to make indexing for two fields in the particular table so in that way we can possibly avoid this issue right",
+            "time": 1758187348916,
+            "endTime": 1758187384156,
+            "duration": 35240,
+            "secondsFromStart": 1217.3999996185303
+          },
+          {
+            "idx": 57,
+            "role": "agent",
+            "message": "can you discuss the use of materialized views for optimizing report queries in PostgreSQL sorry I don't have an idea about that that's all right let's move on to the next question",
+            "time": 1758187384156,
+            "endTime": 1758187399877,
+            "duration": 15721,
+            "secondsFromStart": 1252.6399993896484
+          }
+        ]
+      },
+      {
+        "question_id": "Q8",
+        "question_title": "You need to model e-commerce product data where products have varying attributes. How would you structure this in MongoDB?",
+        "type": "technical",
+        "source": "known_questions",
+        "time_range": {
+          "start": 1758187399877,
+          "end": 1758187519757
+        },
+        "turn_indices": [
+          58,
+          59,
+          60,
+          61
+        ],
+        "facts": {
+          "answers": [],
+          "entities": {}
+        },
+        "greenFlags": [
+          "Proposes embedded attributes collection",
+          "Considers schema versioning",
+          "Mentions indexing strategy for search"
+        ],
+        "redFlags": [],
+        "metadata": {},
+        "conversation": [
+          {
+            "idx": 58,
+            "role": "agent",
+            "message": "you need to model e-commerce product data where products have varying attributes how would you structure this in MongoDB",
+            "time": 1758187399877,
+            "endTime": 1758187411396,
+            "duration": 11519,
+            "secondsFromStart": 1268.3600006103516
+          },
+          {
+            "idx": 59,
+            "role": "user",
+            "message": "for example like MongoDB is kind of a non-structural database model for example the generic thing what we can do like we have to create one collection and that collection actually has ID user ID and then the products that product is kind of a JSON thing so in that way what we can do like if at all this particular product catalog is gonna have varying attributes then there is no issues at all when we are storing the product say for example a one product has only name and then the price and another product has a name price and then the barcode some other product has name price barcode and then the expiry so in that way we can easily manage by using MongoDB because it's kind of a schema less whichever the data will be feeding into the particular collection it will get accepted but we have to do some schema validation we have to generate we have to custom we have to write customizely for that so but in case we if we have like a varying product that what we can say varying product attributes it we can easily store that value by using these non-structured code language by dealing with MongoDB",
+            "time": 1758187411396,
+            "endTime": 1758187474636,
+            "duration": 63240,
+            "secondsFromStart": 1279.879997253418
+          },
+          {
+            "idx": 60,
+            "role": "agent",
+            "message": "understood how would you approach indexing strategy for search optimization in this MongoDB structure",
+            "time": 1758187474636,
+            "endTime": 1758187483117,
+            "duration": 8481,
+            "secondsFromStart": 1343.1199951171875
+          },
+          {
+            "idx": 61,
+            "role": "user",
+            "message": "so the MongoDB is also like what we can say we'll be using the indexing in a particular product name actually so the product name like for example first what we have to do have one key with the product name and then the product metadata inside the product metadata we have to store the varying attributes of the particular product and then we have to use the single key a single field index for the product key then we can easily optimize the query thing if at all we are going with any indexing strategy for the particular product collections",
+            "time": 1758187483117,
+            "endTime": 1758187519757,
+            "duration": 36640,
+            "secondsFromStart": 1351.6000061035156
+          }
+        ]
+      },
+      {
+        "question_id": "Q9",
+        "question_title": "Your application has a frequently accessed but slowly generated user profile view. How would you implement Redis caching for this?",
+        "type": "technical",
+        "source": "known_questions",
+        "time_range": {
+          "start": 1758187520237,
+          "end": 1758187643356
+        },
+        "turn_indices": [
+          62,
+          63,
+          64,
+          65
+        ],
+        "facts": {
+          "answers": [],
+          "entities": {}
+        },
+        "greenFlags": [
+          "Proposes cache-aside pattern",
+          "Considers JSON serialization",
+          "Mentions appropriate TTL settings"
+        ],
+        "redFlags": [],
+        "metadata": {},
+        "conversation": [
+          {
+            "idx": 62,
+            "role": "agent",
+            "message": "I see let's move on to the next question your application has a frequently accessed but slowly generated user profile view how would you implement redis caching for this",
+            "time": 1758187520237,
+            "endTime": 1758187535117,
+            "duration": 14880,
+            "secondsFromStart": 1388.7200012207031
+          },
+          {
+            "idx": 63,
+            "role": "user",
+            "message": "for example the redis caching actually we can do both the ways actually first is that is kind of it's a serverled state database actually it stores keys and values per one what we have to do first we have to create one index for that particular redis cache to store the data for example if I'm going to fetch some users for a name john and the user it is one two three then I have to store that key with the user at one two three and then store the user details in the cases for example if I'm going to fetch a user for a name john store the user details in the cases for example if at all any any frequent ap is coming from the same users for a lot of times what I can see instead of looking over the db and face the data I'll simply look over the redis redis cache database and then simply return those values in that way I can easily cache those queries using redis cache",
+            "time": 1758187537117,
+            "endTime": 1758187586317,
+            "duration": 49200,
+            "secondsFromStart": 1405.6000061035156
+          },
+          {
+            "idx": 64,
+            "role": "agent",
+            "message": "understood can you explain the cache aside pattern and how it would apply to your redis caching implementation",
+            "time": 1758187586317,
+            "endTime": 1758187603677,
+            "duration": 17360,
+            "secondsFromStart": 1454.8000030517578
+          },
+          {
+            "idx": 65,
+            "role": "user",
+            "message": "so the caching pattern actually comes with like for example we have to create setting in a redis data in redis caching data itself we have to create setting indexes for example I'm going to create indexes for users and for products and everything so we have to split up that whenever we are creating a service new service itself so based on the api request we'll be targeting only the particular indexes and from the indexes we will be getting the actual key value but we have to do so for example if we have like five modules like users products prices inventories then we have to store all the things in a redis cache from that we can easily utilize those values",
+            "time": 1758187603677,
+            "endTime": 1758187643356,
+            "duration": 39679,
+            "secondsFromStart": 1473.4400024414062
+          }
+        ]
+      },
+      {
+        "question_id": "Q10",
+        "question_title": "Given a slow-running report query, what specific steps would you take to diagnose and improve its performance?",
+        "type": "technical",
+        "source": "known_questions",
+        "time_range": {
+          "start": 1758187643356,
+          "end": 1758187704957
+        },
+        "turn_indices": [
+          66,
+          67
+        ],
+        "facts": {
+          "answers": [],
+          "entities": {}
+        },
+        "greenFlags": [
+          "References EXPLAIN ANALYZE",
+          "Checks index usage",
+          "Considers query restructuring"
+        ],
+        "redFlags": [],
+        "metadata": {},
+        "conversation": [
+          {
+            "idx": 66,
+            "role": "agent",
+            "message": "I see let's move on to the last technical question given a slow running report query what specific steps would you take to diagnose and improve its performance",
+            "time": 1758187643356,
+            "endTime": 1758187656957,
+            "duration": 13601,
+            "secondsFromStart": 1510.5599975585938
+          },
+          {
+            "idx": 67,
+            "role": "user",
+            "message": "slow running query for example like that particular slow running query it is running based on without any indexes this is the first thing first I will be checking whether any indexes where we have that particular table or not and mostly the slow query is actually occurring for like keywords so when we are going with the text search so if at all we want to avoid the text search and then indexing thing we can go with the indexing pattern like we are using in the db for a particular table actually so in that way we can increase the performance as well and then if at all it has like multiple joints what we have to do based on the hierarchy level of joints we have to make an indexing so in that way we can optimize the slower and queries into a better way of optimization",
+            "time": 1758187656957,
+            "endTime": 1758187704957,
+            "duration": 48000,
+            "secondsFromStart": 1527.2799987792969
+          }
+        ]
+      },
+      {
+        "question_id": "custom:Screening (Group 1)",
+        "question_title": "Screening and introductory conversation",
+        "type": "other",
+        "source": "custom",
+        "time_range": {
+          "start": 1758186131517,
+          "end": 1758186583816
+        },
+        "turn_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          30
+        ],
+        "facts": {
+          "answers": [],
+          "entities": {}
+        },
+        "greenFlags": [],
+        "redFlags": [],
+        "metadata": {},
+        "conversation": [
+          {
+            "idx": 0,
+            "role": "agent",
+            "message": "Hi Mohammed, I'm Sarah, your AI interviewer from F22 Labs. Thanks for joining this virtual interview. How are you doing today?",
+            "time": 1758186131517,
+            "endTime": 1758186149916,
+            "duration": 18400,
+            "secondsFromStart": 0.0
+          },
+          {
+            "idx": 1,
+            "role": "user",
+            "message": "Yeah, I'm doing good. Thanks for asking.",
+            "time": 1758186149916,
+            "endTime": 1758186157156,
+            "duration": 7240,
+            "secondsFromStart": 18.399999618530273
+          },
+          {
+            "idx": 2,
+            "role": "agent",
+            "message": "It's great to see your interest in the SeniorNode.js developer role at F22 Labs. I'll be asking you a few questions to understand your background and how well you might fit the role. Are you ready to go ahead with the interview?",
+            "time": 1758186157156,
+            "endTime": 1758186172197,
+            "duration": 15041,
+            "secondsFromStart": 25.639999389648438
+          },
+          {
+            "idx": 3,
+            "role": "user",
+            "message": "Yes, I'm ready.",
+            "time": 1758186172197,
+            "endTime": 1758186180877,
+            "duration": 8680,
+            "secondsFromStart": 40.68000030517578
+          },
+          {
+            "idx": 4,
+            "role": "agent",
+            "message": "I understand your enthusiasm. Let's get started with the first question.",
+            "time": 1758186180877,
+            "endTime": 1758186185877,
+            "duration": 5000,
+            "secondsFromStart": 49.36000061035156
+          },
+          {
+            "idx": 5,
+            "role": "agent",
+            "message": "Are you open to working from office in Chennai?",
+            "time": 1758186185877,
+            "endTime": 1758186189397,
+            "duration": 3520,
+            "secondsFromStart": 54.36000061035156
+          },
+          {
+            "idx": 6,
+            "role": "user",
+            "message": "Yes, I'm willing to relocate.",
+            "time": 1758186189397,
+            "endTime": 1758186197277,
+            "duration": 7880,
+            "secondsFromStart": 57.880001068115234
+          },
+          {
+            "idx": 7,
+            "role": "agent",
+            "message": "That's good to hear. Which city are you currently based out of?",
+            "time": 1758186197277,
+            "endTime": 1758186202436,
+            "duration": 5159,
+            "secondsFromStart": 65.76000213623047
+          },
+          {
+            "idx": 8,
+            "role": "user",
+            "message": "Coimbatore.",
+            "time": 1758186202436,
+            "endTime": 1758186207197,
+            "duration": 4761,
+            "secondsFromStart": 70.91999816894531
+          },
+          {
+            "idx": 9,
+            "role": "agent",
+            "message": "Thank you for sharing that. Since you're currently based in Coimbatore, are you open to relocating to Chennai?",
+            "time": 1758186207197,
+            "endTime": 1758186213637,
+            "duration": 6440,
+            "secondsFromStart": 75.68000030517578
+          },
+          {
+            "idx": 10,
+            "role": "user",
+            "message": "Yeah, I'm open to relocating.",
+            "time": 1758186214356,
+            "endTime": 1758186220356,
+            "duration": 6000,
+            "secondsFromStart": 82.83999633789062
+          },
+          {
+            "idx": 11,
+            "role": "agent",
+            "message": "Understood. Now, could you please tell me your total years of work experience?",
+            "time": 1758186220356,
+            "endTime": 1758186225756,
+            "duration": 5400,
+            "secondsFromStart": 88.83999633789062
+          },
+          {
+            "idx": 12,
+            "role": "user",
+            "message": "Sure, I do have like three years of experience, 3.4 years of experience in the full stack development actually. So, yeah, the tech stack that I have used like front-end with React, Next.js and the back-end with NodeXpress and Sjs. The DB I'm familiar with is MongoDB Postgres and using Prisma over it. So, these are the tech stack I have throughout this entire experience.",
+            "time": 1758186225756,
+            "endTime": 1758186253277,
+            "duration": 27521,
+            "secondsFromStart": 94.23999786376953
+          },
+          {
+            "idx": 13,
+            "role": "agent",
+            "message": "Thank you for sharing your experience. Just to clarify, you mentioned you have 3.4 years of experience in full stack development. Now, could you tell me your years of experience specifically with Node.js?",
+            "time": 1758186253277,
+            "endTime": 1758186263796,
+            "duration": 10519,
+            "secondsFromStart": 120.0
+          },
+          {
+            "idx": 14,
+            "role": "user",
+            "message": "It's around like three years of experience specifically in Node.js.",
+            "time": 1758186263796,
+            "endTime": 1758186270156,
+            "duration": 6360,
+            "secondsFromStart": 132.27999877929688
+          },
+          {
+            "idx": 15,
+            "role": "agent",
+            "message": "Great. Thank you for that information. What is your current CTC?",
+            "time": 1758186270156,
+            "endTime": 1758186275317,
+            "duration": 5161,
+            "secondsFromStart": 138.63999938964844
+          },
+          {
+            "idx": 16,
+            "role": "user",
+            "message": "So, my current CTC which is 7.3.",
+            "time": 1758186275317,
+            "endTime": 1758186282196,
+            "duration": 6879,
+            "secondsFromStart": 143.8000030517578
+          },
+          {
+            "idx": 17,
+            "role": "agent",
+            "message": "Noted. What is your salary expectation?",
+            "time": 1758186282196,
+            "endTime": 1758186284196,
+            "duration": 2000,
+            "secondsFromStart": 150.67999267578125
+          },
+          {
+            "idx": 18,
+            "role": "user",
+            "message": "Just 9.5.",
+            "time": 1758186284196,
+            "endTime": 1758186290196,
+            "duration": 6000,
+            "secondsFromStart": 152.67999267578125
+          },
+          {
+            "idx": 19,
+            "role": "agent",
+            "message": "Thank you for sharing your salary expectation. Are you open to negotiate on that?",
+            "time": 1758186290196,
+            "endTime": 1758186294817,
+            "duration": 4621,
+            "secondsFromStart": 158.67999267578125
+          },
+          {
+            "idx": 20,
+            "role": "user",
+            "message": "Yeah, I'm open to it.",
+            "time": 1758186294817,
+            "endTime": 1758186300817,
+            "duration": 6000,
+            "secondsFromStart": 163.3000030517578
+          },
+          {
+            "idx": 21,
+            "role": "agent",
+            "message": "Understood. Lastly, could you please tell me your current notice period?",
+            "time": 1758186300817,
+            "endTime": 1758186304817,
+            "duration": 4000,
+            "secondsFromStart": 169.3000030517578
+          },
+          {
+            "idx": 22,
+            "role": "user",
+            "message": "So, currently I'm in my probation. So, it will not take more than 20 days actually, 10 to 15 days.",
+            "time": 1758186304817,
+            "endTime": 1758186316817,
+            "duration": 12000,
+            "secondsFromStart": 173.3000030517578
+          },
+          {
+            "idx": 23,
+            "role": "agent",
+            "message": "Thank you for that information, Mohammed. Now, let's move on to the technical questions.",
+            "time": 1758186316817,
+            "endTime": 1758186321817,
+            "duration": 5000,
+            "secondsFromStart": 185.3000030517578
+          },
+          {
+            "idx": 30,
+            "role": "agent",
+            "message": "Right. Let's move on to the next question.",
+            "time": 1758186580816,
+            "endTime": 1758186583816,
+            "duration": 3000,
+            "secondsFromStart": 449.29998779296875
+          }
+        ]
+      },
+      {
+        "question_id": "custom:WrapUp (Group 2)",
+        "question_title": "Wrap‑up and closing remarks",
+        "type": "other",
+        "source": "custom",
+        "time_range": {
+          "start": 1758187704957,
+          "end": 1758187752636
+        },
+        "turn_indices": [
+          68,
+          69,
+          70,
+          71
+        ],
+        "facts": {
+          "answers": [],
+          "entities": {}
+        },
+        "greenFlags": [],
+        "redFlags": [],
+        "metadata": {},
+        "conversation": [
+          {
+            "idx": 68,
+            "role": "agent",
+            "message": "thank you for your detailed responses Mohammed now I appreciate the insights you provided during this interview I'll share your profile with our hiring team and we'll update you on the next steps",
+            "time": 1758187704957,
+            "endTime": 1758187718876,
+            "duration": 13919,
+            "secondsFromStart": 1576.3999938964844
+          },
+          {
+            "idx": 69,
+            "role": "user",
+            "message": "do you have any questions before we wrap up no it's fine I like how was my performance actually",
+            "time": 1758187718876,
+            "endTime": 1758187725356,
+            "duration": 6480,
+            "secondsFromStart": 1588.0799865722656
+          },
+          {
+            "idx": 70,
+            "role": "agent",
+            "message": "that's a great question I don't I don't have the details on that right now but I'll share your performance feedback with our hiring manager and ensure it's addressed thank you for your time today I'll go ahead and end the call now thank you so much",
+            "time": 1758187725356,
+            "endTime": 1758187742476,
+            "duration": 17120,
+            "secondsFromStart": 1594.8800048828125
+          },
+          {
+            "idx": 71,
+            "role": "agent",
+            "message": "goodbye have a great day",
+            "time": 1758187742476,
+            "endTime": 1758187752636,
+            "duration": 10160,
+            "secondsFromStart": 1610.0
+          }
+        ]
+      }
+    ],
+    "misc_or_unclear": [],
+    "pre_inferred_facts_global": {}
+  },
+  "individual_evaluations_count": 12,
+  "successful_evaluations": 12
+}
