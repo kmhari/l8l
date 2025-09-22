@@ -2,8 +2,8 @@
   "overall_assessment": {
     "recommendation": "Hire",
     "confidence": "Medium",
-    "overall_score": 72,
-    "summary": "Candidate demonstrates solid foundational knowledge in Node.js and asynchronous programming, with practical experience in database optimization. Shows good communication skills but has some gaps in advanced concepts like GraphQL and performance monitoring tools."
+    "overall_score": 75,
+    "summary": "Candidate demonstrates solid foundational knowledge in Node.js and asynchronous programming, with practical experience in database optimization. Shows good communication skills and willingness to learn. While there are some gaps in advanced concepts like GraphQL, the candidate shows strong potential for growth and development."
   },
   "competency_mapping": [
     {

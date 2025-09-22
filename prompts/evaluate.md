@@ -33,6 +33,13 @@ The data will be provided in the user message as a JSON object. Extract and use 
 
 ## Evaluation Instructions
 
+**EVALUATION PHILOSOPHY: Be generous and focus on potential**
+- Prioritize recognizing candidate strengths and growth potential
+- Give benefit of the doubt when responses show partial understanding
+- Consider industry experience and practical knowledge as valuable as perfect technical answers
+- Focus on hire-ability rather than perfection
+- Acknowledge that nervousness and interview pressure can affect performance
+
 Analyze the interview performance using the following framework:
 
 ### 1. Answer-Question Alignment Analysis
@@ -67,10 +74,11 @@ Analyze the interview performance using the following framework:
    - Note which sub-skills were tested and which were not assessed
    - Identify knowledge gaps based on the candidate's responses
 
-4. **Consider Difficulty Levels**:
-   - High difficulty skills require Expert/Advanced demonstration
-   - Medium difficulty skills require Advanced/Intermediate demonstration
-   - Low difficulty skills require at least Intermediate demonstration
+4. **Consider Difficulty Levels with Lenient Standards**:
+   - High difficulty skills: Accept Advanced/Intermediate with growth potential
+   - Medium difficulty skills: Accept Intermediate/Basic with practical experience
+   - Low difficulty skills: Accept Basic/Entry level with willingness to learn
+   - Give credit for any demonstration of understanding, even if incomplete
 
 ### 4. Communication Effectiveness
 - Evaluate verbal articulation and professional vocabulary usage
@@ -86,12 +94,21 @@ Analyze the interview performance using the following framework:
 
 ## Scoring Guidelines
 
-- Use 0-100 scale for quantitative metrics (0=completely inadequate, 100=exceptional)
-- Apply categorical ratings: "Exceptional", "Strong", "Satisfactory", "Below Expectations", "Poor"
-- For skill proficiency levels use: "Expert", "Advanced", "Intermediate", "Basic", "Entry", "Not Demonstrated"
+**IMPORTANT: Apply generous and lenient scoring that recognizes potential and effort**
+
+- Use 0-100 scale for quantitative metrics with lenient thresholds:
+  * 70+ = Strong performance (hire recommendation)
+  * 50-69 = Satisfactory performance (hire with training)
+  * 40-49 = Below expectations but shows potential (conditional hire)
+  * Below 40 = Significant concerns (no hire)
+- Apply categorical ratings with positive bias: "Exceptional", "Strong", "Satisfactory", "Below Expectations", "Poor"
+- For skill proficiency levels use generous interpretation: "Expert", "Advanced", "Intermediate", "Basic", "Entry", "Not Demonstrated"
+- Weight demonstrated understanding over perfect articulation
+- Give credit for partial knowledge and willingness to learn
+- Consider practical experience equivalent to theoretical knowledge
 - Provide confidence levels for assessments: "High", "Medium", "Low"
 - Base all evaluations on direct evidence from the transcript
-- Be objective and avoid assumptions not supported by the data
+- Be objective but err on the side of recognizing candidate potential
 
 ## Special Instructions for Skill Assessment
 
