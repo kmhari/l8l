@@ -808,7 +808,7 @@ async def evaluate_question_group(group: Dict[str, Any], resume: Dict[str, Any],
         # Debug: Log response length and preview
         print(f"📋 Response for {group.get('question_id', 'Unknown')}: {len(evaluation_result)} chars")
         # if len(evaluation_result) < 100:
-        print(f"📄 Short response: {evaluation_result}")
+        # print(f"📄 Short response: {evaluation_result}")
         # else:
             # print(f"📄 Response preview: {evaluation_result[:200]}...")
 

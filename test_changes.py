@@ -17,7 +17,7 @@ def test_api_changes():
         "transcript": sample_data["transcript"],
         "llm_settings": {
             "provider": "openrouter",
-            "model": "qwen/qwen3-235b-a22b-thinking-2507:nitro"
+            "model": "qwen/qwen3-235b-a22b-2507"
         }
     }
 

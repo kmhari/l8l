@@ -18,9 +18,7 @@
         },
         "overall_score": {
           "type": "number",
-          "minimum": 0,
-          "maximum": 100,
-          "description": "Overall interview performance score"
+          "description": "Overall interview performance score 0 - 100"
         },
         "summary": {
           "type": "string",
@@ -118,9 +116,7 @@
             "properties": {
               "relevance_score": {
                 "type": "number",
-                "minimum": 0,
-                "maximum": 100,
-                "description": "How directly the answer addressed the question"
+                "description": "How directly the answer addressed the question 0 - 100"
               },
               "completeness": {
                 "type": "string",

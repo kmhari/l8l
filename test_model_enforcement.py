@@ -33,7 +33,7 @@ def test_model_enforcement():
         modified_data = sample_data.copy()
         modified_data["llm_settings"] = {
             "provider": "openrouter",
-            "model": "qwen/qwen3-235b-a22b-thinking-2507:nitro"  # Different model
+            "model": "qwen/qwen3-235b-a22b-2507"  # Different model
         }
 
         print(f"   Sending request with: {modified_data['llm_settings']['model']}")

@@ -4,7 +4,7 @@
 
 ### High-Performance Models
 - `openai/gpt-oss-120b:nitro` - OpenAI's latest large model with nitro acceleration
-- `qwen/qwen3-235b-a22b-thinking-2507:nitro` - Qwen's advanced reasoning model
+- `qwen/qwen3-235b-a22b-2507` - Qwen's advanced reasoning model
 - `qwen/qwen3-32b:nitro` - Efficient mid-size model with nitro acceleration
 
 ### Usage Example
@@ -12,7 +12,7 @@
 {
   "llm_settings": {
     "provider": "openrouter",
-    "model": "qwen/qwen3-235b-a22b-thinking-2507:nitro",
+    "model": "qwen/qwen3-235b-a22b-2507",
     "api_key": "your_openrouter_api_key"
   }
 }

@@ -151,7 +151,7 @@ def main():
     # Test different providers/models
     test_configs = [
         {"provider": "openrouter", "model": "openai/gpt-oss-120b:nitro"},
-        {"provider": "openrouter", "model": "qwen/qwen3-235b-a22b-thinking-2507:nitro"},
+        {"provider": "openrouter", "model": "qwen/qwen3-235b-a22b-2507"},
         {"provider": "openrouter", "model": "qwen/qwen3-32b:nitro"},
         # Add more configurations as needed
     ]
