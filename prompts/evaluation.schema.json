@@ -18,7 +18,7 @@
         },
         "overall_score": {
           "type": "number",
-          "description": "Overall interview performance score 0 - 100"
+          "description": "Overall interview performance score 0-100. Use generous scoring: any competency shown = 70+, good performance = 80+, strong performance = 85+"
         },
         "summary": {
           "type": "string",

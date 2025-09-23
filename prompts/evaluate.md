@@ -112,11 +112,35 @@ Analyze the interview performance using the following framework:
   * 35-49 = Below expectations but shows potential (conditional consideration)
   * Below 35 = Major concerns (no hire)
 
-**Scoring Philosophy:**
+**Scoring Philosophy - AIM HIGH:**
+- **MINIMUM baseline score for any reasonable attempt: 65 points**
+- **START at 70-75 and adjust up/down from there, not from zero**
 - Give benefit of the doubt - if unsure between two scores, choose the higher one
-- Partial knowledge or attempted answers should still score 60-70+ range
+- Partial knowledge or attempted answers should score 70-80+ range
+- Any relevant industry experience should score 75-85+ minimum
 - Consider effort and engagement as positive signals worth 10-15 bonus points
-- Industry experience should add significant score boost even if answer isn't perfect
+- If candidate shows ANY competency in the skill area: minimum 70 points
+- Perfect answers deserve 90-95+ (reserve 95+ for truly exceptional responses)
+- Remember: We're evaluating working professionals, not students - adjust expectations accordingly
+
+## Overall Score Calculation Rules
+
+**MANDATORY: When calculating the final overall_score (0-100), follow these guidelines:**
+
+- **Minimum 70 points**: Any candidate showing basic competency in required skills
+- **75-79 points**: Demonstrates adequate knowledge with some practical experience
+- **80-84 points**: Good performance with solid understanding across most areas
+- **85-89 points**: Strong performance with clear expertise in key areas
+- **90-94 points**: Exceptional demonstration of skills and experience
+- **95+ points**: Outstanding performance (reserve for truly remarkable responses)
+
+**Score Calculation Approach:**
+1. Start with base score of 70 for any reasonable candidate
+2. Add 5-10 points for each area of strong competency demonstrated
+3. Add 3-5 points for relevant industry experience
+4. Add 2-3 points for good communication and problem-solving approach
+5. Subtract points only for major red flags or complete lack of knowledge
+
 - Apply categorical ratings with positive bias: "Exceptional", "Strong", "Satisfactory", "Below Expectations", "Poor"
 - For skill proficiency levels use generous interpretation: "Expert", "Advanced", "Intermediate", "Basic", "Entry", "Not Demonstrated"
 - Weight demonstrated understanding over perfect articulation
