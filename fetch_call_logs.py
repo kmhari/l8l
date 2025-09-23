@@ -7,6 +7,7 @@ import psycopg2
 import psycopg2.extras
 import argparse
 import json
+import requests
 from urllib.parse import urlparse, parse_qs
 
 def fetch_call_log_variables_supabase(room_name: str) -> dict:
@@ -252,20 +253,194 @@ def create_evaluation_json(supabase_data: dict, postgres_data: dict, job_details
 
     return evaluation_json
 
+def generate_call_report(supabase_data: dict, postgres_data: dict, job_details: dict) -> dict:
+    """
+    Generate a comprehensive report for the call
+
+    Args:
+        supabase_data: Data from Supabase call_logs
+        postgres_data: Data from PostgreSQL call_logs
+        job_details: Job details from PostgreSQL jobs table
+
+    Returns:
+        Dictionary containing the report
+    """
+    call_data = postgres_data if postgres_data else supabase_data
+
+    # Extract basic call information - prioritize PostgreSQL data
+    call_id = 'N/A'
+    status = 'N/A'
+
+    if postgres_data:
+        call_id = postgres_data.get('call_id', 'N/A')
+        status = postgres_data.get('status', 'N/A')
+    elif supabase_data:
+        call_id = supabase_data.get('room_name', 'N/A')
+        status = supabase_data.get('status', 'N/A')
+
+    call_info = {
+        "call_id": call_id,
+        "status": status,
+        "duration": "N/A",
+        "candidate_name": "N/A",
+        "job_title": "N/A",
+        "company_name": "N/A"
+    }
+
+    # Extract duration from different sources
+    if 'call_duration' in call_data:
+        duration_seconds = call_data['call_duration']
+        call_info["duration"] = f"{duration_seconds // 60}m {duration_seconds % 60}s"
+    elif supabase_data and 'transcript' in supabase_data:
+        # Handle string transcript
+        transcript_data = supabase_data['transcript']
+        if isinstance(transcript_data, str):
+            try:
+                transcript = json.loads(transcript_data)
+            except:
+                transcript = {}
+        else:
+            transcript = transcript_data
+
+        if isinstance(transcript, dict) and 'stats' in transcript:
+            duration_ms = transcript['stats'].get('duration', 0)
+            duration_seconds = duration_ms // 1000
+            call_info["duration"] = f"{duration_seconds // 60}m {duration_seconds % 60}s"
+
+    # Extract candidate info from variables
+    if supabase_data and 'variables' in supabase_data:
+        variables = supabase_data['variables']
+        if isinstance(variables, dict):
+            call_info["candidate_name"] = variables.get('candidate_name', 'N/A')
+            call_info["job_title"] = variables.get('job_title', 'N/A')
+            call_info["company_name"] = variables.get('company_name', 'N/A')
+
+    # Extract key skill areas
+    skill_areas = []
+    if job_details and 'key_skill_areas' in job_details:
+        skill_areas = job_details['key_skill_areas']
+
+    # Count transcript messages
+    message_stats = {"total_messages": 0, "user_messages": 0, "agent_messages": 0}
+    if supabase_data and 'transcript' in supabase_data:
+        # Handle string transcript
+        transcript_data = supabase_data['transcript']
+        if isinstance(transcript_data, str):
+            try:
+                transcript = json.loads(transcript_data)
+            except:
+                transcript = {}
+        else:
+            transcript = transcript_data
+
+        if isinstance(transcript, dict) and 'messages' in transcript:
+            messages = transcript['messages']
+            message_stats["total_messages"] = len(messages)
+            message_stats["user_messages"] = len([m for m in messages if m.get('role') == 'user'])
+            message_stats["agent_messages"] = len([m for m in messages if m.get('role') == 'agent'])
+
+    return {
+        "call_information": call_info,
+        "skill_areas": skill_areas,
+        "conversation_stats": message_stats,
+        "data_sources": {
+            "supabase_available": bool(supabase_data),
+            "postgres_available": bool(postgres_data),
+            "job_details_available": bool(job_details)
+        }
+    }
+
+def print_report(report: dict):
+    """Print a formatted report"""
+    print("\n" + "="*60)
+    print("CALL INTERVIEW REPORT")
+    print("="*60)
+
+    # Call Information
+    print("\n📞 CALL INFORMATION")
+    print("-" * 30)
+    call_info = report["call_information"]
+    print(f"Call ID: {call_info['call_id']}")
+    print(f"Status: {call_info['status']}")
+    print(f"Duration: {call_info['duration']}")
+    print(f"Candidate: {call_info['candidate_name']}")
+    print(f"Position: {call_info['job_title']}")
+    print(f"Company: {call_info['company_name']}")
+
+    # Conversation Statistics
+    print("\n💬 CONVERSATION STATISTICS")
+    print("-" * 30)
+    stats = report["conversation_stats"]
+    print(f"Total Messages: {stats['total_messages']}")
+    print(f"Candidate Messages: {stats['user_messages']}")
+    print(f"Interviewer Messages: {stats['agent_messages']}")
+
+    # Skill Areas
+    print("\n🎯 KEY SKILL AREAS")
+    print("-" * 30)
+    skill_areas = report["skill_areas"]
+    if skill_areas:
+        for i, skill in enumerate(skill_areas, 1):
+            print(f"{i}. {skill['name']} ({skill['difficultyLevel']})")
+            for sub_skill in skill.get('subSkillAreas', []):
+                print(f"   • {sub_skill}")
+    else:
+        print("No skill areas found")
+
+    # Data Sources
+    print("\n📊 DATA SOURCES")
+    print("-" * 30)
+    sources = report["data_sources"]
+    print(f"Supabase: {'✓ Available' if sources['supabase_available'] else '✗ Not found'}")
+    print(f"PostgreSQL: {'✓ Available' if sources['postgres_available'] else '✗ Not found'}")
+    print(f"Job Details: {'✓ Available' if sources['job_details_available'] else '✗ Not found'}")
+
+def call_generate_report_api(evaluation_json: dict, api_url: str = "http://localhost:8000") -> dict:
+    """
+    Call the /generate-report API endpoint with evaluation data
+
+    Args:
+        evaluation_json: The evaluation data in the required format
+        api_url: Base URL for the API (default: localhost:8000)
+
+    Returns:
+        Dictionary containing the API response
+    """
+    try:
+        response = requests.post(
+            f"{api_url}/generate-report",
+            json=evaluation_json,
+            headers={"Content-Type": "application/json"},
+            timeout=300  # 5 minute timeout for LLM processing
+        )
+
+        if response.status_code == 200:
+            return response.json()
+        else:
+            print(f"API Error {response.status_code}: {response.text}")
+            return {}
+
+    except requests.exceptions.RequestException as e:
+        print(f"Request failed: {e}")
+        return {}
+
 def main():
-    parser = argparse.ArgumentParser(description='Fetch call_logs data and create evaluation JSON')
-    parser.add_argument('room_name', help='Room name/call_id to search for')
+    parser = argparse.ArgumentParser(description='Generate interview report using /generate-report API')
+    parser.add_argument('call_id', help='Call ID to search for')
+    parser.add_argument('--json', action='store_true', help='Output full API response JSON')
     parser.add_argument('--pretty', action='store_true', help='Pretty print JSON output')
+    parser.add_argument('--api-url', default='http://localhost:8000', help='API base URL')
+    parser.add_argument('--local-only', action='store_true', help='Skip API call, show only local data')
 
     args = parser.parse_args()
 
-    print(f"Fetching data for room_name/call_id: {args.room_name}")
+    print(f"Generating report for call_id: {args.call_id}")
 
     # Fetch from Supabase
     print("Fetching from Supabase...")
     supabase_data = {}
     try:
-        supabase_data = fetch_call_log_variables_supabase(args.room_name)
+        supabase_data = fetch_call_log_variables_supabase(args.call_id)
         if supabase_data:
             print("✓ Found data in Supabase")
         else:
@@ -277,7 +452,7 @@ def main():
     print("Fetching from PostgreSQL...")
     postgres_data = {}
     try:
-        postgres_data = fetch_call_log_variables_postgres(args.room_name)
+        postgres_data = fetch_call_log_variables_postgres(args.call_id)
         if postgres_data:
             print("✓ Found data in PostgreSQL")
         else:
@@ -299,18 +474,95 @@ def main():
         except Exception as e:
             print(f"✗ Job details query failed: {e}")
 
-    # Create evaluation JSON
+    # Generate evaluation JSON for API
     if supabase_data or postgres_data:
         evaluation_json = create_evaluation_json(supabase_data, postgres_data, job_details)
 
-        print("\n" + "="*50)
-        print("EVALUATION JSON")
-        print("="*50)
-
-        if args.pretty:
-            print(json.dumps(evaluation_json, indent=2, default=str))
+        if args.local_only:
+            # Output local data only
+            print("\n" + "="*50)
+            print("LOCAL EVALUATION DATA")
+            print("="*50)
+            if args.pretty:
+                print(json.dumps(evaluation_json, indent=2, default=str))
+            else:
+                print(json.dumps(evaluation_json, default=str))
         else:
-            print(json.dumps(evaluation_json, default=str))
+            # Call the API for report generation
+            print(f"\nCalling /generate-report API at {args.api_url}...")
+            api_response = call_generate_report_api(evaluation_json, args.api_url)
+
+            if api_response:
+                print("✓ Report generated successfully")
+                print("\n" + "="*60)
+                print("INTERVIEW EVALUATION REPORT")
+                print("="*60)
+
+                if args.json:
+                    # Output full API response
+                    if args.pretty:
+                        print(json.dumps(api_response, indent=2, default=str))
+                    else:
+                        print(json.dumps(api_response, default=str))
+                else:
+                    # Extract and display key information from API response
+                    if 'evaluation' in api_response:
+                        evaluation = api_response['evaluation']
+
+                        # Display overall score and recommendation
+                        if 'overall_recommendation' in evaluation:
+                            rec = evaluation['overall_recommendation']
+                            print(f"Overall Score: {rec.get('overall_score', 'N/A')}/10")
+                            print(f"Recommendation: {rec.get('recommendation', 'N/A')}")
+                            print(f"Confidence: {rec.get('confidence_level', 'N/A')}")
+
+                        # Display skill area evaluations
+                        if 'skill_area_evaluations' in evaluation:
+                            print(f"\n🎯 SKILL AREA EVALUATIONS")
+                            print("-" * 30)
+                            for skill_eval in evaluation['skill_area_evaluations']:
+                                skill_name = skill_eval.get('skill_area_name', 'Unknown')
+                                score = skill_eval.get('score', 'N/A')
+                                print(f"{skill_name}: {score}/10")
+
+                        # Display technical assessment
+                        if 'technical_assessment' in evaluation:
+                            tech = evaluation['technical_assessment']
+                            print(f"\n💻 TECHNICAL ASSESSMENT")
+                            print("-" * 30)
+                            print(f"Problem Solving: {tech.get('problem_solving_score', 'N/A')}/10")
+                            print(f"Technical Depth: {tech.get('technical_depth_score', 'N/A')}/10")
+                            print(f"Communication: {tech.get('communication_score', 'N/A')}/10")
+
+                        # Display key insights
+                        if 'key_insights' in evaluation:
+                            insights = evaluation['key_insights']
+                            if insights.get('strengths'):
+                                print(f"\n✅ STRENGTHS")
+                                print("-" * 30)
+                                for strength in insights['strengths']:
+                                    print(f"• {strength}")
+
+                            if insights.get('areas_for_improvement'):
+                                print(f"\n⚠️ AREAS FOR IMPROVEMENT")
+                                print("-" * 30)
+                                for area in insights['areas_for_improvement']:
+                                    print(f"• {area}")
+
+                    # Display metadata
+                    if 'metadata' in api_response:
+                        meta = api_response['metadata']
+                        print(f"\n📊 METADATA")
+                        print("-" * 30)
+                        print(f"Processing Time: {meta.get('processing_time_seconds', 'N/A')}s")
+                        print(f"Model Used: {meta.get('model_used', 'N/A')}")
+                        print(f"Generated At: {meta.get('generated_at', 'N/A')}")
+            else:
+                print("✗ Failed to generate report via API")
+                print("Falling back to local analysis...")
+                # Fallback to local report generation
+                report = generate_call_report(supabase_data, postgres_data, job_details)
+                print_report(report)
     else:
         print("No data found from any source")
 
