@@ -933,7 +933,63 @@ async def merge_evaluations(evaluations: List[Dict[str, Any]],
                             # Merge sub-skills and aggregate assessments
                             existing = skill_areas[skill_area]
                             if "sub_skills" in competency and isinstance(competency["sub_skills"], list):
-                                existing["sub_skills"].extend(competency["sub_skills"])
+                                # Deduplicate sub-skills by name and merge their evidence
+                                existing_sub_skills = {}
+
+                                # First, index existing sub-skills by name
+                                for sub_skill in existing["sub_skills"]:
+                                    if isinstance(sub_skill, dict) and "name" in sub_skill:
+                                        name = sub_skill["name"]
+                                        existing_sub_skills[name] = sub_skill
+
+                                # Then merge new sub-skills, consolidating duplicates
+                                for new_sub_skill in competency["sub_skills"]:
+                                    if isinstance(new_sub_skill, dict) and "name" in new_sub_skill:
+                                        name = new_sub_skill["name"]
+                                        if name in existing_sub_skills:
+                                            # Merge evidence and gaps for duplicate sub-skill
+                                            existing_skill = existing_sub_skills[name]
+
+                                            # Take highest proficiency
+                                            prof_levels = {"Entry": 1, "Basic": 2, "Intermediate": 3, "Advanced": 4, "Expert": 5}
+                                            existing_prof = prof_levels.get(existing_skill.get("proficiency", "Entry"), 1)
+                                            new_prof = prof_levels.get(new_sub_skill.get("proficiency", "Entry"), 1)
+                                            if new_prof > existing_prof:
+                                                existing_skill["proficiency"] = new_sub_skill.get("proficiency", "Entry")
+
+                                            # Combine evidence
+                                            if "evidence" in new_sub_skill and new_sub_skill["evidence"]:
+                                                existing_evidence = existing_skill.get("evidence", "")
+                                                new_evidence = new_sub_skill["evidence"]
+                                                if existing_evidence and new_evidence not in existing_evidence:
+                                                    existing_skill["evidence"] = f"{existing_evidence} | {new_evidence}"
+                                                elif not existing_evidence:
+                                                    existing_skill["evidence"] = new_evidence
+
+                                            # Combine gaps
+                                            if "gaps_identified" in new_sub_skill and isinstance(new_sub_skill["gaps_identified"], list):
+                                                existing_gaps = existing_skill.get("gaps_identified", [])
+                                                for gap in new_sub_skill["gaps_identified"]:
+                                                    if gap not in existing_gaps:
+                                                        existing_gaps.append(gap)
+                                                existing_skill["gaps_identified"] = existing_gaps
+
+                                            # Update confidence to highest
+                                            conf_levels = {"Low": 1, "Medium": 2, "High": 3}
+                                            existing_conf = conf_levels.get(existing_skill.get("confidence", "Low"), 1)
+                                            new_conf = conf_levels.get(new_sub_skill.get("confidence", "Low"), 1)
+                                            if new_conf > existing_conf:
+                                                existing_skill["confidence"] = new_sub_skill.get("confidence", "Low")
+
+                                            # Set demonstrated to true if either is true
+                                            existing_skill["demonstrated"] = existing_skill.get("demonstrated", False) or new_sub_skill.get("demonstrated", False)
+                                        else:
+                                            # Add new sub-skill
+                                            existing_sub_skills[name] = new_sub_skill
+
+                                # Replace the sub_skills list with deduplicated results
+                                existing["sub_skills"] = list(existing_sub_skills.values())
+
                             if "assessment_notes" in competency and isinstance(competency["assessment_notes"], list):
                                 existing["assessment_notes"].extend(competency["assessment_notes"])
 
@@ -982,9 +1038,9 @@ async def merge_evaluations(evaluations: List[Dict[str, Any]],
         # Determine overall recommendation based on average score
         if avg_score >= 80:
             merged_report["overall_assessment"]["recommendation"] = "Strong Hire"
-        elif avg_score >= 65:
+        elif avg_score >= 60:
             merged_report["overall_assessment"]["recommendation"] = "Hire"
-        elif avg_score >= 50:
+        elif avg_score >= 45:
             merged_report["overall_assessment"]["recommendation"] = "No Hire"
         else:
             merged_report["overall_assessment"]["recommendation"] = "Strong No Hire"
