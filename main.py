@@ -1094,12 +1094,12 @@ async def merge_evaluations(evaluations: List[Dict[str, Any]],
         avg_score = sum(e["overall_assessment"]["overall_score"] for e in valid_evaluations) / len(valid_evaluations)
         merged_report["overall_assessment"]["overall_score"] = round(avg_score, 1)
 
-        # Determine overall recommendation based on average score
-        if avg_score >= 80:
+        # Determine overall recommendation based on average score - more lenient thresholds
+        if avg_score >= 75:
             merged_report["overall_assessment"]["recommendation"] = "Strong Hire"
-        elif avg_score >= 60:
+        elif avg_score >= 55:
             merged_report["overall_assessment"]["recommendation"] = "Hire"
-        elif avg_score >= 45:
+        elif avg_score >= 35:
             merged_report["overall_assessment"]["recommendation"] = "No Hire"
         else:
             merged_report["overall_assessment"]["recommendation"] = "Strong No Hire"

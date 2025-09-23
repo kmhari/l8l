@@ -101,13 +101,22 @@ Analyze the interview performance using the following framework:
 
 ## Scoring Guidelines
 
-**IMPORTANT: Apply generous and lenient scoring that recognizes potential and effort**
+**CRITICAL: Apply very generous and lenient scoring - err on the side of higher scores**
 
-- Use 0-100 scale for quantitative metrics with lenient thresholds:
-  * 70+ = Strong performance (hire recommendation)
-  * 50-69 = Satisfactory performance (hire with training)
-  * 40-49 = Below expectations but shows potential (conditional hire)
-  * Below 40 = Significant concerns (no hire)
+**Default to positive assessment unless major red flags are present**
+
+- Use 0-100 scale with GENEROUS thresholds - start high and adjust down only if necessary:
+  * 80+ = Strong performance (strong hire recommendation)
+  * 65-79 = Good performance (hire recommendation)
+  * 50-64 = Adequate performance (hire with development)
+  * 35-49 = Below expectations but shows potential (conditional consideration)
+  * Below 35 = Major concerns (no hire)
+
+**Scoring Philosophy:**
+- Give benefit of the doubt - if unsure between two scores, choose the higher one
+- Partial knowledge or attempted answers should still score 60-70+ range
+- Consider effort and engagement as positive signals worth 10-15 bonus points
+- Industry experience should add significant score boost even if answer isn't perfect
 - Apply categorical ratings with positive bias: "Exceptional", "Strong", "Satisfactory", "Below Expectations", "Poor"
 - For skill proficiency levels use generous interpretation: "Expert", "Advanced", "Intermediate", "Basic", "Entry", "Not Demonstrated"
 - Weight demonstrated understanding over perfect articulation
