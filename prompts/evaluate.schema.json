@@ -38,7 +38,7 @@
                 "duration": { "type": ["number", "string"] },
                 "secondsFromStart": { "type": ["number", "string"] }
               },
-              "required": ["idx", "role", "message"],
+              "required": ["idx", "role", "message", "time", "endTime", "duration", "secondsFromStart"],
               "additionalProperties": true
             }
           },
