@@ -23,7 +23,8 @@ GATHER_CONFIG = {
 # Model settings for the /generate-report endpoint (evaluation and scoring)
 EVALUATION_CONFIG = {
     "provider": "openrouter",
-    "model": "qwen/qwen3-235b-a22b-2507",
+    # "model": "qwen/qwen3-235b-a22b-2507",
+    "model": "qwen/qwen3-32b",
     "description": "Advanced reasoning model for comprehensive candidate evaluation"
 }
 
