@@ -175,11 +175,7 @@ You are evaluating a SINGLE question group in this request. Generate ONE questio
    - Each conversation turn has: `role` (agent/user), `message` (content), `time`, `duration`, etc.
    - Use this conversation to make your assessments - it's the primary source of evidence
 
-## Expected Response Structure
 
-Your response must be valid JSON following the complete evaluation schema. Here's a comprehensive example showing the expected structure for individual questionnaire evaluation:
-
-{{SAMPLE_RESPONSE_STRUCTURE}}
 
 ## Key Requirements for Your Response
 
@@ -197,3 +193,8 @@ Your response must be valid JSON following the complete evaluation schema. Here'
 - Consider the interview context (junior vs senior role, industry norms)
 - Provide constructive feedback that could help the candidate improve
 - When a skill area has multiple sub-skills, ensure each is evaluated separately with specific observations
+
+## Expected Response Structure
+
+Your response must be valid JSON following the complete evaluation schema. Here's a comprehensive example showing the expected structure for individual questionnaire evaluation:
+

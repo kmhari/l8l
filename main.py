@@ -297,9 +297,10 @@ class GatherResponse(BaseModel):
 
 class EvaluateRequest(BaseModel):
     transcript: Dict[str, Any]
+    key_skill_areas: Optional[List[Dict[str, Any]]] = None
     llm_settings: Optional[LLMSettings] = LLMSettings(
         provider="openrouter",
-        model="qwen/qwen3-235b-a22b-2507"  # Use thinking model by default
+        model="openai/gpt-oss-120b:nitro"  # Use thinking model by default
     )
 
     class Config:
@@ -327,35 +328,7 @@ class EvaluateResponse(BaseModel):
     question_groups: Dict[str, Any]
 
     class Config:
-        schema_extra = {
-            "example": {
-                "evaluation_report": {
-                    "overall_assessment": {
-                        "recommendation": "Strong Hire",
-                        "confidence": "High",
-                        "overall_score": 78
-                    },
-                    "competency_mapping": [
-                        {
-                            "skill_area": "Programming & Development",
-                            "overall_assessment": "Advanced",
-                            "sub_skills": [
-                                {
-                                    "name": "Node.js Runtime",
-                                    "proficiency": "Advanced",
-                                    "demonstrated": True,
-                                    "confidence": "High"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "question_groups": {
-                    "groups": [],
-                    "pre_inferred_facts_global": {}
-                }
-            }
-        }
+        pass
 
 def parse_technical_questions(technical_questions: str) -> List[QuestionData]:
     questions = []
@@ -764,29 +737,24 @@ async def call_gather_endpoint(request_data: Dict[str, Any]) -> Dict[str, Any]:
     gather_response = await gather(gather_request)
     return gather_response.llm_output
 
+
 async def evaluate_question_group(group: Dict[str, Any], resume: Dict[str, Any],
                                 job_requirements: str, key_skill_areas: List[Dict[str, Any]],
                                 llm_client, evaluation_prompt: str, evaluation_schema: Dict) -> Dict[str, Any]:
     """Evaluate a single question group using the thinking model"""
     print(f"🔍 Evaluating question group: {group.get('question_id', 'Unknown')}")
 
-    # Load sample response structure
-    try:
-        sample_response = json.loads(Path("prompts/sample_evaluation_response.json").read_text())
-        sample_response_str = json.dumps(sample_response, indent=2)
-    except Exception as e:
-        print(f"⚠️  Failed to load sample response structure: {str(e)}")
-        sample_response_str = "Error loading sample structure"
+    # Remove sample response structure - let the LLM use only schema and instructions
+    print(f"🔧 Using schema-only evaluation for {len(key_skill_areas)} skill areas")
+    print(f"📋 Expected skill areas: {[skill['name'] for skill in key_skill_areas]}")
 
-    # Populate the system prompt with candidate information and sample structure
+    # Populate the system prompt with candidate information only
     populated_prompt = evaluation_prompt.replace(
         "{{RESUME_CONTENT}}", json.dumps(resume, indent=2)
     ).replace(
         "{{JOB_REQUIREMENTS}}", job_requirements
     ).replace(
         "{{KEY_SKILL_AREAS}}", json.dumps(key_skill_areas, indent=2)
-    ).replace(
-        "{{SAMPLE_RESPONSE_STRUCTURE}}", sample_response_str
     )
 
     # Prepare the input data for this specific group (without resume, job_requirements, key_skill_areas)
@@ -1057,10 +1025,14 @@ async def generate_report(request: EvaluateRequest):
         print(f"📊 Evaluation Provider: {request.llm_settings.provider}")
         print(f"🤖 Evaluation Model: {request.llm_settings.model}")
 
-        # Load evaluation configuration (resume, job requirements, key skill areas)
+        # Load evaluation configuration (resume, job requirements, technical questions)
         print("📋 Loading evaluation configuration...")
         eval_config = await load_evaluation_config()
         print("✅ Evaluation configuration loaded")
+
+        # Use key_skill_areas from request if provided, otherwise use sample data
+        key_skill_areas = request.key_skill_areas if request.key_skill_areas else eval_config["key_skill_areas"]
+        print(f"🎯 Using {len(key_skill_areas)} skill areas: {[skill['name'] for skill in key_skill_areas]}")
 
         # Step 1: Call gather endpoint to get question groups
         print("🔄 Step 1: Gathering question groups using /gather endpoint...")
@@ -1068,7 +1040,7 @@ async def generate_report(request: EvaluateRequest):
         gather_data = {
             "transcript": request.transcript,
             "technical_questions": eval_config["technical_questions"],
-            "key_skill_areas": eval_config["key_skill_areas"],
+            "key_skill_areas": key_skill_areas,
             "llm_settings": {
                 "provider": "openrouter",
                 "model": "openai/gpt-oss-120b:nitro"  # This will be enforced anyway
@@ -1123,7 +1095,7 @@ async def generate_report(request: EvaluateRequest):
                 group=group,
                 resume=eval_config["resume"],
                 job_requirements=eval_config["job_requirements"],
-                key_skill_areas=eval_config["key_skill_areas"],
+                key_skill_areas=key_skill_areas,
                 llm_client=eval_llm_client,
                 evaluation_prompt=evaluation_prompt,
                 evaluation_schema=evaluation_schema
