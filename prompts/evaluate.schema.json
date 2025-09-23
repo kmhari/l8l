@@ -33,10 +33,10 @@
                 "idx": { "type": "integer" },
                 "role": { "type": "string" },
                 "message": { "type": "string" },
-                "time": { "type": ["number", "string"] },
-                "endTime": { "type": ["number", "string"] },
-                "duration": { "type": ["number", "string"] },
-                "secondsFromStart": { "type": ["number", "string"] }
+                "time": { "anyOf": [{"type": "number"}, {"type": "string"}] },
+                "endTime": { "anyOf": [{"type": "number"}, {"type": "string"}] },
+                "duration": { "anyOf": [{"type": "number"}, {"type": "string"}] },
+                "secondsFromStart": { "anyOf": [{"type": "number"}, {"type": "string"}] }
               },
               "required": ["idx", "role", "message", "time", "endTime", "duration", "secondsFromStart"],
               "additionalProperties": true

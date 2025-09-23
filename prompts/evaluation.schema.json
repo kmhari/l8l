@@ -80,13 +80,17 @@
                   "description": "Confidence level in this assessment"
                 },
                 "evidence": {
-                  "type": ["array", "null"],
-                  "items": {"type": "string"},
+                  "anyOf": [
+                    {"type": "array", "items": {"type": "string"}},
+                    {"type": "null"}
+                  ],
                   "description": "Array of specific evidence points or examples from the interview"
                 },
                 "gaps_identified": {
-                  "type": ["array", "null"],
-                  "items": {"type": "string"},
+                  "anyOf": [
+                    {"type": "array", "items": {"type": "string"}},
+                    {"type": "null"}
+                  ],
                   "description": "Specific knowledge gaps or areas for improvement"
                 }
               },

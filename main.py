@@ -300,7 +300,7 @@ class EvaluateRequest(BaseModel):
     key_skill_areas: Optional[List[Dict[str, Any]]] = None
     llm_settings: Optional[LLMSettings] = LLMSettings(
         provider="openrouter",
-        model="openai/gpt-oss-120b:nitro"  # Use thinking model by default
+        model="qwen/qwen3-235b-a22b-2507"  # Use thinking model by default
     )
 
     class Config:
@@ -1158,7 +1158,7 @@ async def generate_report(request: EvaluateRequest):
             "key_skill_areas": key_skill_areas,
             "llm_settings": {
                 "provider": "openrouter",
-                "model": "openai/gpt-oss-120b:nitro"  # This will be enforced anyway
+                "model": "qwen/qwen3-235b-a22b-2507"  # This will be enforced anyway
             }
         }
 
