@@ -175,7 +175,7 @@
                 "duration": {"type": "number", "description": "Duration of the message in milliseconds"},
                 "secondsFromStart": {"type": "number", "description": "Seconds from start of interview"}
               },
-              "required": ["idx", "role", "message"],
+              "required": ["idx", "role", "message", "time", "endTime", "duration", "secondsFromStart"],
               "additionalProperties": false
             },
             "description": "Complete conversation turns for this question group"
