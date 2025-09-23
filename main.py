@@ -1011,14 +1011,19 @@ async def merge_evaluations(evaluations: List[Dict[str, Any]],
         else:
             holistic_notes.append(f"Candidate shows {overall_assessment.lower()} level performance in {skill_name} but does not fully meet requirements.")
 
-        # Analyze sub-skills coverage
+        # Analyze sub-skills coverage - only report positively if overall assessment is not "Not Demonstrated"
         demonstrated_skills = [skill for skill in sub_skills if skill.get("demonstrated", False)]
         not_demonstrated_skills = [skill for skill in sub_skills if not skill.get("demonstrated", False)]
 
-        if demonstrated_skills:
+        # Only report demonstrated experience if the overall assessment indicates actual demonstration
+        if demonstrated_skills and overall_assessment != "Not Demonstrated":
             skill_names = [skill["name"] for skill in demonstrated_skills]
             proficiencies = [skill.get("proficiency", "Unknown") for skill in demonstrated_skills]
             holistic_notes.append(f"Demonstrated experience in: {', '.join(skill_names)} with proficiency levels ranging from {min(proficiencies)} to {max(proficiencies)}.")
+        elif demonstrated_skills and overall_assessment == "Not Demonstrated":
+            # If overall is "Not Demonstrated" but sub-skills show some evidence, clarify the contradiction
+            skill_names = [skill["name"] for skill in demonstrated_skills]
+            holistic_notes.append(f"Some evidence found for: {', '.join(skill_names)}, but insufficient for overall competency demonstration.")
 
         if not_demonstrated_skills:
             skill_names = [skill["name"] for skill in not_demonstrated_skills]
