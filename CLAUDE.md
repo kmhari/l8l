@@ -77,8 +77,9 @@ The application uses a plugin-based LLM provider architecture:
 - **GroqProvider**: Fast inference for specific models
 
 ### Model Enforcement Strategy
-- **Gather endpoint**: Forces `openrouter/openai/gpt-oss-120b:nitro` for consistency
-- **Evaluate endpoint**: Allows flexible model selection, defaults to `qwen/qwen3-235b-a22b-2507`
+- **Gather endpoint**: Forces model defined in `globals.py` GATHER_CONFIG for consistency
+- **Evaluate endpoint**: Allows flexible model selection, defaults to model in `globals.py` EVALUATION_CONFIG
+- **Centralized Configuration**: All model settings managed in `globals.py` for easy updates
 
 ### Caching System
 - MD5-based cache keys generated from request content
@@ -98,9 +99,9 @@ Required API keys in `.env`:
 - `ANTHROPIC_API_KEY`: Claude models
 - `GROQ_API_KEY`: Fast inference models
 
-### Default Models
-- **Gather**: `openai/gpt-oss-120b:nitro` (enforced)
-- **Evaluate**: `qwen/qwen3-235b-a22b-2507` (default)
+### Default Models (defined in globals.py)
+- **Gather**: `openai/gpt-oss-120b:nitro` (enforced via GATHER_CONFIG)
+- **Evaluate**: `qwen/qwen3-235b-a22b-2507` (default via EVALUATION_CONFIG)
 
 See `models.md` for complete list of supported models and usage examples.
 

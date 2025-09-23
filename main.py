@@ -13,6 +13,7 @@ from scalar_fastapi import get_scalar_api_reference
 from llm_client import create_llm_client
 from concurrent.futures import ThreadPoolExecutor
 from functools import partial
+import globals as config
 
 def parse_structured_output(response: str, expected_keys: List[str] = None) -> dict:
     """
@@ -202,15 +203,15 @@ app = FastAPI(
 )
 
 class LLMSettings(BaseModel):
-    provider: str = "openrouter"
-    model: str = "openai/gpt-oss-120b:nitro"
+    provider: str = config.GATHER_CONFIG["provider"]
+    model: str = config.GATHER_CONFIG["model"]
     api_key: Optional[str] = None
 
     class Config:
         schema_extra = {
             "example": {
-                "provider": "openrouter",
-                "model": "openai/gpt-oss-120b:nitro",
+                "provider": config.GATHER_CONFIG["provider"],
+                "model": config.GATHER_CONFIG["model"],
                 "api_key": "optional_if_set_in_env"
             }
         }
@@ -220,8 +221,8 @@ class GatherRequest(BaseModel):
     technical_questions: str
     key_skill_areas: List[Dict[str, Any]]
     llm_settings: Optional[LLMSettings] = LLMSettings(
-        provider="openrouter",
-        model="openai/gpt-oss-120b:nitro"
+        provider=config.GATHER_CONFIG["provider"],
+        model=config.GATHER_CONFIG["model"]
     )
 
     class Config:
@@ -299,8 +300,8 @@ class EvaluateRequest(BaseModel):
     transcript: Dict[str, Any]
     key_skill_areas: Optional[List[Dict[str, Any]]] = None
     llm_settings: Optional[LLMSettings] = LLMSettings(
-        provider="openrouter",
-        model="qwen/qwen3-235b-a22b-2507"  # Use thinking model by default
+        provider=config.EVALUATION_CONFIG["provider"],
+        model=config.EVALUATION_CONFIG["model"]  # Use thinking model by default
     )
 
     class Config:
@@ -311,12 +312,12 @@ class EvaluateRequest(BaseModel):
                 full_sample = json.loads(Path("sample/evaluate.json").read_text())
                 return {
                     "transcript": full_sample.get("transcript", {"messages": []}),
-                    "llm_settings": {"provider": "openrouter", "model": "qwen/qwen3-235b-a22b-2507"}
+                    "llm_settings": {"provider": config.EVALUATION_CONFIG["provider"], "model": config.EVALUATION_CONFIG["model"]}
                 }
             except:
                 return {
                     "transcript": {"messages": []},
-                    "llm_settings": {"provider": "openrouter", "model": "qwen/qwen3-235b-a22b-2507"}
+                    "llm_settings": {"provider": config.EVALUATION_CONFIG["provider"], "model": config.EVALUATION_CONFIG["model"]}
                 }
 
         json_schema_extra = {
@@ -509,8 +510,8 @@ async def gather(request: GatherRequest):
         original_model = request.llm_settings.model
 
         # Force the use of the specified model for gather
-        request.llm_settings.provider = "openrouter"
-        request.llm_settings.model = "openai/gpt-oss-120b:nitro"
+        request.llm_settings.provider = config.GATHER_CONFIG["provider"]
+        request.llm_settings.model = config.GATHER_CONFIG["model"]
 
         if original_provider != request.llm_settings.provider or original_model != request.llm_settings.model:
             print(f"⚠️  Model override detected - enforcing gather default:")
@@ -1157,8 +1158,8 @@ async def generate_report(request: EvaluateRequest):
             "technical_questions": eval_config["technical_questions"],
             "key_skill_areas": key_skill_areas,
             "llm_settings": {
-                "provider": "openrouter",
-                "model": "qwen/qwen3-235b-a22b-2507"  # This will be enforced anyway
+                "provider": config.GATHER_CONFIG["provider"],
+                "model": config.GATHER_CONFIG["model"]  # This will be enforced anyway
             }
         }
 
@@ -1309,7 +1310,7 @@ async def get_evaluate_sample_data():
         # Only return the fields that are now required for EvaluateRequest
         filtered_sample = {
             "transcript": sample_data.get("transcript", {"messages": []}),
-            "llm_settings": sample_data.get("llm_settings", {"provider": "openrouter", "model": "qwen/qwen3-235b-a22b-2507"})
+            "llm_settings": sample_data.get("llm_settings", {"provider": config.EVALUATION_CONFIG["provider"], "model": config.EVALUATION_CONFIG["model"]})
         }
         return EvaluateRequest(**filtered_sample)
     except Exception as e:
