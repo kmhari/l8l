@@ -80,8 +80,9 @@
                   "description": "Confidence level in this assessment"
                 },
                 "evidence": {
-                  "type": ["string", "null"],
-                  "description": "Specific evidence or examples from the interview"
+                  "type": ["array", "null"],
+                  "items": {"type": "string"},
+                  "description": "Array of specific evidence points or examples from the interview"
                 },
                 "gaps_identified": {
                   "type": ["array", "null"],

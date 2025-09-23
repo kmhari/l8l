@@ -957,14 +957,25 @@ async def merge_evaluations(evaluations: List[Dict[str, Any]],
                                             if new_prof > existing_prof:
                                                 existing_skill["proficiency"] = new_sub_skill.get("proficiency", "Entry")
 
-                                            # Combine evidence
+                                            # Combine evidence arrays
                                             if "evidence" in new_sub_skill and new_sub_skill["evidence"]:
-                                                existing_evidence = existing_skill.get("evidence", "")
+                                                existing_evidence = existing_skill.get("evidence", [])
                                                 new_evidence = new_sub_skill["evidence"]
-                                                if existing_evidence and new_evidence not in existing_evidence:
-                                                    existing_skill["evidence"] = f"{existing_evidence} | {new_evidence}"
-                                                elif not existing_evidence:
-                                                    existing_skill["evidence"] = new_evidence
+
+                                                # Ensure existing_evidence is a list
+                                                if not isinstance(existing_evidence, list):
+                                                    existing_evidence = [existing_evidence] if existing_evidence else []
+
+                                                # Handle new_evidence as either string or list
+                                                if isinstance(new_evidence, list):
+                                                    for evidence_point in new_evidence:
+                                                        if evidence_point and evidence_point not in existing_evidence:
+                                                            existing_evidence.append(evidence_point)
+                                                elif isinstance(new_evidence, str) and new_evidence:
+                                                    if new_evidence not in existing_evidence:
+                                                        existing_evidence.append(new_evidence)
+
+                                                existing_skill["evidence"] = existing_evidence
 
                                             # Combine gaps
                                             if "gaps_identified" in new_sub_skill and isinstance(new_sub_skill["gaps_identified"], list):
