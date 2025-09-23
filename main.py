@@ -990,8 +990,51 @@ async def merge_evaluations(evaluations: List[Dict[str, Any]],
                                 # Replace the sub_skills list with deduplicated results
                                 existing["sub_skills"] = list(existing_sub_skills.values())
 
-                            if "assessment_notes" in competency and isinstance(competency["assessment_notes"], list):
-                                existing["assessment_notes"].extend(competency["assessment_notes"])
+                            # Skip individual group assessment_notes - we'll generate holistic notes later
+                            # This prevents conflicting statements like "No star schema discussion" from one group
+                            # while another group might have covered star schema concepts
+                            pass
+
+    # Generate holistic assessment notes for each skill area based on consolidated evidence
+    print("🔄 Generating holistic assessment notes for each skill area...")
+    for skill_area_data in skill_areas.values():
+        skill_name = skill_area_data.get("skill_area", "Unknown")
+        sub_skills = skill_area_data.get("sub_skills", [])
+        overall_assessment = skill_area_data.get("overall_assessment", "Not Assessed")
+        meets_requirements = skill_area_data.get("meets_requirements", False)
+
+        holistic_notes = []
+
+        # Analyze overall performance
+        if meets_requirements:
+            holistic_notes.append(f"Candidate demonstrates competency in {skill_name} with {overall_assessment.lower()} level performance.")
+        else:
+            holistic_notes.append(f"Candidate shows {overall_assessment.lower()} level performance in {skill_name} but does not fully meet requirements.")
+
+        # Analyze sub-skills coverage
+        demonstrated_skills = [skill for skill in sub_skills if skill.get("demonstrated", False)]
+        not_demonstrated_skills = [skill for skill in sub_skills if not skill.get("demonstrated", False)]
+
+        if demonstrated_skills:
+            skill_names = [skill["name"] for skill in demonstrated_skills]
+            proficiencies = [skill.get("proficiency", "Unknown") for skill in demonstrated_skills]
+            holistic_notes.append(f"Demonstrated experience in: {', '.join(skill_names)} with proficiency levels ranging from {min(proficiencies)} to {max(proficiencies)}.")
+
+        if not_demonstrated_skills:
+            skill_names = [skill["name"] for skill in not_demonstrated_skills]
+            holistic_notes.append(f"Areas requiring further assessment or development: {', '.join(skill_names)}.")
+
+        # Identify confidence levels
+        high_confidence_skills = [skill["name"] for skill in sub_skills if skill.get("confidence") == "High"]
+        low_confidence_skills = [skill["name"] for skill in sub_skills if skill.get("confidence") == "Low"]
+
+        if high_confidence_skills:
+            holistic_notes.append(f"Strong evidence of competency in: {', '.join(high_confidence_skills)}.")
+
+        if low_confidence_skills:
+            holistic_notes.append(f"Limited evidence provided for: {', '.join(low_confidence_skills)}.")
+
+        skill_area_data["assessment_notes"] = holistic_notes
 
     merged_report["competency_mapping"] = list(skill_areas.values())
 
