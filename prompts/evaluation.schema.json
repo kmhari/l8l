@@ -80,16 +80,16 @@
                   "description": "Confidence level in this assessment"
                 },
                 "evidence": {
-                  "type": "string",
+                  "type": ["string", "null"],
                   "description": "Specific evidence or examples from the interview"
                 },
                 "gaps_identified": {
-                  "type": "array",
+                  "type": ["array", "null"],
                   "items": {"type": "string"},
                   "description": "Specific knowledge gaps or areas for improvement"
                 }
               },
-              "required": ["name", "proficiency", "demonstrated", "confidence"],
+              "required": ["name", "proficiency", "demonstrated", "confidence", "evidence", "gaps_identified"],
               "additionalProperties": false
             }
           }
