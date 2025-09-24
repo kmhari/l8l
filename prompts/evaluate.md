@@ -123,6 +123,43 @@ Analyze the interview performance using the following framework:
 - Perfect answers deserve 90-95+ (reserve 95+ for truly exceptional responses)
 - Remember: We're evaluating working professionals, not students - adjust expectations accordingly
 
+## MANDATORY Score Justification Requirements
+
+**CRITICAL: Every score and rating MUST be accompanied by detailed justification**
+
+For transparency and accountability, you MUST provide clear evidence-based reasoning for ALL scoring decisions:
+
+1. **Relevance Score Justification (0-100)**:
+   - Cite specific parts of the candidate's response that directly address the question
+   - Explain how well these parts align with what was asked
+   - Note any aspects of the question that were left unaddressed
+   - Provide exact quotes or detailed paraphrases as supporting evidence
+
+2. **Completeness Rating Justification**:
+   - List the key components that should be covered for a complete answer
+   - Identify which components the candidate addressed and which were missing
+   - Explain why the response qualifies as "Complete", "Partial", "Incomplete", or "Not Addressed"
+
+3. **Clarity Rating Justification**:
+   - Assess the structure and organization of the response
+   - Note communication effectiveness: clear explanations, logical flow, appropriate terminology
+   - Identify any confusing statements or unclear explanations
+   - Comment on the candidate's ability to articulate complex concepts
+
+4. **Depth Rating Justification**:
+   - Evaluate the level of understanding demonstrated beyond surface-level answers
+   - Look for nuanced insights, practical considerations, or advanced knowledge
+   - Note whether examples and explanations show practical experience
+   - Assess critical thinking and problem-solving depth
+
+5. **Key Evidence Collection**:
+   - Extract specific quotes that support your scoring decisions
+   - Include paraphrases of longer explanations that demonstrate competency
+   - Reference specific examples or scenarios mentioned by the candidate
+   - Document any impressive insights or concerning statements
+
+**NO ARBITRARY SCORING**: Every numerical score and categorical rating must be backed by specific evidence from the conversation transcript. This ensures fair, consistent, and defensible evaluation decisions.
+
 ## Overall Score Calculation Rules
 
 **MANDATORY: When calculating the final overall_score (0-100), follow these guidelines:**
@@ -187,6 +224,12 @@ You are evaluating a SINGLE question group in this request. Generate ONE questio
    - `question_text`: Extract from `question_group.question_title`
    - `answer_quality`: Analyze the conversation to assess:
      * `relevance_score`: 0-100 scale of how well the answer addressed the question
+     * `score_justification`: **CRITICAL - REQUIRED JUSTIFICATION FOR ALL SCORES**:
+       - `relevance_reasoning`: Detailed explanation of why the relevance_score was assigned, citing specific parts of the candidate's response that support this score
+       - `completeness_reasoning`: Explanation of why the completeness rating was given, identifying what aspects were fully covered, partially covered, or missing
+       - `clarity_reasoning`: Justification for the clarity rating, explaining specific aspects of communication effectiveness or issues
+       - `depth_reasoning`: Reasoning for the depth assessment, explaining the level of understanding demonstrated with specific evidence
+       - `key_evidence`: Array of specific quotes or detailed paraphrases from the candidate's response that directly support the scoring decisions
      * `completeness`: "Complete", "Partial", "Incomplete", or "Not Addressed"
      * `clarity`: "Excellent", "Good", "Fair", or "Poor"
      * `depth`: "Deep", "Moderate", "Surface", or "None"

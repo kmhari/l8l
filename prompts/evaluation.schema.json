@@ -44,6 +44,34 @@
                 "type": "number",
                 "description": "How well the candidates answer has addressed the question 0 - 100"
               },
+              "score_justification": {
+                "type": "object",
+                "properties": {
+                  "relevance_reasoning": {
+                    "type": "string",
+                    "description": "Detailed explanation of why the relevance_score was assigned, citing specific parts of the candidate's response"
+                  },
+                  "completeness_reasoning": {
+                    "type": "string",
+                    "description": "Explanation of why the completeness rating was given, identifying what aspects were covered or missing"
+                  },
+                  "clarity_reasoning": {
+                    "type": "string",
+                    "description": "Justification for the clarity rating, explaining communication effectiveness"
+                  },
+                  "depth_reasoning": {
+                    "type": "string",
+                    "description": "Reasoning for the depth assessment, explaining the level of understanding demonstrated"
+                  },
+                  "key_evidence": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "description": "Specific quotes or paraphrases from the candidate's response that support the scoring"
+                  }
+                },
+                "required": ["relevance_reasoning", "completeness_reasoning", "clarity_reasoning", "depth_reasoning", "key_evidence"],
+                "additionalProperties": false
+              },
               "completeness": {
                 "type": "string",
                 "enum": ["Complete", "Partial", "Incomplete", "Not Addressed"],
@@ -64,7 +92,7 @@
                 "description": "Whether specific examples or evidence were provided from the transcript"
               }
             },
-            "required": ["relevance_score", "completeness", "clarity", "depth", "evidence_provided"],
+            "required": ["relevance_score", "score_justification", "completeness", "clarity", "depth", "evidence_provided"],
             "additionalProperties": false
           },
           "strengths": {

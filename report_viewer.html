@@ -362,6 +362,144 @@
                 text-align: center;
             }
         }
+        /* Score Justification Styles */
+        .question-analysis {
+            background: white;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #4a90e2;
+        }
+
+        .quality-assessment {
+            margin: 1rem 0;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+
+        .assessment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .assessment-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0.75rem;
+            background: white;
+            border-radius: 4px;
+            border: 1px solid #e9ecef;
+        }
+
+        .assessment-label {
+            font-weight: 500;
+            color: #555;
+        }
+
+        .assessment-value {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .score-justification {
+            background: #f8fff9;
+            border-radius: 6px;
+            padding: 1.25rem;
+            margin: 1rem;
+            border: 1px solid #d4edda;
+            border-left: 4px solid #28a745;
+        }
+
+        .score-justification h4 {
+            color: #28a745;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .justification-item {
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            background: white;
+            border-radius: 4px;
+            border: 1px solid #e9ecef;
+        }
+
+        .justification-title {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .justification-content {
+            color: #6c757d;
+            line-height: 1.6;
+            font-size: 0.9rem;
+        }
+
+        .justification-content ul {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .justification-content li {
+            margin-bottom: 0.3rem;
+            padding: 0.2rem 0;
+        }
+
+        .analysis-details {
+            margin: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+
+        .detail-section {
+            margin-bottom: 1rem;
+        }
+
+        .detail-section h4 {
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .detail-section ul {
+            padding-left: 1.25rem;
+            margin: 0.5rem 0;
+        }
+
+        .detail-section li {
+            margin-bottom: 0.3rem;
+            line-height: 1.5;
+        }
+
+        .green-flags h4 {
+            color: #28a745;
+        }
+
+        .red-flags h4 {
+            color: #dc3545;
+        }
+
+        .green-flags {
+            background: #f8fff9;
+            border: 1px solid #d4edda;
+            border-radius: 4px;
+            padding: 0.75rem;
+        }
+
+        .red-flags {
+            background: #fff8f8;
+            border: 1px solid #f8d7da;
+            border-radius: 4px;
+            padding: 0.75rem;
+        }
     </style>
 </head>
 <body>
@@ -581,6 +719,143 @@
                 });
 
                 html += '</div></div>';
+            }
+
+            // Question Analysis with Score Justifications
+            if (evaluationReport.question_analysis && evaluationReport.question_analysis.length > 0) {
+                html += `
+                    <div class="section">
+                        <div class="section-title">Detailed Question Analysis</div>
+                        <div class="section-content">
+                `;
+
+                evaluationReport.question_analysis.forEach((analysis, index) => {
+                    const answerQuality = analysis.answer_quality || {};
+                    const scoreJustification = answerQuality.score_justification || {};
+
+                    html += `
+                        <div class="question-analysis">
+                            <div class="question-header">
+                                <div class="question-title">${analysis.question_id}: ${analysis.question_text || 'Question text not available'}</div>
+                                <div class="question-score">Relevance Score: ${answerQuality.relevance_score || 'N/A'}/100</div>
+                            </div>
+                            <div class="question-content">
+                                <div class="quality-assessment">
+                                    <div class="assessment-grid">
+                                        <div class="assessment-item">
+                                            <span class="assessment-label">Completeness:</span>
+                                            <span class="assessment-value">${answerQuality.completeness || 'N/A'}</span>
+                                        </div>
+                                        <div class="assessment-item">
+                                            <span class="assessment-label">Clarity:</span>
+                                            <span class="assessment-value">${answerQuality.clarity || 'N/A'}</span>
+                                        </div>
+                                        <div class="assessment-item">
+                                            <span class="assessment-label">Depth:</span>
+                                            <span class="assessment-value">${answerQuality.depth || 'N/A'}</span>
+                                        </div>
+                                        <div class="assessment-item">
+                                            <span class="assessment-label">Evidence Provided:</span>
+                                            <span class="assessment-value">${answerQuality.evidence_provided ? 'Yes' : 'No'}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                    `;
+
+                    // Score Justification Section
+                    if (scoreJustification && Object.keys(scoreJustification).length > 0) {
+                        html += `
+                            <div class="score-justification">
+                                <h4>Score Justification</h4>
+                                ${scoreJustification.relevance_reasoning ? `
+                                    <div class="justification-item">
+                                        <div class="justification-title">Relevance Reasoning:</div>
+                                        <div class="justification-content">${scoreJustification.relevance_reasoning}</div>
+                                    </div>
+                                ` : ''}
+                                ${scoreJustification.completeness_reasoning ? `
+                                    <div class="justification-item">
+                                        <div class="justification-title">Completeness Reasoning:</div>
+                                        <div class="justification-content">${scoreJustification.completeness_reasoning}</div>
+                                    </div>
+                                ` : ''}
+                                ${scoreJustification.clarity_reasoning ? `
+                                    <div class="justification-item">
+                                        <div class="justification-title">Clarity Reasoning:</div>
+                                        <div class="justification-content">${scoreJustification.clarity_reasoning}</div>
+                                    </div>
+                                ` : ''}
+                                ${scoreJustification.depth_reasoning ? `
+                                    <div class="justification-item">
+                                        <div class="justification-title">Depth Reasoning:</div>
+                                        <div class="justification-content">${scoreJustification.depth_reasoning}</div>
+                                    </div>
+                                ` : ''}
+                                ${scoreJustification.key_evidence && scoreJustification.key_evidence.length > 0 ? `
+                                    <div class="justification-item">
+                                        <div class="justification-title">Key Evidence:</div>
+                                        <div class="justification-content">
+                                            <ul>
+                                                ${scoreJustification.key_evidence.map(evidence => `<li>${evidence}</li>`).join('')}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        `;
+                    }
+
+                    // Strengths and Concerns
+                    html += '<div class="analysis-details">';
+
+                    if (analysis.strengths && analysis.strengths.length > 0) {
+                        html += `
+                            <div class="detail-section">
+                                <h4>Strengths:</h4>
+                                <ul>
+                                    ${analysis.strengths.map(strength => `<li>${strength}</li>`).join('')}
+                                </ul>
+                            </div>
+                        `;
+                    }
+
+                    if (analysis.concerns && analysis.concerns.length > 0) {
+                        html += `
+                            <div class="detail-section">
+                                <h4>Concerns:</h4>
+                                <ul>
+                                    ${analysis.concerns.map(concern => `<li>${concern}</li>`).join('')}
+                                </ul>
+                            </div>
+                        `;
+                    }
+
+                    if (analysis.green_flags && analysis.green_flags.length > 0) {
+                        html += `
+                            <div class="detail-section green-flags">
+                                <h4>Green Flags:</h4>
+                                <ul>
+                                    ${analysis.green_flags.map(flag => `<li>${flag}</li>`).join('')}
+                                </ul>
+                            </div>
+                        `;
+                    }
+
+                    if (analysis.red_flags && analysis.red_flags.length > 0) {
+                        html += `
+                            <div class="detail-section red-flags">
+                                <h4>Red Flags:</h4>
+                                <ul>
+                                    ${analysis.red_flags.map(flag => `<li>${flag}</li>`).join('')}
+                                </ul>
+                            </div>
+                        `;
+                    }
+
+                    html += '</div></div></div>'; // Close analysis-details, question-content, question-analysis
+                });
+
+                html += '</div></div>'; // Close section-content, section
             }
 
             // Skills Assessment
