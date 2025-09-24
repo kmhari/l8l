@@ -5,6 +5,13 @@ This module centralizes all model settings for the gather and generate-report AP
 making it easy to update models without changing code in multiple places.
 """
 
+class CEREBRAS_MODELS:
+    GPT_OSS = "openai/gpt-oss-120b"
+    QWEN3_235B = "qwen/qwen3-235b-a22b-thinking-2507"
+    QWEN3_32B = "qwen/qwen3-32b"
+    QWEN3_CODER = "qwen/qwen3-coder"
+    QWEN3_2507 = "qwen/qwen3-235b-a22b-2507"
+
 # =============================================================================
 # GATHER ENDPOINT CONFIGURATION
 # =============================================================================
@@ -12,7 +19,7 @@ making it easy to update models without changing code in multiple places.
 # Model settings for the /gather endpoint (conversation segmentation)
 GATHER_CONFIG = {
     "provider": "openrouter",
-    "model": "openai/gpt-oss-120b:nitro",
+    "model": CEREBRAS_MODELS.GPT_OSS,
     "description": "High-performance model for conversation analysis and question group segmentation"
 }
 
@@ -24,7 +31,7 @@ GATHER_CONFIG = {
 EVALUATION_CONFIG = {
     "provider": "openrouter",
     # "model": "qwen/qwen3-235b-a22b-2507",
-    "model": "qwen/qwen3-32b",
+    "model": CEREBRAS_MODELS.QWEN3_32B,
     "description": "Advanced reasoning model for comprehensive candidate evaluation"
 }
 
@@ -36,12 +43,12 @@ EVALUATION_CONFIG = {
 FALLBACK_MODELS = {
     "gather_fallback": {
         "provider": "openrouter",
-        "model": "anthropic/claude-3.5-sonnet",
+        "model": "openai/gpt-4o",
         "description": "Fallback model for gather operations"
     },
     "evaluation_fallback": {
         "provider": "openrouter",
-        "model": "anthropic/claude-3.5-sonnet",
+        "model": "openai/gpt-4o",
         "description": "Fallback model for evaluation operations"
     }
 }
@@ -66,12 +73,12 @@ MODEL_FEATURES = {
         "cost": "low",
         "thinking_model": True
     },
-    "anthropic/claude-3.5-sonnet": {
+    "openai/gpt-4o": {
         "structured_output": True,
-        "context_window": 200000,
+        "context_window": 128000,
         "reasoning": "excellent",
         "speed": "medium",
-        "cost": "high"
+        "cost": "medium"
     }
 }
 

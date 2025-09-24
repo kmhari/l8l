@@ -15,7 +15,7 @@ The application follows a two-phase pipeline:
 ### Key Components
 
 - **main.py**: Primary FastAPI application with endpoints, caching, and orchestration logic
-- **llm_client.py**: Abstract LLM provider interface supporting OpenAI, Anthropic, Groq, and OpenRouter
+- **llm_client.py**: LLM provider interface exclusively using OpenRouter
 - **prompts/**: Contains system prompts and JSON schemas for LLM interactions
 - **cache/**: File-based caching system for gather results to improve performance
 - **output/**: Timestamped JSON outputs for both gather and evaluate operations
@@ -70,11 +70,8 @@ Access the interactive API documentation at:
 ## Architecture Details
 
 ### LLM Provider System
-The application uses a plugin-based LLM provider architecture:
-- **OpenRouterProvider**: Primary provider with access to latest models
-- **OpenAIProvider**: Direct OpenAI API integration
-- **AnthropicProvider**: Claude models support
-- **GroqProvider**: Fast inference for specific models
+The application uses OpenRouter as the exclusive LLM provider:
+- **OpenRouterProvider**: Single provider with access to multiple models including OpenAI, Anthropic, and other leading models through a unified API
 
 ### Model Enforcement Strategy
 - **Gather endpoint**: Forces model defined in `globals.py` GATHER_CONFIG for consistency
@@ -93,11 +90,8 @@ The system includes sophisticated JSON extraction for handling "thinking" models
 ## Key Configuration
 
 ### Environment Variables
-Required API keys in `.env`:
-- `OPENROUTER_API_KEY`: Primary provider (recommended)
-- `OPENAI_API_KEY`: Direct OpenAI access
-- `ANTHROPIC_API_KEY`: Claude models
-- `GROQ_API_KEY`: Fast inference models
+Required API key in `.env`:
+- `OPENROUTER_API_KEY`: The only required API key for LLM access
 
 ### Default Models (defined in globals.py)
 - **Gather**: `openai/gpt-oss-120b:nitro` (enforced via GATHER_CONFIG)

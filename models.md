@@ -1,11 +1,13 @@
 # Supported LLM Models
 
-## OpenRouter Models (Recommended)
+## OpenRouter Models (Only Supported Provider)
 
 ### High-Performance Models
 - `openai/gpt-oss-120b:nitro` - OpenAI's latest large model with nitro acceleration
 - `qwen/qwen3-235b-a22b-2507` - Qwen's advanced reasoning model
 - `qwen/qwen3-32b:nitro` - Efficient mid-size model with nitro acceleration
+- `openai/gpt-4o` - OpenAI's GPT-4 Optimized model
+- `openai/gpt-4o-mini` - Smaller, faster version of GPT-4 Optimized
 
 ### Usage Example
 ```json
@@ -18,30 +20,14 @@
 }
 ```
 
-## Other Providers
-
-### OpenAI
-- `gpt-4o-mini` (default)
-- `gpt-4o`
-- `gpt-4-turbo`
-
-### Anthropic
-- `claude-3-5-sonnet-20241022`
-- `claude-3-5-haiku-20241022`
-
-### Groq
-- `llama-3.1-8b-instant`
-- `llama-3.1-70b-versatile`
-- `mixtral-8x7b-32768`
-
 ## API Key Configuration
 
-Set environment variables:
+Set environment variable:
 ```bash
 export OPENROUTER_API_KEY="your_key"
-export OPENAI_API_KEY="your_key"
-export ANTHROPIC_API_KEY="your_key"
-export GROQ_API_KEY="your_key"
 ```
 
 Or pass directly in the request body.
+
+## Note
+This application exclusively uses OpenRouter as the LLM provider. All other providers have been removed to simplify the codebase and focus on a single, reliable provider with access to multiple models.

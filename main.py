@@ -578,18 +578,14 @@ async def gather(request: GatherRequest):
         print("🔑 Checking API key...")
         api_key = request.llm_settings.api_key
         if not api_key:
-            env_key_map = {
-                "openai": "OPENAI_API_KEY",
-                "anthropic": "ANTHROPIC_API_KEY",
-                "groq": "GROQ_API_KEY",
-                "openrouter": "OPENROUTER_API_KEY"
-            }
-            env_key = env_key_map.get(request.llm_settings.provider.lower())
-            if env_key:
-                api_key = os.getenv(env_key)
-                print(f"✅ Using API key from environment: {env_key}")
+            if request.llm_settings.provider.lower() == "openrouter":
+                api_key = os.getenv("OPENROUTER_API_KEY")
+                if api_key:
+                    print(f"✅ Using API key from environment: OPENROUTER_API_KEY")
+                else:
+                    print("⚠️  No API key found")
             else:
-                print("⚠️  No API key found")
+                raise ValueError("Only OpenRouter provider is supported")
         else:
             print("✅ Using provided API key")
 
@@ -1213,17 +1209,16 @@ async def generate_report(request: EvaluateRequest):
         print("🔧 Step 3: Creating evaluation LLM client...")
         api_key = request.llm_settings.api_key
         if not api_key:
-            env_key_map = {
-                "openai": "OPENAI_API_KEY",
-                "anthropic": "ANTHROPIC_API_KEY",
-                "groq": "GROQ_API_KEY",
-                "openrouter": "OPENROUTER_API_KEY"
-            }
-            env_key = env_key_map.get(request.llm_settings.provider.lower())
-            if env_key:
-                api_key = os.getenv(env_key)
-        print(f"✅ Using API key from environment: {env_key}" if api_key else "⚠️  No API key found")
-        print(f"API Key: {api_key}")
+            if request.llm_settings.provider.lower() == "openrouter":
+                api_key = os.getenv("OPENROUTER_API_KEY")
+                if api_key:
+                    print("✅ Using API key from environment: OPENROUTER_API_KEY")
+                else:
+                    print("⚠️  No API key found")
+            else:
+                raise ValueError("Only OpenRouter provider is supported")
+        else:
+            print("✅ Using provided API key")
 
         eval_llm_client = create_llm_client(
             provider=request.llm_settings.provider,
