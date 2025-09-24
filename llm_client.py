@@ -71,22 +71,6 @@ class OpenRouterProvider(LLMProvider):
             except httpx.HTTPStatusError as e:
                 # If structured outputs fail, try fallback approach
                 print("HTTP error:", e.response.text)
-                response_text = str(e.response.text)
-                if (
-                    e.response.status_code == 400
-                    and schema
-                    and (
-                        "Invalid schema" in response_text
-                        or "not supported" in response_text
-                        or "response_format" in response_text
-                    )
-                ):
-                    print(
-                        "⚠️ Structured outputs failed, falling back to prompt-based approach..."
-                    )
-                    return await self._fallback_generate(
-                        headers, client, messages, schema
-                    )
                 raise ValueError(
                     f"HTTP error from OpenRouter API: {e.response.status_code} - {e.response.text}"
                 )
@@ -98,42 +82,6 @@ class OpenRouterProvider(LLMProvider):
                 )
             except Exception as e:
                 raise ValueError(f"Error calling OpenRouter API: {str(e)}")
-
-    async def _fallback_generate(self, headers, client, messages, schema):
-        """Fallback method using prompt-based JSON generation instead of structured outputs"""
-        import json
-
-        payload = {
-            "model": self.model,
-            "messages": messages,
-            "temperature": 0.1,
-            "max_tokens": 18000,
-        }
-
-        # Add schema instruction to system prompt
-        system_prompt = (
-            messages[0]["content"]
-            if messages and messages[0]["role"] == "system"
-            else ""
-        )
-        system_prompt += f"\n\nIMPORTANT: Your response must be valid JSON matching this schema: {json.dumps(schema)}"
-
-        modified_messages = [{"role": "system", "content": system_prompt}] + messages[
-            1:
-        ]
-
-        payload["messages"] = modified_messages
-
-        response = await client.post(
-            f"{self.base_url}/chat/completions",
-            headers=headers,
-            json=payload,
-            timeout=120,
-        )
-        response.raise_for_status()
-        data = response.json()
-        return data["choices"][0]["message"]["content"]
-
 
 class LLMClient:
     def __init__(self, config: LLMConfig):
