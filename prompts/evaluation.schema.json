@@ -28,81 +28,6 @@
       "required": ["recommendation", "confidence", "overall_score", "summary"],
       "additionalProperties": false
     },
-    "competency_mapping": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "skill_area": {
-            "type": "string",
-            "description": "Name of the skill area being evaluated"
-          },
-          "overall_assessment": {
-            "type": "string",
-            "enum": ["Expert", "Advanced", "Intermediate", "Basic", "Entry", "Not Demonstrated"],
-            "description": "Overall proficiency level for this skill area"
-          },
-          "meets_requirements": {
-            "type": "boolean",
-            "description": "Whether the candidate meets the job requirements for this skill area"
-          },
-          "confidence": {
-            "type": "string",
-            "enum": ["High", "Medium", "Low"],
-            "description": "Confidence level in this assessment"
-          },
-          "assessment_notes": {
-            "type": "array",
-            "items": {"type": "string"},
-            "description": "1-5 key bullet points summarizing performance in this skill area"
-          },
-          "sub_skills": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "description": "Name of the sub-skill"
-                },
-                "proficiency": {
-                  "type": "string",
-                  "enum": ["Expert", "Advanced", "Intermediate", "Basic", "Entry", "Not Demonstrated"],
-                  "description": "Demonstrated proficiency level"
-                },
-                "demonstrated": {
-                  "type": "boolean",
-                  "description": "Whether this sub-skill was demonstrated in the interview"
-                },
-                "confidence": {
-                  "type": "string",
-                  "enum": ["High", "Medium", "Low"],
-                  "description": "Confidence level in this assessment"
-                },
-                "evidence": {
-                  "anyOf": [
-                    {"type": "array", "items": {"type": "string"}},
-                    {"type": "null"}
-                  ],
-                  "description": "Array of specific evidence points or examples from the interview"
-                },
-                "gaps_identified": {
-                  "anyOf": [
-                    {"type": "array", "items": {"type": "string"}},
-                    {"type": "null"}
-                  ],
-                  "description": "Specific knowledge gaps or areas for improvement"
-                }
-              },
-              "required": ["name", "proficiency", "demonstrated", "confidence", "evidence", "gaps_identified"],
-              "additionalProperties": false
-            }
-          }
-        },
-        "required": ["skill_area", "overall_assessment", "meets_requirements", "confidence", "assessment_notes", "sub_skills"],
-        "additionalProperties": false
-      }
-    },
     "question_analysis": {
       "type": "array",
       "items": {
@@ -166,6 +91,16 @@
             "items": {"type": "string"},
             "description": "Warning signs or concerning aspects identified in this response"
           },
+          "exceptional_responses": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Outstanding answers or unique strengths demonstrated in this specific response"
+          },
+          "inconsistencies": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Inconsistencies between resume, job requirements, and this specific response"
+          },
           "conversation": {
             "type": "array",
             "items": {
@@ -185,7 +120,7 @@
             "description": "Complete conversation turns for this question group"
           }
         },
-        "required": ["question_id", "question_text", "answer_quality", "strengths", "concerns", "green_flags", "red_flags", "conversation"],
+        "required": ["question_id", "question_text", "answer_quality", "strengths", "concerns", "green_flags", "red_flags", "exceptional_responses", "inconsistencies", "conversation"],
         "additionalProperties": false
       }
     },
@@ -219,27 +154,12 @@
     "critical_analysis": {
       "type": "object",
       "properties": {
-        "red_flags": {
-          "type": "array",
-          "items": {"type": "string"},
-          "description": "Significant concerns or warning signs"
-        },
-        "exceptional_responses": {
-          "type": "array",
-          "items": {"type": "string"},
-          "description": "Outstanding answers or unique strengths demonstrated"
-        },
-        "inconsistencies": {
-          "type": "array",
-          "items": {"type": "string"},
-          "description": "Inconsistencies between resume, job requirements, and responses"
-        },
         "problem_solving_approach": {
           "type": "string",
-          "description": "Assessment of candidate's problem-solving methodology"
+          "description": "Overall assessment of candidate's problem-solving methodology across all responses"
         }
       },
-      "required": ["red_flags", "exceptional_responses", "inconsistencies", "problem_solving_approach"],
+      "required": ["problem_solving_approach"],
       "additionalProperties": false
     },
     "improvement_recommendations": {
@@ -250,7 +170,6 @@
   },
   "required": [
     "overall_assessment",
-    "competency_mapping",
     "question_analysis",
     "communication_assessment",
     "critical_analysis",

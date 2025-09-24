@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SkillsCompetencyAssessment",
+  "type": "object",
+  "properties": {
+    "competency_mapping": {
+      "type": "array",
+      "description": "Comprehensive assessment of all required skill areas based on the entire interview transcript",
+      "items": {
+        "type": "object",
+        "properties": {
+          "skill_area": {
+            "type": "string",
+            "description": "Name of the skill area being evaluated"
+          },
+          "overall_assessment": {
+            "type": "string",
+            "enum": ["Expert", "Advanced", "Intermediate", "Basic", "Entry", "Not Demonstrated"],
+            "description": "Overall proficiency level for this skill area based on holistic analysis"
+          },
+          "meets_requirements": {
+            "type": "boolean",
+            "description": "Whether the candidate meets the job requirements for this skill area"
+          },
+          "confidence": {
+            "type": "string",
+            "enum": ["High", "Medium", "Low"],
+            "description": "Confidence level in this assessment based on available evidence"
+          },
+          "assessment_notes": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "3-5 key bullet points summarizing performance, strengths, evidence, and gaps in this skill area"
+          },
+          "sub_skills": {
+            "type": "array",
+            "description": "Individual assessment of each sub-skill within this skill area",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Name of the sub-skill"
+                },
+                "proficiency": {
+                  "type": "string",
+                  "enum": ["Expert", "Advanced", "Intermediate", "Basic", "Entry", "Not Demonstrated"],
+                  "description": "Demonstrated proficiency level based on transcript evidence"
+                },
+                "demonstrated": {
+                  "type": "boolean",
+                  "description": "Whether this sub-skill was clearly demonstrated or inferred from the interview"
+                },
+                "confidence": {
+                  "type": "string",
+                  "enum": ["High", "Medium", "Low"],
+                  "description": "Confidence level in this assessment"
+                },
+                "evidence": {
+                  "anyOf": [
+                    {"type": "array", "items": {"type": "string"}},
+                    {"type": "null"}
+                  ],
+                  "description": "Specific evidence points or examples from across the entire transcript that support this assessment"
+                },
+                "gaps_identified": {
+                  "anyOf": [
+                    {"type": "array", "items": {"type": "string"}},
+                    {"type": "null"}
+                  ],
+                  "description": "Specific knowledge gaps or areas for improvement identified"
+                }
+              },
+              "required": ["name", "proficiency", "demonstrated", "confidence", "evidence", "gaps_identified"],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": ["skill_area", "overall_assessment", "meets_requirements", "confidence", "assessment_notes", "sub_skills"],
+        "additionalProperties": false
+      }
+    },
+    "overall_skills_summary": {
+      "type": "object",
+      "description": "High-level summary of the candidate's skills competency",
+      "properties": {
+        "total_skill_areas_assessed": {
+          "type": "integer",
+          "description": "Total number of skill areas evaluated"
+        },
+        "skill_areas_meeting_requirements": {
+          "type": "integer",
+          "description": "Number of skill areas where candidate meets requirements"
+        },
+        "strongest_skill_areas": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Top 3 skill areas where candidate demonstrated strongest competency"
+        },
+        "development_areas": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Top 3 skill areas that would benefit from development"
+        },
+        "overall_competency_level": {
+          "type": "string",
+          "enum": ["Expert", "Advanced", "Intermediate", "Basic", "Entry"],
+          "description": "Overall competency level across all assessed skills"
+        },
+        "hiring_recommendation_skills": {
+          "type": "string",
+          "enum": ["Strong Hire", "Hire", "Conditional Hire", "No Hire"],
+          "description": "Hiring recommendation based purely on skills competency assessment"
+        },
+        "key_findings": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "3-5 key findings from the comprehensive skills assessment"
+        }
+      },
+      "required": [
+        "total_skill_areas_assessed",
+        "skill_areas_meeting_requirements",
+        "strongest_skill_areas",
+        "development_areas",
+        "overall_competency_level",
+        "hiring_recommendation_skills",
+        "key_findings"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": ["competency_mapping", "overall_skills_summary"],
+  "additionalProperties": false
+}

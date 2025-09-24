@@ -94,6 +94,22 @@ class EvaluateRequest(BaseModel):
 class EvaluateResponse(BaseModel):
     evaluation_report: Dict[str, Any]
     question_groups: Dict[str, Any]
+    skills_assessment: Optional[Dict[str, Any]] = None
+
+    class Config:
+        pass
+
+class SkillsAssessmentRequest(BaseModel):
+    transcript: Dict[str, Any]
+    key_skill_areas: List[Dict[str, Any]]
+    resume: Optional[Dict[str, Any]] = None
+
+    class Config:
+        pass
+
+class SkillsAssessmentResponse(BaseModel):
+    competency_mapping: List[Dict[str, Any]]
+    overall_skills_summary: Dict[str, Any]
 
     class Config:
         pass
@@ -153,6 +169,15 @@ async def load_prompts():
         return system_prompt, schema
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error loading prompts: {str(e)}")
+
+async def load_skills_assessment_prompts():
+    """Load skills assessment prompt and schema"""
+    try:
+        skills_prompt = Path("prompts/assess_skills.md").read_text()
+        skills_schema = json.loads(Path("prompts/skills_assessment.schema.json").read_text())
+        return skills_prompt, skills_schema
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error loading skills assessment prompts: {str(e)}")
 
 async def prepare_known_questions(questions: List[QuestionData]) -> List[Dict]:
     """Convert parsed questions to the format expected by the LLM"""
@@ -484,14 +509,10 @@ async def call_gather_endpoint(request_data: Dict[str, Any]) -> Dict[str, Any]:
 
 
 async def evaluate_question_group(group: Dict[str, Any], resume: Dict[str, Any],
-                                job_requirements: str, key_skill_areas: List[Dict[str, Any]],
-                                llm_client, evaluation_prompt: str, evaluation_schema: Dict) -> Dict[str, Any]:
-    """Evaluate a single question group using the thinking model"""
-    print(f"🔍 Evaluating question group: {group.get('question_id', 'Unknown')}")
-
-    # Remove sample response structure - let the LLM use only schema and instructions
-    print(f"🔧 Using schema-only evaluation for {len(key_skill_areas)} skill areas")
-    print(f"📋 Expected skill areas: {[skill['name'] for skill in key_skill_areas]}")
+                                job_requirements: str, llm_client, evaluation_prompt: str,
+                                evaluation_schema: Dict) -> Dict[str, Any]:
+    """Evaluate a single question group focusing on question analysis only (no competency mapping)"""
+    print(f"🔍 Evaluating question group: {group.get('question_id', 'Unknown')} (question analysis only)")
 
     # Populate the system prompt with candidate information only
     populated_prompt = evaluation_prompt.replace(
@@ -499,7 +520,7 @@ async def evaluate_question_group(group: Dict[str, Any], resume: Dict[str, Any],
     ).replace(
         "{{JOB_REQUIREMENTS}}", job_requirements
     ).replace(
-        "{{KEY_SKILL_AREAS}}", json.dumps(key_skill_areas, indent=2)
+        "{{KEY_SKILL_AREAS}}", "[]"  # Empty since we're not doing competency mapping here
     )
 
     # Prepare the input data for this specific group (without resume, job_requirements, key_skill_areas)
@@ -539,7 +560,6 @@ async def evaluate_question_group(group: Dict[str, Any], resume: Dict[str, Any],
                     "overall_score": 0,
                     "summary": "Failed to parse evaluation response"
                 },
-                "competency_mapping": [],
                 "question_analysis": [],
                 "communication_assessment": {
                     "verbal_articulation": "Fair",
@@ -548,9 +568,6 @@ async def evaluate_question_group(group: Dict[str, Any], resume: Dict[str, Any],
                     "cultural_fit_indicators": []
                 },
                 "critical_analysis": {
-                    "red_flags": ["Evaluation parsing failed"],
-                    "exceptional_responses": [],
-                    "inconsistencies": [],
                     "problem_solving_approach": "Unable to assess due to parsing failure"
                 },
                 "improvement_recommendations": ["Re-evaluate this response manually"],
@@ -582,7 +599,8 @@ async def evaluate_question_group(group: Dict[str, Any], resume: Dict[str, Any],
         }
 
 async def merge_evaluations(evaluations: List[Dict[str, Any]],
-                          global_facts: Dict[str, Any]) -> Dict[str, Any]:
+                          global_facts: Dict[str, Any],
+                          skills_assessment: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     """Merge individual group evaluations into a comprehensive report"""
     print("🔄 Merging individual evaluations into comprehensive report...")
     print(f"📊 Received {len(evaluations)} evaluations to merge")
@@ -608,13 +626,17 @@ async def merge_evaluations(evaluations: List[Dict[str, Any]],
             "cultural_fit_indicators": []
         },
         "critical_analysis": {
-            "red_flags": [],
-            "exceptional_responses": [],
-            "inconsistencies": [],
             "problem_solving_approach": ""
         },
         "improvement_recommendations": []
     }
+
+    # Use skills assessment for competency mapping if provided
+    if skills_assessment and "competency_mapping" in skills_assessment:
+        merged_report["competency_mapping"] = skills_assessment["competency_mapping"]
+        print(f"✅ Used holistic skills assessment for competency mapping ({len(skills_assessment['competency_mapping'])} skill areas)")
+    else:
+        print("⚠️  No skills assessment provided, competency mapping will be empty")
 
     # Collect all question analyses
     for evaluation in evaluations:
@@ -622,169 +644,32 @@ async def merge_evaluations(evaluations: List[Dict[str, Any]],
             if isinstance(evaluation["question_analysis"], list):
                 merged_report["question_analysis"].extend(evaluation["question_analysis"])
 
-    # Aggregate competency mappings by skill area
-    skill_areas = {}
-    for evaluation in evaluations:
-        if isinstance(evaluation, dict) and "error" not in evaluation and "competency_mapping" in evaluation:
-            if isinstance(evaluation["competency_mapping"], list):
-                for competency in evaluation["competency_mapping"]:
-                    if isinstance(competency, dict) and "skill_area" in competency:
-                        skill_area = competency["skill_area"]
-                        if skill_area not in skill_areas:
-                            skill_areas[skill_area] = competency.copy()
-                            # Ensure lists exist
-                            if "sub_skills" not in skill_areas[skill_area]:
-                                skill_areas[skill_area]["sub_skills"] = []
-                            if "assessment_notes" not in skill_areas[skill_area]:
-                                skill_areas[skill_area]["assessment_notes"] = []
-                        else:
-                            # Merge sub-skills and aggregate assessments
-                            existing = skill_areas[skill_area]
-                            if "sub_skills" in competency and isinstance(competency["sub_skills"], list):
-                                # Deduplicate sub-skills by name and merge their evidence
-                                existing_sub_skills = {}
+    # Note: Competency mapping is now handled by the holistic skills assessment above
+    # This section previously aggregated competency mappings from individual question groups
+    # but now we use a single holistic assessment for better accuracy
 
-                                # First, index existing sub-skills by name
-                                for sub_skill in existing["sub_skills"]:
-                                    if isinstance(sub_skill, dict) and "name" in sub_skill:
-                                        name = sub_skill["name"]
-                                        existing_sub_skills[name] = sub_skill
-
-                                # Then merge new sub-skills, consolidating duplicates
-                                for new_sub_skill in competency["sub_skills"]:
-                                    if isinstance(new_sub_skill, dict) and "name" in new_sub_skill:
-                                        name = new_sub_skill["name"]
-                                        if name in existing_sub_skills:
-                                            # Merge evidence and gaps for duplicate sub-skill
-                                            existing_skill = existing_sub_skills[name]
-
-                                            # Take highest proficiency
-                                            prof_levels = {"Entry": 1, "Basic": 2, "Intermediate": 3, "Advanced": 4, "Expert": 5}
-                                            existing_prof = prof_levels.get(existing_skill.get("proficiency", "Entry"), 1)
-                                            new_prof = prof_levels.get(new_sub_skill.get("proficiency", "Entry"), 1)
-                                            if new_prof > existing_prof:
-                                                existing_skill["proficiency"] = new_sub_skill.get("proficiency", "Entry")
-
-                                            # Combine evidence arrays
-                                            if "evidence" in new_sub_skill and new_sub_skill["evidence"]:
-                                                existing_evidence = existing_skill.get("evidence", [])
-                                                new_evidence = new_sub_skill["evidence"]
-
-                                                # Ensure existing_evidence is a list
-                                                if not isinstance(existing_evidence, list):
-                                                    existing_evidence = [existing_evidence] if existing_evidence else []
-
-                                                # Handle new_evidence as either string or list
-                                                if isinstance(new_evidence, list):
-                                                    for evidence_point in new_evidence:
-                                                        if evidence_point and evidence_point not in existing_evidence:
-                                                            existing_evidence.append(evidence_point)
-                                                elif isinstance(new_evidence, str) and new_evidence:
-                                                    if new_evidence not in existing_evidence:
-                                                        existing_evidence.append(new_evidence)
-
-                                                existing_skill["evidence"] = existing_evidence
-
-                                            # Combine gaps
-                                            if "gaps_identified" in new_sub_skill and isinstance(new_sub_skill["gaps_identified"], list):
-                                                existing_gaps = existing_skill.get("gaps_identified", [])
-                                                for gap in new_sub_skill["gaps_identified"]:
-                                                    if gap not in existing_gaps:
-                                                        existing_gaps.append(gap)
-                                                existing_skill["gaps_identified"] = existing_gaps
-
-                                            # Update confidence to highest
-                                            conf_levels = {"Low": 1, "Medium": 2, "High": 3}
-                                            existing_conf = conf_levels.get(existing_skill.get("confidence", "Low"), 1)
-                                            new_conf = conf_levels.get(new_sub_skill.get("confidence", "Low"), 1)
-                                            if new_conf > existing_conf:
-                                                existing_skill["confidence"] = new_sub_skill.get("confidence", "Low")
-
-                                            # Set demonstrated to true if either is true
-                                            existing_skill["demonstrated"] = existing_skill.get("demonstrated", False) or new_sub_skill.get("demonstrated", False)
-                                        else:
-                                            # Add new sub-skill
-                                            existing_sub_skills[name] = new_sub_skill
-
-                                # Replace the sub_skills list with deduplicated results
-                                existing["sub_skills"] = list(existing_sub_skills.values())
-
-                            # Skip individual group assessment_notes - we'll generate holistic notes later
-                            # This prevents conflicting statements like "No star schema discussion" from one group
-                            # while another group might have covered star schema concepts
-                            pass
-
-    # Generate holistic assessment notes for each skill area based on consolidated evidence
-    print("🔄 Generating holistic assessment notes for each skill area...")
-    for skill_area_data in skill_areas.values():
-        skill_name = skill_area_data.get("skill_area", "Unknown")
-        sub_skills = skill_area_data.get("sub_skills", [])
-        overall_assessment = skill_area_data.get("overall_assessment", "Not Assessed")
-        meets_requirements = skill_area_data.get("meets_requirements", False)
-
-        holistic_notes = []
-
-        # Analyze overall performance
-        if meets_requirements:
-            holistic_notes.append(f"Candidate demonstrates competency in {skill_name} with {overall_assessment.lower()} level performance.")
-        else:
-            holistic_notes.append(f"Candidate shows {overall_assessment.lower()} level performance in {skill_name} but does not fully meet requirements.")
-
-        # Analyze sub-skills coverage - only report positively if overall assessment is not "Not Demonstrated"
-        demonstrated_skills = [skill for skill in sub_skills if skill.get("demonstrated", False)]
-        not_demonstrated_skills = [skill for skill in sub_skills if not skill.get("demonstrated", False)]
-
-        # Only report demonstrated experience if the overall assessment indicates actual demonstration
-        if demonstrated_skills and overall_assessment != "Not Demonstrated":
-            skill_names = [skill["name"] for skill in demonstrated_skills]
-            proficiencies = [skill.get("proficiency", "Unknown") for skill in demonstrated_skills]
-            holistic_notes.append(f"Demonstrated experience in: {', '.join(skill_names)} with proficiency levels ranging from {min(proficiencies)} to {max(proficiencies)}.")
-        elif demonstrated_skills and overall_assessment == "Not Demonstrated":
-            # If overall is "Not Demonstrated" but sub-skills show some evidence, clarify the contradiction
-            skill_names = [skill["name"] for skill in demonstrated_skills]
-            holistic_notes.append(f"Some evidence found for: {', '.join(skill_names)}, but insufficient for overall competency demonstration.")
-
-        if not_demonstrated_skills:
-            skill_names = [skill["name"] for skill in not_demonstrated_skills]
-            holistic_notes.append(f"Areas requiring further assessment or development: {', '.join(skill_names)}.")
-
-        # Identify confidence levels
-        high_confidence_skills = [skill["name"] for skill in sub_skills if skill.get("confidence") == "High"]
-        low_confidence_skills = [skill["name"] for skill in sub_skills if skill.get("confidence") == "Low"]
-
-        if high_confidence_skills:
-            holistic_notes.append(f"Strong evidence of competency in: {', '.join(high_confidence_skills)}.")
-
-        if low_confidence_skills:
-            holistic_notes.append(f"Limited evidence provided for: {', '.join(low_confidence_skills)}.")
-
-        skill_area_data["assessment_notes"] = holistic_notes
-
-    merged_report["competency_mapping"] = list(skill_areas.values())
-
-    # Aggregate other assessments
-    all_red_flags = []
-    all_exceptional_responses = []
-    all_inconsistencies = []
+    # Aggregate recommendations and problem-solving approach
     all_recommendations = []
+    problem_solving_approaches = []
 
     for evaluation in evaluations:
         if isinstance(evaluation, dict) and "error" not in evaluation:
             if "critical_analysis" in evaluation and isinstance(evaluation["critical_analysis"], dict):
                 critical_analysis = evaluation["critical_analysis"]
-                if "red_flags" in critical_analysis and isinstance(critical_analysis["red_flags"], list):
-                    all_red_flags.extend(critical_analysis["red_flags"])
-                if "exceptional_responses" in critical_analysis and isinstance(critical_analysis["exceptional_responses"], list):
-                    all_exceptional_responses.extend(critical_analysis["exceptional_responses"])
-                if "inconsistencies" in critical_analysis and isinstance(critical_analysis["inconsistencies"], list):
-                    all_inconsistencies.extend(critical_analysis["inconsistencies"])
+                if "problem_solving_approach" in critical_analysis and isinstance(critical_analysis["problem_solving_approach"], str):
+                    if critical_analysis["problem_solving_approach"].strip():
+                        problem_solving_approaches.append(critical_analysis["problem_solving_approach"])
 
             if "improvement_recommendations" in evaluation and isinstance(evaluation["improvement_recommendations"], list):
                 all_recommendations.extend(evaluation["improvement_recommendations"])
 
-    merged_report["critical_analysis"]["red_flags"] = list(set(all_red_flags))
-    merged_report["critical_analysis"]["exceptional_responses"] = list(set(all_exceptional_responses))
-    merged_report["critical_analysis"]["inconsistencies"] = list(set(all_inconsistencies))
+    # Set overall problem-solving approach (combine or pick the most comprehensive one)
+    if problem_solving_approaches:
+        # Use the longest/most detailed problem-solving approach as the overall one
+        merged_report["critical_analysis"]["problem_solving_approach"] = max(problem_solving_approaches, key=len)
+    else:
+        merged_report["critical_analysis"]["problem_solving_approach"] = "No clear problem-solving approach demonstrated"
+
     merged_report["improvement_recommendations"] = list(set(all_recommendations))
 
     # Calculate overall scores and recommendations
@@ -878,6 +763,218 @@ async def load_evaluation_config():
             "technical_questions": "No technical questions specified",
             "key_skill_areas": []
         }
+
+async def evaluate_skills_holistically(transcript: Dict[str, Any], key_skill_areas: List[Dict[str, Any]],
+                                     resume: Dict[str, Any], job_requirements: str, llm_client) -> Dict[str, Any]:
+    """Evaluate skills competency holistically across the entire transcript using one LLM call"""
+    print("🔍 Starting holistic skills competency assessment...")
+
+    # Load skills assessment prompt and schema
+    skills_prompt, skills_schema = await load_skills_assessment_prompts()
+
+    # Populate the system prompt with candidate information
+    populated_prompt = skills_prompt.replace(
+        "{{RESUME_CONTENT}}", json.dumps(resume, indent=2)
+    ).replace(
+        "{{JOB_REQUIREMENTS}}", job_requirements
+    ).replace(
+        "{{KEY_SKILL_AREAS}}", json.dumps(key_skill_areas, indent=2)
+    )
+
+    # Extract messages from transcript
+    messages = transcript.get("messages", [])
+
+    # Prepare input data for skills assessment
+    skills_input = {
+        "transcript_messages": [
+            {
+                "idx": i,
+                "role": msg.get("role"),
+                "time": msg.get("time"),
+                "message": msg.get("message"),
+                "endTime": msg.get("endTime"),
+                "duration": msg.get("duration"),
+                "secondsFromStart": msg.get("secondsFromStart")
+            }
+            for i, msg in enumerate(messages)
+        ],
+        "key_skill_areas": key_skill_areas
+    }
+
+    # Create the skills assessment prompt
+    skills_messages = [
+        {"role": "system", "content": populated_prompt},
+        {"role": "user", "content": f"Assess skills competency based on this complete interview data: {json.dumps(skills_input)}"}
+    ]
+
+    try:
+        print(f"🤖 Generating skills assessment for {len(key_skill_areas)} skill areas...")
+
+        # Generate skills assessment using LLM
+        skills_result = await llm_client.generate(skills_messages, skills_schema)
+
+        # Parse skills assessment result
+        try:
+            skills_data = json.loads(skills_result)
+            print(f"✅ Skills assessment completed successfully")
+            return skills_data
+        except json.JSONDecodeError as e:
+            print(f"❌ Failed to parse skills assessment: {str(e)}")
+            print(f"📄 Raw response (first 1000 chars): {skills_result[:1000]}")
+            return {
+                "competency_mapping": [],
+                "overall_skills_summary": {
+                    "total_skill_areas_assessed": 0,
+                    "skill_areas_meeting_requirements": 0,
+                    "strongest_skill_areas": [],
+                    "development_areas": [],
+                    "overall_competency_level": "Entry",
+                    "hiring_recommendation_skills": "No Hire",
+                    "key_findings": ["Failed to parse skills assessment response"]
+                },
+                "parsing_error": True,
+                "raw_response_preview": skills_result[:500] if len(skills_result) > 500 else skills_result
+            }
+
+    except Exception as e:
+        print(f"❌ Error during skills assessment: {str(e)}")
+        return {
+            "competency_mapping": [],
+            "overall_skills_summary": {
+                "total_skill_areas_assessed": 0,
+                "skill_areas_meeting_requirements": 0,
+                "strongest_skill_areas": [],
+                "development_areas": [],
+                "overall_competency_level": "Entry",
+                "hiring_recommendation_skills": "No Hire",
+                "key_findings": [f"Skills assessment failed: {str(e)}"]
+            },
+            "error": str(e)
+        }
+
+@app.post("/assess-skills-competency", response_model=SkillsAssessmentResponse)
+async def assess_skills_competency(request: SkillsAssessmentRequest):
+    """Assess candidate's skills competency holistically across the entire interview transcript"""
+    try:
+        print("\n" + "="*50)
+        print("🚀 Starting holistic skills competency assessment...")
+
+        # Get configuration from environment
+        eval_provider = "openrouter"  # Always use OpenRouter
+        eval_model = config.CEREBRAS_MODELS.QWEN3_32B
+
+        print(f"📊 Provider: {eval_provider}")
+        print(f"🤖 Model: {eval_model}")
+
+        # Extract candidate information from request
+        candidate_info = {}
+        if request.resume:
+            # Use resume data from request if available
+            candidate_info = {
+                "candidate_name": request.resume.get("candidate_name", "Unknown"),
+                "job_title": request.resume.get("job_title", "Unknown"),
+                "company_name": request.resume.get("company_name", "Unknown"),
+                "salary_range": request.resume.get("salary_range", "Not specified"),
+                "company_profile": request.resume.get("company_profile", "Not available"),
+                "job_requirements": request.resume.get("job_requirements", "Not available")
+            }
+            print(f"👤 Using resume data: {candidate_info['candidate_name']} applying for {candidate_info['job_title']} at {candidate_info['company_name']}")
+        else:
+            # Extract from transcript variables field
+            candidate_info = extract_candidate_info_from_transcript(request.transcript)
+            print(f"👤 Extracted from transcript: {candidate_info['candidate_name']} applying for {candidate_info['job_title']} at {candidate_info['company_name']}")
+
+        # Create resume structure from extracted candidate info
+        resume_data = {
+            "candidate_name": candidate_info["candidate_name"],
+            "job_title": candidate_info["job_title"],
+            "company_name": candidate_info["company_name"],
+            "salary_range": candidate_info["salary_range"],
+            "company_profile": candidate_info["company_profile"],
+            "job_requirements": candidate_info["job_requirements"]
+        }
+
+        print(f"🎯 Assessing {len(request.key_skill_areas)} skill areas: {[skill['name'] for skill in request.key_skill_areas]}")
+
+        # Get API key from environment
+        print("🔑 Checking API key...")
+        api_key = os.getenv("OPENROUTER_API_KEY")
+        if api_key:
+            print("✅ Using API key from environment: OPENROUTER_API_KEY")
+        else:
+            raise HTTPException(
+                status_code=500,
+                detail="OPENROUTER_API_KEY not found in environment variables"
+            )
+
+        # Create LLM client
+        print("🔧 Creating LLM client...")
+        llm_client = create_llm_client(
+            provider=eval_provider,
+            model=eval_model,
+            api_key=api_key
+        )
+        print("✅ LLM client created successfully")
+
+        # Perform holistic skills assessment
+        print("🔄 Performing holistic skills assessment...")
+        skills_assessment = await evaluate_skills_holistically(
+            transcript=request.transcript,
+            key_skill_areas=request.key_skill_areas,
+            resume=resume_data,
+            job_requirements=candidate_info["job_requirements"],
+            llm_client=llm_client
+        )
+        print("✅ Holistic skills assessment completed")
+
+        # Create response
+        response = SkillsAssessmentResponse(
+            competency_mapping=skills_assessment.get("competency_mapping", []),
+            overall_skills_summary=skills_assessment.get("overall_skills_summary", {})
+        )
+
+        # Save skills assessment to disk
+        print("💾 Saving skills assessment to disk...")
+        try:
+            # Create output directory if it doesn't exist
+            output_dir = Path("output")
+            output_dir.mkdir(exist_ok=True)
+
+            # Generate filename with timestamp
+            timestamp = int(time.time())
+            filename = f"skills_assessment_{timestamp}.json"
+            output_path = output_dir / filename
+
+            # Save the complete assessment
+            output_data = {
+                "timestamp": timestamp,
+                "request_data": {
+                    "candidate_name": candidate_info.get("candidate_name", "Unknown"),
+                    "job_title": candidate_info.get("job_title", "Unknown"),
+                    "company": candidate_info.get("company_name", "Unknown"),
+                    "transcript_messages_count": len(request.transcript.get("messages", [])),
+                    "key_skill_areas_count": len(request.key_skill_areas),
+                },
+                "skills_assessment": skills_assessment
+            }
+
+            with open(output_path, 'w', encoding='utf-8') as f:
+                json.dump(output_data, f, indent=2, ensure_ascii=False)
+
+            print(f"✅ Skills assessment saved to: {output_path}")
+
+        except Exception as e:
+            print(f"⚠️  Failed to save skills assessment: {str(e)}")
+
+        print("✅ Skills competency assessment completed successfully!")
+        print("="*50 + "\n")
+
+        return response
+
+    except Exception as e:
+        print(f"❌ Error during skills competency assessment: {str(e)}")
+        print("="*50 + "\n")
+        raise HTTPException(status_code=500, detail=f"Error assessing skills competency: {str(e)}")
 
 @app.post("/generate-report", response_model=EvaluateResponse)
 async def generate_report(request: EvaluateRequest):
@@ -977,14 +1074,13 @@ async def generate_report(request: EvaluateRequest):
         # Step 4: Process question groups in parallel
         print(f"🔄 Step 4: Processing {len(groups)} question groups in parallel...")
 
-        # Create tasks for parallel processing
+        # Create tasks for parallel processing (question analysis only)
         evaluation_tasks = []
         for group in groups:
             task = evaluate_question_group(
                 group=group,
                 resume=resume_data,
                 job_requirements=candidate_info["job_requirements"],
-                key_skill_areas=key_skill_areas,
                 llm_client=eval_llm_client,
                 evaluation_prompt=evaluation_prompt,
                 evaluation_schema=evaluation_schema
@@ -1008,15 +1104,27 @@ async def generate_report(request: EvaluateRequest):
 
         print(f"✅ Step 4 completed: {len(valid_evaluations)} evaluations processed")
 
-        # Step 5: Merge evaluations into comprehensive report
-        print("🔄 Step 5: Merging evaluations into comprehensive report...")
-        final_evaluation = await merge_evaluations(valid_evaluations, global_facts)
-        print("✅ Step 5 completed: Final evaluation report generated")
+        # Step 5: Perform holistic skills assessment
+        print("🔄 Step 5: Performing holistic skills competency assessment...")
+        skills_assessment = await evaluate_skills_holistically(
+            transcript=request.transcript,
+            key_skill_areas=key_skill_areas,
+            resume=resume_data,
+            job_requirements=candidate_info["job_requirements"],
+            llm_client=eval_llm_client
+        )
+        print("✅ Step 5 completed: Skills competency assessment generated")
 
-        # Prepare response
+        # Step 6: Merge evaluations into comprehensive report
+        print("🔄 Step 6: Merging question evaluations and skills assessment...")
+        final_evaluation = await merge_evaluations(valid_evaluations, global_facts, skills_assessment)
+        print("✅ Step 6 completed: Final evaluation report generated")
+
+        # Prepare response including skills assessment
         response = EvaluateResponse(
             evaluation_report=final_evaluation,
-            question_groups=question_groups_result
+            question_groups=question_groups_result,
+            skills_assessment=skills_assessment
         )
 
         # Save evaluation report to disk
@@ -1043,6 +1151,7 @@ async def generate_report(request: EvaluateRequest):
                 },
                 "evaluation_report": final_evaluation,
                 "question_groups": question_groups_result,
+                "skills_assessment": skills_assessment,
                 "individual_evaluations_count": len(valid_evaluations),
                 "successful_evaluations": len([e for e in valid_evaluations if "error" not in e])
             }
