@@ -461,6 +461,10 @@ def call_generate_report_api(evaluation_json: dict, api_url: str = "http://local
         "key_skill_areas": evaluation_json.get("key_skill_areas", [])
     }
 
+    #store api_request to a file for debugging
+    with open("api_request_debug.json", "w") as f:
+        json.dump(api_request, f, indent=2, ensure_ascii=False, default=str)
+
     try:
         response = requests.post(
             f"{api_url}/generate-report",

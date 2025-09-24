@@ -15,183 +15,7 @@ from concurrent.futures import ThreadPoolExecutor
 from functools import partial
 import globals as config
 
-def parse_structured_output(response: str, expected_keys: List[str] = None) -> dict:
-    """
-    Parse JSON from structured output responses.
-    For structured outputs, the response should be clean JSON.
-    For non-structured responses, try to extract JSON from various formats.
-    """
-    # First try direct JSON parsing (for structured outputs)
-    try:
-        parsed = json.loads(response.strip())
-        if expected_keys:
-            # Verify expected structure
-            if all(key in parsed for key in expected_keys):
-                return parsed
-        else:
-            return parsed
-    except json.JSONDecodeError as e:
-        print(f"🔍 Direct JSON parsing failed: {str(e)}")
-        print(f"📄 Response length: {len(response)} chars")
 
-    # Try to find the largest valid JSON object in the response
-    try:
-        # Look for JSON that starts with { and try to find the matching }
-        start_idx = response.find('{')
-        if start_idx != -1:
-            # Try different end positions to find valid JSON
-            for end_idx in range(len(response), start_idx, -1):
-                candidate = response[start_idx:end_idx].strip()
-                try:
-                    parsed = json.loads(candidate)
-                    if expected_keys:
-                        if all(key in parsed for key in expected_keys):
-                            print(f"✅ Found valid JSON at position {start_idx}:{end_idx}")
-                            return parsed
-                    else:
-                        print(f"✅ Found valid JSON at position {start_idx}:{end_idx}")
-                        return parsed
-                except json.JSONDecodeError:
-                    continue
-    except Exception as e:
-        print(f"⚠️ JSON scanning failed: {str(e)}")
-
-    # Fallback to extraction for non-structured responses
-    import re
-
-    json_patterns = [
-        r'```json\s*(\{.*?\})\s*```',  # JSON in code blocks
-        r'<json>\s*(\{.*?\})\s*</json>',  # JSON in XML tags
-        r'(\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\})',  # Any complete JSON object
-    ]
-
-    for pattern in json_patterns:
-        matches = re.findall(pattern, response, re.DOTALL)
-        if matches:
-            for match in matches:
-                try:
-                    parsed = json.loads(match)
-                    if expected_keys:
-                        if all(key in parsed for key in expected_keys):
-                            return parsed
-                    else:
-                        return parsed
-                except:
-                    continue
-
-    # If all else fails, try to repair incomplete JSON
-    try:
-        repaired = repair_incomplete_json(response)
-        parsed = json.loads(repaired)
-        print(f"✅ Successfully repaired incomplete JSON")
-        return parsed
-    except Exception as e:
-        print(f"⚠️ JSON repair failed: {str(e)}")
-        raise ValueError(f"Could not parse JSON from response: {response[:200]}...")
-
-def repair_incomplete_json(json_text: str) -> str:
-    """Attempt to repair incomplete JSON by adding missing closing braces and quotes"""
-    import re
-
-    if not json_text.strip():
-        return "{}"
-
-    repaired = json_text.strip()
-
-    # Find the last complete, valid JSON structure
-    max_valid_pos = 0
-    for i in range(len(repaired), 0, -1):
-        candidate = repaired[:i]
-        try:
-            # Try to parse what we have so far
-            json.loads(candidate)
-            # If it parses, this is our longest valid JSON
-            return candidate
-        except json.JSONDecodeError:
-            continue
-
-    # If no valid JSON found, try incremental repair
-
-    # First, handle basic structural issues
-    # Remove any trailing commas before closing braces/brackets
-    repaired = re.sub(r',(\s*[}\]])', r'\1', repaired)
-
-    # Find where we are in the JSON structure
-    brace_count = 0
-    bracket_count = 0
-    in_string = False
-    last_complete_pos = 0
-
-    for i, char in enumerate(repaired):
-        if char == '"' and (i == 0 or repaired[i-1] != '\\'):
-            in_string = not in_string
-        elif not in_string:
-            if char == '{':
-                brace_count += 1
-            elif char == '}':
-                brace_count -= 1
-                if brace_count == 0 and bracket_count == 0:
-                    last_complete_pos = i + 1
-            elif char == '[':
-                bracket_count += 1
-            elif char == ']':
-                bracket_count -= 1
-
-    # If we found a position where objects/arrays were balanced, use that
-    if last_complete_pos > len(repaired) // 2:  # Only if we got reasonably far
-        try:
-            candidate = repaired[:last_complete_pos]
-            json.loads(candidate)
-            return candidate
-        except json.JSONDecodeError:
-            pass
-
-    # Otherwise, try to repair by truncating at a safe point
-    # Look for the last complete key-value pair or array element
-    safe_endings = ['}",', '},', ']",', '],', '",', ',']
-
-    for ending in safe_endings:
-        pos = repaired.rfind(ending)
-        if pos != -1:
-            # Try truncating at this point and closing properly
-            truncated = repaired[:pos + len(ending) - 1]  # Remove the comma
-
-            # Count remaining open structures
-            open_braces = truncated.count('{') - truncated.count('}')
-            open_brackets = truncated.count('[') - truncated.count(']')
-
-            # Close them
-            while open_brackets > 0:
-                truncated += ']'
-                open_brackets -= 1
-            while open_braces > 0:
-                truncated += '}'
-                open_braces -= 1
-
-            # Test if this works
-            try:
-                json.loads(truncated)
-                return truncated
-            except json.JSONDecodeError:
-                continue
-
-    # If all else fails, try the original repair logic
-    if repaired.count('"') % 2 != 0:
-        repaired += '"'
-
-    # Close remaining structures
-    open_brackets = repaired.count('[') - repaired.count(']')
-    open_braces = repaired.count('{') - repaired.count('}')
-
-    while open_brackets > 0:
-        repaired += ']'
-        open_brackets -= 1
-
-    while open_braces > 0:
-        repaired += '}'
-        open_braces -= 1
-
-    return repaired
 
 # Load environment variables
 load_dotenv(override=True)
@@ -202,28 +26,12 @@ app = FastAPI(
     version="1.0.0"
 )
 
-class LLMSettings(BaseModel):
-    provider: str = config.GATHER_CONFIG["provider"]
-    model: str = config.GATHER_CONFIG["model"]
-    api_key: Optional[str] = None
 
-    class Config:
-        schema_extra = {
-            "example": {
-                "provider": config.GATHER_CONFIG["provider"],
-                "model": config.GATHER_CONFIG["model"],
-                "api_key": "optional_if_set_in_env"
-            }
-        }
 
 class GatherRequest(BaseModel):
     transcript: Dict[str, Any]
     technical_questions: str
     key_skill_areas: List[Dict[str, Any]]
-    llm_settings: Optional[LLMSettings] = LLMSettings(
-        provider=config.GATHER_CONFIG["provider"],
-        model=config.GATHER_CONFIG["model"]
-    )
 
     class Config:
         pass
@@ -279,10 +87,6 @@ class EvaluateRequest(BaseModel):
     transcript: Dict[str, Any]
     resume: Optional[Dict[str, Any]] = None
     key_skill_areas: Optional[List[Dict[str, Any]]] = None
-    llm_settings: Optional[LLMSettings] = LLMSettings(
-        provider=config.EVALUATION_CONFIG["provider"],
-        model=config.EVALUATION_CONFIG["model"]  # Use thinking model by default
-    )
 
     class Config:
         pass
@@ -396,12 +200,7 @@ def generate_cache_key(request: GatherRequest) -> str:
     cache_input = {
         "transcript": request.transcript,
         "technical_questions": request.technical_questions,
-        "key_skill_areas": request.key_skill_areas,
-        # Include model settings as they affect the output
-        "llm_settings": {
-            "provider": request.llm_settings.provider,
-            "model": request.llm_settings.model
-        }
+        "key_skill_areas": request.key_skill_areas,            # Include model settings as they affect the output
     }
 
     # Convert to JSON string with sorted keys for consistent hashing
@@ -468,21 +267,13 @@ async def gather(request: GatherRequest):
         print("\n" + "="*50)
         print("🚀 Starting report generation...")
 
-        # Enforce default model for gather endpoint - do not allow override
-        original_provider = request.llm_settings.provider
-        original_model = request.llm_settings.model
-
-        # Force the use of the specified model for gather
-        request.llm_settings.provider = config.GATHER_CONFIG["provider"]
-        request.llm_settings.model = config.GATHER_CONFIG["model"]
-
-        if original_provider != request.llm_settings.provider or original_model != request.llm_settings.model:
-            print(f"⚠️  Model override detected - enforcing gather default:")
-            print(f"   Requested: {original_provider}/{original_model}")
-            print(f"   Using: {request.llm_settings.provider}/{request.llm_settings.model}")
-
-        print(f"📊 Provider: {request.llm_settings.provider}")
-        print(f"🤖 Model: {request.llm_settings.model}")
+        # Get configuration from environment
+       
+        provider = "openrouter"  # Always use OpenRouter
+        model = config.CEREBRAS_MODELS.GPT_OSS
+        
+        print(f"📊 Provider: {provider}")
+        print(f"🤖 Model: {model}")
 
         # Generate cache key for this request
         print("🔑 Generating cache key...")
@@ -517,7 +308,6 @@ async def gather(request: GatherRequest):
                         "transcript_messages_count": len(request.transcript.get("messages", [])),
                         "technical_questions_count": len(parse_technical_questions(request.technical_questions)),
                         "key_skill_areas_count": len(request.key_skill_areas),
-                        "llm_settings": request.llm_settings.dict()
                     },
                     "llm_output": cached_result["llm_output"]
                 }
@@ -574,26 +364,22 @@ async def gather(request: GatherRequest):
         }
         print(f"✅ Input data prepared ({len(llm_input['turns'])} turns)")
 
-        # Get API key from environment if not provided
+        # Get API key from environment
         print("🔑 Checking API key...")
-        api_key = request.llm_settings.api_key
-        if not api_key:
-            if request.llm_settings.provider.lower() == "openrouter":
-                api_key = os.getenv("OPENROUTER_API_KEY")
-                if api_key:
-                    print(f"✅ Using API key from environment: OPENROUTER_API_KEY")
-                else:
-                    print("⚠️  No API key found")
-            else:
-                raise ValueError("Only OpenRouter provider is supported")
+        api_key = os.getenv("OPENROUTER_API_KEY")
+        if api_key:
+            print(f"✅ Using API key from environment: OPENROUTER_API_KEY")
         else:
-            print("✅ Using provided API key")
+            raise HTTPException(
+                status_code=500,
+                detail="OPENROUTER_API_KEY not found in environment variables"
+            )
 
         # Create LLM client
         print("🔧 Creating LLM client...")
         llm_client = create_llm_client(
-            provider=request.llm_settings.provider,
-            model=request.llm_settings.model,
+            provider=provider,
+            model=model,
             api_key=api_key
         )
         print("✅ LLM client created successfully")
@@ -609,18 +395,18 @@ async def gather(request: GatherRequest):
 
         # Generate LLM response
         print("🤖 Generating LLM response...")
-        print(f"   Provider: {request.llm_settings.provider}")
-        print(f"   Model: {request.llm_settings.model}")
+        print(f"   Provider: {provider}")
+        print(f"   Model: {model}")
         llm_response = await llm_client.generate(llm_messages, schema)
         print("✅ LLM response generated")
 
         # Parse response
         print("🔍 Parsing LLM response...")
         try:
-            llm_output = parse_structured_output(llm_response, expected_keys=["groups"])
+            llm_output = json.loads(llm_response)
             groups_count = len(llm_output.get("groups", []))
             print(f"✅ Response parsed successfully ({groups_count} conversation groups)")
-        except Exception as e:
+        except json.JSONDecodeError as e:
             print(f"❌ Failed to parse LLM response: {str(e)}")
             print(f"Raw response preview: {llm_response[:500]}...")
             llm_output = {"error": "Failed to parse LLM response", "raw_response": llm_response}
@@ -740,75 +526,38 @@ async def evaluate_question_group(group: Dict[str, Any], resume: Dict[str, Any],
         # else:
             # print(f"📄 Response preview: {evaluation_result[:200]}...")
 
-        # Parse evaluation result using structured output helper
+        # Parse evaluation result
         try:
-            expected_keys = ["overall_assessment", "competency_mapping", "question_analysis"]
-            evaluation_data = parse_structured_output(evaluation_result, expected_keys=expected_keys)
+            evaluation_data = json.loads(evaluation_result)
             print(f"✅ Evaluation parsed successfully for group {group.get('question_id', 'Unknown')}")
-        except Exception as e:
-            print(f"❌ Failed to parse complete evaluation for group {group.get('question_id', 'Unknown')}: {str(e)}")
-
-            # Try to parse as partial response (without requiring all expected keys)
-            try:
-                partial_data = parse_structured_output(evaluation_result, expected_keys=None)
-                print(f"🔧 Recovered partial evaluation data with keys: {list(partial_data.keys())}")
-
-                # Fill in missing required fields with defaults
-                evaluation_data = {
-                    "overall_assessment": partial_data.get("overall_assessment", {
-                        "recommendation": "No Hire",
-                        "confidence": "Low",
-                        "overall_score": 0,
-                        "summary": "Partial evaluation due to parsing issues"
-                    }),
-                    "competency_mapping": partial_data.get("competency_mapping", []),
-                    "question_analysis": partial_data.get("question_analysis", []),
-                    "communication_assessment": partial_data.get("communication_assessment", {
-                        "verbal_articulation": "Fair",
-                        "logical_flow": "Fair",
-                        "professional_vocabulary": "Fair",
-                        "cultural_fit_indicators": []
-                    }),
-                    "critical_analysis": partial_data.get("critical_analysis", {
-                        "red_flags": ["Incomplete evaluation due to parsing issues"],
-                        "exceptional_responses": [],
-                        "inconsistencies": [],
-                        "problem_solving_approach": "Partially assessed"
-                    }),
-                    "improvement_recommendations": partial_data.get("improvement_recommendations", ["Complete evaluation manually"]),
-                    "partial_response": True,
-                    "recovered_fields": list(partial_data.keys())
-                }
-                print(f"✅ Successfully recovered partial evaluation with {len(partial_data.keys())} fields")
-
-            except Exception as e2:
-                print(f"❌ Complete parsing failure: {str(e2)}")
-                print(f"📄 Raw response (first 1000 chars): {evaluation_result[:1000]}")
-                evaluation_data = {
-                    "overall_assessment": {
-                        "recommendation": "No Hire",
-                        "confidence": "Low",
-                        "overall_score": 0,
-                        "summary": "Failed to parse evaluation response"
-                    },
-                    "competency_mapping": [],
-                    "question_analysis": [],
-                    "communication_assessment": {
-                        "verbal_articulation": "Fair",
-                        "logical_flow": "Fair",
-                        "professional_vocabulary": "Fair",
-                        "cultural_fit_indicators": []
-                    },
-                    "critical_analysis": {
-                        "red_flags": ["Evaluation parsing failed"],
-                        "exceptional_responses": [],
-                        "inconsistencies": [],
-                        "problem_solving_approach": "Unable to assess due to parsing failure"
-                    },
-                    "improvement_recommendations": ["Re-evaluate this response manually"],
-                    "parsing_error": True,
-                    "raw_response_preview": evaluation_result[:500] if len(evaluation_result) > 500 else evaluation_result
-                }
+        except json.JSONDecodeError as e:
+            print(f"❌ Failed to parse evaluation for group {group.get('question_id', 'Unknown')}: {str(e)}")
+            print(f"📄 Raw response (first 1000 chars): {evaluation_result[:1000]}")
+            evaluation_data = {
+                "overall_assessment": {
+                    "recommendation": "No Hire",
+                    "confidence": "Low",
+                    "overall_score": 0,
+                    "summary": "Failed to parse evaluation response"
+                },
+                "competency_mapping": [],
+                "question_analysis": [],
+                "communication_assessment": {
+                    "verbal_articulation": "Fair",
+                    "logical_flow": "Fair",
+                    "professional_vocabulary": "Fair",
+                    "cultural_fit_indicators": []
+                },
+                "critical_analysis": {
+                    "red_flags": ["Evaluation parsing failed"],
+                    "exceptional_responses": [],
+                    "inconsistencies": [],
+                    "problem_solving_approach": "Unable to assess due to parsing failure"
+                },
+                "improvement_recommendations": ["Re-evaluate this response manually"],
+                "parsing_error": True,
+                "raw_response_preview": evaluation_result[:500] if len(evaluation_result) > 500 else evaluation_result
+            }
 
         # Add group metadata
         evaluation_data["group_metadata"] = {
@@ -1137,8 +886,13 @@ async def generate_report(request: EvaluateRequest):
     try:
         print("\n" + "="*50)
         print("🚀 Starting comprehensive report generation...")
-        print(f"📊 Evaluation Provider: {request.llm_settings.provider}")
-        print(f"🤖 Evaluation Model: {request.llm_settings.model}")
+        
+        # Get evaluation configuration from environment
+        eval_provider = "openrouter"  # Always use OpenRouter
+        eval_model = config.CEREBRAS_MODELS.QWEN3_32B
+        
+        print(f"📊 Evaluation Provider: {eval_provider}")
+        print(f"🤖 Evaluation Model: {eval_model}")
 
         # Load evaluation configuration (resume, job requirements, technical questions)
         print("📋 Loading evaluation configuration...")
@@ -1179,15 +933,13 @@ async def generate_report(request: EvaluateRequest):
 
         # Step 1: Call gather endpoint to get question groups
         print("🔄 Step 1: Gathering question groups using /gather endpoint...")
-        # Note: gather endpoint will enforce its own model settings regardless of what we pass
+        
+        # Check if gather configuration is available from environment
+      
         gather_data = {
             "transcript": request.transcript,
             "technical_questions": eval_config["technical_questions"],
             "key_skill_areas": key_skill_areas,
-            "llm_settings": {
-                "provider": config.GATHER_CONFIG["provider"],
-                "model": config.GATHER_CONFIG["model"]  # This will be enforced anyway
-            }
         }
 
         question_groups_result = await call_gather_endpoint(gather_data)
@@ -1205,24 +957,20 @@ async def generate_report(request: EvaluateRequest):
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Error loading evaluation materials: {str(e)}")
 
-        # Step 3: Create LLM client for evaluation (thinking model)
+        # Step 3: Create LLM client for evaluation
         print("🔧 Step 3: Creating evaluation LLM client...")
-        api_key = request.llm_settings.api_key
-        if not api_key:
-            if request.llm_settings.provider.lower() == "openrouter":
-                api_key = os.getenv("OPENROUTER_API_KEY")
-                if api_key:
-                    print("✅ Using API key from environment: OPENROUTER_API_KEY")
-                else:
-                    print("⚠️  No API key found")
-            else:
-                raise ValueError("Only OpenRouter provider is supported")
+        api_key = os.getenv("OPENROUTER_API_KEY")
+        if api_key:
+            print("✅ Using API key from environment: OPENROUTER_API_KEY")
         else:
-            print("✅ Using provided API key")
+            raise HTTPException(
+                status_code=500,
+                detail="OPENROUTER_API_KEY not found in environment variables"
+            )
 
         eval_llm_client = create_llm_client(
-            provider=request.llm_settings.provider,
-            model=request.llm_settings.model,
+            provider=eval_provider,
+            model=eval_model,
             api_key=api_key
         )
         print("✅ Step 3 completed: Evaluation LLM client created")
@@ -1293,7 +1041,7 @@ async def generate_report(request: EvaluateRequest):
                     "company": candidate_info.get("company_name", "Unknown"),
                     "transcript_messages_count": len(request.transcript.get("messages", [])),
                     "key_skill_areas_count": len(key_skill_areas),
-                    "llm_settings": request.llm_settings.dict()
+                    "llm_settings": {"provider": eval_provider, "model": eval_model}
                 },
                 "evaluation_report": final_evaluation,
                 "question_groups": question_groups_result,
