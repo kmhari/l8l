@@ -611,9 +611,5 @@
             ],
             "difficultyLevel": "low"
         }
-    ],
-  "llm_settings": {
-    "provider": "openrouter",
-    "model": "openai/gpt-oss-120b:nitro"
-}
+    ]
   }

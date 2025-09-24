@@ -433,7 +433,6 @@ async def gather(request: GatherRequest):
             "transcript_messages_count": len(messages),
             "technical_questions_count": len(questions),
             "key_skill_areas_count": len(request.key_skill_areas),
-            "llm_settings": request.llm_settings.dict()
         }
 
         # Save to cache (only if LLM generation was successful)
@@ -1041,7 +1040,6 @@ async def generate_report(request: EvaluateRequest):
                     "company": candidate_info.get("company_name", "Unknown"),
                     "transcript_messages_count": len(request.transcript.get("messages", [])),
                     "key_skill_areas_count": len(key_skill_areas),
-                    "llm_settings": {"provider": eval_provider, "model": eval_model}
                 },
                 "evaluation_report": final_evaluation,
                 "question_groups": question_groups_result,

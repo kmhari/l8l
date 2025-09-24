@@ -58,7 +58,8 @@
           "turn_indices",
           "facts",
           "greenFlags",
-          "redFlags"
+          "redFlags",
+          "metadata"
         ],
         "additionalProperties": false
       }

@@ -622,9 +622,5 @@
             ],
             "difficultyLevel": "low"
         }
-    ],
-  "llm_settings": {
-      "provider": "openrouter",
-    "model": "qwen/qwen3-235b-a22b-2507"
-}
+    ]
   }
