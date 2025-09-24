@@ -87,6 +87,7 @@ class EvaluateRequest(BaseModel):
     transcript: Dict[str, Any]
     resume: Optional[Dict[str, Any]] = None
     key_skill_areas: Optional[List[Dict[str, Any]]] = None
+    call_id: Optional[str] = None  # Interview room name for custom filename
 
     class Config:
         pass
@@ -673,29 +674,47 @@ async def merge_evaluations(evaluations: List[Dict[str, Any]],
     merged_report["improvement_recommendations"] = list(set(all_recommendations))
 
     # Calculate overall scores and recommendations (exclude custom questions)
-    valid_evaluations = []
-    for e in evaluations:
+    # Extract individual question analyses from the evaluation structure
+    print(f"🔍 Starting overall score calculation from {len(evaluations)} evaluations")
+    all_question_analyses = []
+    for i, e in enumerate(evaluations):
+        print(f"🔍 Processing evaluation {i+1}: has question_analysis = {isinstance(e.get('question_analysis'), list)}")
         if (isinstance(e, dict) and
             "error" not in e and
-            "answer_quality" in e and
-            isinstance(e["answer_quality"], dict) and
-            "relevance_score" in e["answer_quality"] and
-            isinstance(e["answer_quality"]["relevance_score"], (int, float))):
+            "question_analysis" in e and
+            isinstance(e["question_analysis"], list)):
 
-            # Check if this is a standard numbered question (only include Q1, Q2, etc.)
-            question_id = e.get("question_id", "")
+            print(f"🔍 Evaluation {i+1} has {len(e['question_analysis'])} question analyses")
+            # Each evaluation contains a question_analysis array with individual questions
+            for j, qa in enumerate(e["question_analysis"]):
+                qa_valid = (isinstance(qa, dict) and
+                    "question_id" in qa and
+                    "answer_quality" in qa and
+                    isinstance(qa["answer_quality"], dict) and
+                    "relevance_score" in qa["answer_quality"] and
+                    isinstance(qa["answer_quality"]["relevance_score"], (int, float)))
+                print(f"🔍 Question analysis {j+1} valid: {qa_valid}, question_id: {qa.get('question_id', 'N/A')}")
+                if qa_valid:
+                    all_question_analyses.append(qa)
 
-            # Only include questions that match the pattern Q1, Q2, Q3, etc.
-            if re.match(r'^Q\d+$', question_id):
-                valid_evaluations.append(e)
-                print(f"🔍 Including question {question_id} in overall score calculation (relevance_score: {e['answer_quality']['relevance_score']})")
-            else:
-                print(f"🔍 Excluding non-standard question {question_id} from overall score calculation")
+    print(f"🔍 Found {len(all_question_analyses)} total valid question analyses")
 
-    if valid_evaluations:
-        avg_score = sum(e["answer_quality"]["relevance_score"] for e in valid_evaluations) / len(valid_evaluations)
+    # Filter for Q-numbered questions only
+    valid_question_analyses = []
+    for qa in all_question_analyses:
+        question_id = qa.get("question_id", "")
+        if re.match(r'^Q\d+$', question_id):
+            valid_question_analyses.append(qa)
+            print(f"🔍 Including question {question_id} in overall score calculation (relevance_score: {qa['answer_quality']['relevance_score']})")
+        else:
+            print(f"🔍 Excluding non-standard question {question_id} from overall score calculation")
+
+    print(f"🔍 Found {len(valid_question_analyses)} Q-numbered questions for scoring")
+
+    if valid_question_analyses:
+        avg_score = sum(qa["answer_quality"]["relevance_score"] for qa in valid_question_analyses) / len(valid_question_analyses)
         merged_report["overall_assessment"]["overall_score"] = round(avg_score, 1)
-        print(f"📊 Overall score calculated from {len(valid_evaluations)} Q-numbered questions: {avg_score:.1f}")
+        print(f"📊 Overall score calculated from {len(valid_question_analyses)} Q-numbered questions: {avg_score:.1f}")
 
         # Determine overall recommendation based on average score - more lenient thresholds
         if avg_score >= 75:
@@ -708,18 +727,13 @@ async def merge_evaluations(evaluations: List[Dict[str, Any]],
             merged_report["overall_assessment"]["recommendation"] = "Strong No Hire"
 
         # Add summary
-        successful_evaluations = len(valid_evaluations)
-        total_evaluations = len(evaluations)
+        successful_evaluations = len(valid_question_analyses)
+        total_questions = len(all_question_analyses)
 
-        # Count non-standard questions (anything that's not Q1, Q2, Q3, etc.)
-        non_standard_questions_count = sum(1 for e in evaluations if
-                                         isinstance(e, dict) and
-                                         not re.match(r'^Q\d+$', e.get("group_metadata", {}).get("question_id", "")))
-
-        if non_standard_questions_count > 0:
-            merged_report["overall_assessment"]["summary"] = f"Evaluation based on {successful_evaluations} standard Q-numbered questions (excluded {non_standard_questions_count} non-standard questions from scoring)."
-        else:
-            merged_report["overall_assessment"]["summary"] = f"Evaluation based on {successful_evaluations}/{total_evaluations} successfully processed question groups."
+        merged_report["overall_assessment"]["summary"] = f"Evaluation based on {successful_evaluations} Q-numbered questions. Custom questions are filtered out before processing."
+    else:
+        print("⚠️ No valid Q-numbered questions found for overall score calculation")
+        merged_report["overall_assessment"]["overall_score"] = 0
 
     print("✅ Evaluation merging completed")
     return merged_report
@@ -1090,12 +1104,27 @@ async def generate_report(request: EvaluateRequest):
         )
         print("✅ Step 3 completed: Evaluation LLM client created")
 
-        # Step 4: Process question groups in parallel
-        print(f"🔄 Step 4: Processing {len(groups)} question groups in parallel...")
+        # Step 4: Filter out custom questions and process only Q-numbered questions
+        print(f"🔄 Step 4: Filtering question groups (excluding custom questions)...")
+
+        # Filter to only include Q-numbered questions (Q1, Q2, Q3, etc.)
+        q_numbered_groups = []
+        excluded_groups = []
+
+        for group in groups:
+            question_id = group.get("question_id", "")
+            if re.match(r'^Q\d+$', question_id):
+                q_numbered_groups.append(group)
+                print(f"✅ Including question group: {question_id}")
+            else:
+                excluded_groups.append(group)
+                print(f"🚫 Excluding custom question group: {question_id}")
+
+        print(f"📊 Will process {len(q_numbered_groups)} Q-numbered questions, excluding {len(excluded_groups)} custom questions")
 
         # Create tasks for parallel processing (question analysis only)
         evaluation_tasks = []
-        for group in groups:
+        for group in q_numbered_groups:
             task = evaluate_question_group(
                 group=group,
                 resume=resume_data,
@@ -1113,15 +1142,15 @@ async def generate_report(request: EvaluateRequest):
         valid_evaluations = []
         for i, result in enumerate(individual_evaluations):
             if isinstance(result, Exception):
-                print(f"❌ Group {i+1} evaluation failed: {str(result)}")
+                print(f"❌ Q-numbered group {i+1} evaluation failed: {str(result)}")
                 valid_evaluations.append({
                     "error": str(result),
-                    "group_metadata": groups[i] if i < len(groups) else {}
+                    "group_metadata": q_numbered_groups[i] if i < len(q_numbered_groups) else {}
                 })
             else:
                 valid_evaluations.append(result)
 
-        print(f"✅ Step 4 completed: {len(valid_evaluations)} evaluations processed")
+        print(f"✅ Step 4 completed: {len(valid_evaluations)} Q-numbered evaluations processed (excluded {len(excluded_groups)} custom questions)")
 
         # Step 5: Perform holistic skills assessment
         print("🔄 Step 5: Performing holistic skills competency assessment...")
@@ -1153,14 +1182,20 @@ async def generate_report(request: EvaluateRequest):
             output_dir = Path("output")
             output_dir.mkdir(exist_ok=True)
 
-            # Generate filename with timestamp
+            # Generate filename - use call_id if provided, otherwise timestamp
             timestamp = int(time.time())
-            filename = f"evaluation_report_{timestamp}.json"
+            if request.call_id:
+                filename = f"{request.call_id}.json"
+                print(f"💾 Using custom filename: {filename}")
+            else:
+                filename = f"evaluation_report_{timestamp}.json"
+                print(f"💾 Using timestamp filename: {filename}")
             output_path = output_dir / filename
 
             # Save the complete response
             output_data = {
                 "timestamp": timestamp,
+                "call_id": request.call_id,  # Include call_id for reference
                 "request_data": {
                     "candidate_name": candidate_info.get("candidate_name", "Unknown"),
                     "job_title": candidate_info.get("job_title", "Unknown"),

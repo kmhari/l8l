@@ -105,7 +105,7 @@ Analyze the interview performance using the following framework:
 
 **Default to positive assessment unless major red flags are present**
 
-- Use 0-100 scale with GENEROUS thresholds - start high and adjust down only if necessary:
+- Use 0-100 scale with strict thresholds - start high and adjust down only if necessary:
   * 80+ = Strong performance (strong hire recommendation)
   * 65-79 = Good performance (hire recommendation)
   * 50-64 = Adequate performance (hire with development)

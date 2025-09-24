@@ -443,12 +443,13 @@ def print_report(report: dict):
     print(f"PostgreSQL: {'✓ Available' if sources['postgres_available'] else '✗ Not found'}")
     print(f"Job Details: {'✓ Available' if sources['job_details_available'] else '✗ Not found'}")
 
-def call_generate_report_api(evaluation_json: dict, api_url: str = "http://localhost:8000") -> dict:
+def call_generate_report_api(evaluation_json: dict, call_id: str = None, api_url: str = "http://localhost:8000") -> dict:
     """
     Call the /generate-report API endpoint with evaluation data
 
     Args:
         evaluation_json: The evaluation data in the required format
+        call_id: The interview room name/call ID for filename
         api_url: Base URL for the API (default: localhost:8000)
 
     Returns:
@@ -460,6 +461,10 @@ def call_generate_report_api(evaluation_json: dict, api_url: str = "http://local
         "resume": evaluation_json.get("resume", {}),
         "key_skill_areas": evaluation_json.get("key_skill_areas", [])
     }
+
+    # Include call_id if provided for custom filename
+    if call_id:
+        api_request["call_id"] = call_id
 
     #store api_request to a file for debugging
     with open("api_request_debug.json", "w") as f:
@@ -563,7 +568,7 @@ def main():
         else:
             # Call the API for report generation
             print(f"\nCalling /generate-report API at {args.api_url}...")
-            api_response = call_generate_report_api(evaluation_json, args.api_url)
+            api_response = call_generate_report_api(evaluation_json, args.call_id, args.api_url)
 
             if api_response:
                 print("✓ Report generated successfully")

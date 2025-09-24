@@ -16,16 +16,12 @@
           "enum": ["High", "Medium", "Low"],
           "description": "Confidence level in the assessment"
         },
-        "overall_score": {
-          "type": "number",
-          "description": "Overall interview performance score 0-100. Use generous scoring: any competency shown = 70+, good performance = 80+, strong performance = 85+"
-        },
         "summary": {
           "type": "string",
           "description": "Brief summary of candidate performance"
         }
       },
-      "required": ["recommendation", "confidence", "overall_score", "summary"],
+      "required": ["recommendation", "confidence", "summary"],
       "additionalProperties": false
     },
     "question_analysis": {
@@ -46,7 +42,7 @@
             "properties": {
               "relevance_score": {
                 "type": "number",
-                "description": "How directly the answer addressed the question 0 - 100"
+                "description": "How well the candidates answer has addressed the question 0 - 100"
               },
               "completeness": {
                 "type": "string",
@@ -65,7 +61,7 @@
               },
               "evidence_provided": {
                 "type": "boolean",
-                "description": "Whether specific examples or evidence were provided"
+                "description": "Whether specific examples or evidence were provided from the transcript"
               }
             },
             "required": ["relevance_score", "completeness", "clarity", "depth", "evidence_provided"],
