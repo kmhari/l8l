@@ -14,10 +14,9 @@ The application follows a two-phase pipeline:
 
 ### Key Components
 
-- **main.py**: Primary FastAPI application with endpoints, caching, and orchestration logic
+- **main.py**: Primary FastAPI application with endpoints and orchestration logic
 - **llm_client.py**: LLM provider interface exclusively using OpenRouter
 - **prompts/**: Contains system prompts and JSON schemas for LLM interactions
-- **cache/**: File-based caching system for gather results to improve performance
 - **output/**: Timestamped JSON outputs for both gather and evaluate operations
 
 ## Development Commands
@@ -78,11 +77,6 @@ The application uses OpenRouter as the exclusive LLM provider:
 - **Evaluate endpoint**: Allows flexible model selection, defaults to model in `globals.py` EVALUATION_CONFIG
 - **Centralized Configuration**: All model settings managed in `globals.py` for easy updates
 
-### Caching System
-- MD5-based cache keys generated from request content
-- Cache hits return immediately with age metadata
-- Failed LLM responses are not cached
-- Cache management endpoints for monitoring and cleanup
 
 ### Error Handling & JSON Extraction
 The system includes sophisticated JSON extraction for handling "thinking" models that may return additional reasoning text alongside structured JSON responses.
@@ -111,4 +105,3 @@ See `models.md` for complete list of supported models and usage examples.
 - `prompts/*.md`: Human-readable system prompts
 - `prompts/*.schema.json`: JSON schemas for LLM response validation
 - `output/`: Timestamped results with comprehensive metadata
-- `cache/gather/`: MD5-keyed cache files for gather operations

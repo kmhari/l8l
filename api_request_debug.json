@@ -1,1093 +1,1102 @@
 {
-  "transcript": {
-    "messages": [
-      {
-        "role": "agent",
-        "time": 1758124741067.3435,
-        "endTime": 1758124749557.3674,
-        "message": "Hi Mihir, I'm Sarah, your AI interviewer from F22 Labs. Thanks for joining this virtual interview! How are you doing today?",
-        "duration": 8490.02392578125,
-        "secondsFromStart": 13.271611083984375
-      },
-      {
-        "role": "user",
-        "time": 1758124751375.7104,
-        "endTime": 1758124752783.658,
-        "message": "Hello?",
-        "duration": 1407.947509765625,
-        "secondsFromStart": 23.57997802734375
-      },
-      {
-        "role": "agent",
-        "time": 1758124756114.61,
-        "endTime": 1758124756366.0376,
-        "message": "Hi",
-        "duration": 251.427490234375,
-        "secondsFromStart": 28.318877685546877
-      },
-      {
-        "role": "user",
-        "time": 1758124754864.985,
-        "endTime": 1758124758444.9922,
-        "message": "Yes. I'm doing great.",
-        "duration": 3580.007080078125,
-        "secondsFromStart": 27.069252685546875
-      },
-      {
-        "role": "user",
-        "time": 1758124763913.7092,
-        "endTime": 1758124765775.1624,
-        "message": "Go ahead.",
-        "duration": 1861.453125,
-        "secondsFromStart": 36.11797680664063
-      },
-      {
-        "role": "agent",
-        "time": 1758124768635.691,
-        "endTime": 1758124781618.294,
-        "message": "It's great to see your interest in the Senior Nodejs Developer role at F22 Labs. I'll be asking you a few questions to understand your background and how well you might fit the role. Are you ready to go ahead with the interview?",
-        "duration": 12982.60302734375,
-        "secondsFromStart": 40.83995849609375
-      },
-      {
-        "role": "user",
-        "time": 1758124782925.1565,
-        "endTime": 1758124784785.0972,
-        "message": "Yes. For sure. Go ahead.",
-        "duration": 1859.940673828125,
-        "secondsFromStart": 55.12942407226563
-      },
-      {
-        "role": "agent",
-        "time": 1758124789481.9922,
-        "endTime": 1758124791884.387,
-        "message": "Are you open to working from office in Chennai?",
-        "duration": 2402.394775390625,
-        "secondsFromStart": 61.686259765625
-      },
-      {
-        "role": "user",
-        "time": 1758124793714.4976,
-        "endTime": 1758124798765.6587,
-        "message": "Yes. I am able to work in Chennai from office.",
-        "duration": 5051.1611328125,
-        "secondsFromStart": 65.91876513671875
-      },
-      {
-        "role": "agent",
-        "time": 1758124805172.0205,
-        "endTime": 1758124808514.7495,
-        "message": "That's good to hear! Which city are you currently based out of?",
-        "duration": 3342.72900390625,
-        "secondsFromStart": 77.3762880859375
-      },
-      {
-        "role": "user",
-        "time": 1758124810705.6516,
-        "endTime": 1758124814225.13,
-        "message": "So I'm currently based in.",
-        "duration": 3519.478271484375,
-        "secondsFromStart": 82.90991918945312
-      },
-      {
-        "role": "agent",
-        "time": 1758124816011.7305,
-        "endTime": 1758124821469.9814,
-        "message": "It seems like your response got cut off. Could you please repeat which city you are currently based in?",
-        "duration": 5458.2509765625,
-        "secondsFromStart": 88.215998046875
-      },
-      {
-        "role": "user",
-        "time": 1758124823055.6133,
-        "endTime": 1758124825515.1926,
-        "message": "I'm based in Ahmedabad.",
-        "duration": 2459.579345703125,
-        "secondsFromStart": 95.259880859375
-      },
-      {
-        "role": "agent",
-        "time": 1758124828468.5825,
-        "endTime": 1758124831655.2063,
-        "message": "Thank you for that. Are you open to relocating to Chennai?",
-        "duration": 3186.623779296875,
-        "secondsFromStart": 100.67285009765625
-      },
-      {
-        "role": "user",
-        "time": 1758124833034.805,
-        "endTime": 1758124834604.9617,
-        "message": "Yes.",
-        "duration": 1570.15673828125,
-        "secondsFromStart": 105.23907250976562
-      },
-      {
-        "role": "agent",
-        "time": 1758124837805.078,
-        "endTime": 1758124840625.4824,
-        "message": "Great! What is your total years of work experience?",
-        "duration": 2820.404541015625,
-        "secondsFromStart": 110.00934545898437
-      },
-      {
-        "role": "user",
-        "time": 1758124842674.86,
-        "endTime": 1758124916532.5845,
-        "message": "So I have a total of four years of experience in developing the Node. Js applications where I have completed my multiple SDSs in the years of experience. Talking about the APIs, I have got the to build both RESTful and GraphQL APIs. Where I have also integrated the real time API responses using the WebSockets. Apart from that, if I talk about the database things, Apart from that, if I talk about the database things, I have worked with both SQL and MySQL databases. Apart from that, talking about the cloud infrastructure, I have worked with AWS and GCP where I have integrated fifteen plus AWS services. And around five plus GCP services. Yes. So I'm committed to write clean and maintainable code by using the modern, solid, and low level design principles. So, yeah, you can ask me.",
-        "duration": 73857.72436523438,
-        "secondsFromStart": 114.87912768554688
-      },
-      {
-        "role": "user",
-        "time": 1758124918575.3694,
-        "endTime": 1758124920334.4915,
-        "message": "On projects or yes, I can answer that.",
-        "duration": 1759.1220703125,
-        "secondsFromStart": 190.77963696289063
-      },
-      {
-        "role": "agent",
-        "time": 1758124922758.9192,
-        "endTime": 1758124930830.5396,
-        "message": "Thank you for sharing that detailed background! Just to clarify, could you please confirm your total years of work experience?",
-        "duration": 8071.620361328125,
-        "secondsFromStart": 194.96318676757812
-      },
-      {
-        "role": "user",
-        "time": 1758124932554.7778,
-        "endTime": 1758124938315.4763,
-        "message": "Yes. Uh, I have total around four years of experience.",
-        "duration": 5760.698486328125,
-        "secondsFromStart": 204.75904541015626
-      },
-      {
-        "role": "agent",
-        "time": 1758124939999.4863,
-        "endTime": 1758124940435.3867,
-        "message": "Understood.",
-        "duration": 435.900390625,
-        "secondsFromStart": 212.20375390625
-      },
-      {
-        "role": "user",
-        "time": 1758124939115.6792,
-        "endTime": 1758124941324.9277,
-        "message": "In node JS development.",
-        "duration": 2209.24853515625,
-        "secondsFromStart": 211.31994677734374
-      },
-      {
-        "role": "agent",
-        "time": 1758124943347.7327,
-        "endTime": 1758124946274.3794,
-        "message": "Thank you for that clarification! What is your current CTC?",
-        "duration": 2926.646728515625,
-        "secondsFromStart": 215.55200024414063
-      },
-      {
-        "role": "user",
-        "time": 1758124948434.613,
-        "endTime": 1758124952785.2874,
-        "message": "So my current CTC is eight point five two LPA.",
-        "duration": 4350.67431640625,
-        "secondsFromStart": 220.63888061523437
-      },
-      {
-        "role": "agent",
-        "time": 1758124955796.1948,
-        "endTime": 1758124957963.9568,
-        "message": "Noted. What is your salary expectation?",
-        "duration": 2167.761962890625,
-        "secondsFromStart": 228.00046240234374
-      },
-      {
-        "role": "user",
-        "time": 1758124960042.9878,
-        "endTime": 1758124966994.9316,
-        "message": "So my salary expectation is around fifteen to sixteen LPA depending on the interview.",
-        "duration": 6951.94384765625,
-        "secondsFromStart": 232.24725537109376
-      },
-      {
-        "role": "agent",
-        "time": 1758124968452.3896,
-        "endTime": 1758124973180.424,
-        "message": "Thank you for sharing that. Are you open to negotiating your salary expectation?",
-        "duration": 4728.034423828125,
-        "secondsFromStart": 240.6566572265625
-      },
-      {
-        "role": "user",
-        "time": 1758124975184.7234,
-        "endTime": 1758124977615.3416,
-        "message": "No. Not below fifty.",
-        "duration": 2430.6181640625,
-        "secondsFromStart": 247.38899096679688
-      },
-      {
-        "role": "agent",
-        "time": 1758124979445.7334,
-        "endTime": 1758124981561.0957,
-        "message": "Understood. What is your current notice period?",
-        "duration": 2115.3623046875,
-        "secondsFromStart": 251.6500009765625
-      },
-      {
-        "role": "user",
-        "time": 1758124983824.9114,
-        "endTime": 1758124989995.1074,
-        "message": "My current notice period official notice period is of sixty days.",
-        "duration": 6170.196044921875,
-        "secondsFromStart": 256.0291789550781
-      },
-      {
-        "role": "agent",
-        "time": 1758124991860.5334,
-        "endTime": 1758125004660.8706,
-        "message": "Thank you for that information. Now, let's move on to the technical questions. \n\nHow does Node.js handle asynchronous operations, and what role does the event loop play in this process?",
-        "duration": 12800.337158203125,
-        "secondsFromStart": 264.06480102539064
-      },
-      {
-        "role": "user",
-        "time": 1758125102065.0713,
-        "endTime": 1758125119827.0098,
-        "message": "Okay. So notice is, uh, basically having the concurrency supported event loop. Where, uh, it has the, uh, Node. Js has the event group in the base which handles the asynchronous operations. So no chance is capable of concurrency by this, uh, event loop only. Talking about how Node. Js handles the asynchronous task, So, basically, what event loop does, event loop follows that if any one request come towards the server, so it basically checks that what are the things that, uh, JS and other asynchronous tasks are provided to the LibUV portion, which, uh, LibUV further has the thread pull the execution, and LibUV handles all this input output operations on any API calls or any database operations which are totally performed by PingoPuV. So now event loop, there are two main things. There is micro task queue and there are macro task queues. Basically, this handles that how the should be performed. So this micro and macro is inside the LibUV context and this are this is how the node node. Js handles the asynchronous execution. Basically, when a request comes, Node. Js provides that to even to even look That's what the JS can do and provide that to this. And apart from that, request to get standard. So this is how the concurrence is",
-        "duration": 17761.9384765625,
-        "secondsFromStart": 374.2693388671875
-      },
-      {
-        "role": "user",
-        "time": 1758125102065.0713,
-        "endTime": 1758125119827.0098,
-        "message": "handled inside the note.",
-        "duration": 17761.9384765625,
-        "secondsFromStart": 374.2693388671875
-      },
-      {
-        "role": "agent",
-        "time": 1758125122575.1338,
-        "endTime": 1758125127304.2322,
-        "message": "I see. Can you elaborate on the phases of the event loop, such as timers, poll, and check?",
-        "duration": 4729.098388671875,
-        "secondsFromStart": 394.7794013671875
-      },
-      {
-        "role": "user",
-        "time": 1758125132593.0498,
-        "endTime": 1758125201999.8623,
-        "message": "Yeah. So, like, there is a timer portion inside talking about this timer, polls and checks what happens that, uh, inside the event loop, there is set, like, there is a thing that which checks on a regular portion that whether this particular task has completed or not. So, like, anything that event group has provided that to Lipi, so it will check on the particular time frame. Whether this thing has completed or not. Let's say there is a certain mediator, set time set time out or anything like that. Or any API call needs to be completed. So it will provide that to a portion, and it will properly have a poll that polling would be done that whether the task has completed or not, so, uh, it can, uh, be freed up So this is what timers, polls, and events are.",
-        "duration": 69406.8125,
-        "secondsFromStart": 404.7973173828125
-      },
-      {
-        "role": "agent",
-        "time": 1758125206522.409,
-        "endTime": 1758125211564.7969,
-        "message": "Understood. Can you explain how the callback queue processes tasks in the event loop?",
-        "duration": 5042.387939453125,
-        "secondsFromStart": 478.72667651367186
-      },
-      {
-        "role": "user",
-        "time": 1758125214995.0168,
-        "endTime": 1758125227756.7283,
-        "message": "Okay. Talking about how callback queues processes the task. Inside the, um, event loop.",
-        "duration": 12761.71142578125,
-        "secondsFromStart": 487.19928442382815
-      },
-      {
-        "role": "agent",
-        "time": 1758125229377.0498,
-        "endTime": 1758125229843.6108,
-        "message": "It seems",
-        "duration": 466.56103515625,
-        "secondsFromStart": 501.5813173828125
-      },
-      {
-        "role": "user",
-        "time": 1758125228914.9158,
-        "endTime": 1758125231025.0193,
-        "message": "So I'll have to check on that.",
-        "duration": 2110.103515625,
-        "secondsFromStart": 501.1191833496094
-      },
-      {
-        "role": "agent",
-        "time": 1758125235251.1868,
-        "endTime": 1758125246380.333,
-        "message": "That's alright. Let's move on to the next question. \n\nDescribe how you would implement a rate-limiting mechanism for an API endpoint in Express.js.",
-        "duration": 11129.146240234375,
-        "secondsFromStart": 507.4554543457031
-      },
-      {
-        "role": "user",
-        "time": 1758125247435.16,
-        "endTime": 1758125364241.2715,
-        "message": "Yeah. Sure. So, basically, there are multiple ways to do the rate limiting. Right? Uh, there are packages inside the n NPM, which I can readily use. For the rate limiting thing. Because these are very popular as well inside the NPM. We can there are there are millions of downloads inside the NPM packages for the rate limiting package. Apart from that, if I want to implement my own rate limiting thing, what I will do, I will be using any of the lightweight database. Like, let's say, there is DynamoDB. If I'm using the AWS Coverity. So what I will do, I will keep the check of the IPs. So whatever request are, uh, hit by the particular IP, we have the request object inside the app dot tools. So what I will do, I will have a middleware. And in inside that middleware, I'll be having the request And inside the request, I will have the IP on which the the user is requesting from. So what I will do, I will keep the track of that request, and I will be putting that into inside the DynamoDB. So what what I will do inside the middle part, I will have a simple check that whether person has been requesting so much of time or what amount of user is requesting? Like, I will set a rate limit. Let let's say a user can only call the API for fifty times, let's say, instance. So what I will do, I will keep every time the check from the DynamoDB that whether this person has accessed the portal in in the rate limit. Or if that person has is requesting so much of time, what I will do, I will block that user or I will block that IP.",
-        "duration": 116806.11157226562,
-        "secondsFromStart": 519.6394274902344
-      },
-      {
-        "role": "user",
-        "time": 1758125364464.5786,
-        "endTime": 1758125367536.3186,
-        "message": "And I will, uh, do the rate limiting in this way.",
-        "duration": 3071.739990234375,
-        "secondsFromStart": 636.6688461914063
-      },
-      {
-        "role": "user",
-        "time": 1758125364464.5786,
-        "endTime": 1758125367536.3186,
-        "message": "So there are two main ways what I told you about.",
-        "duration": 3071.739990234375,
-        "secondsFromStart": 636.6688461914063
-      },
-      {
-        "role": "agent",
-        "time": 1758125370172.3044,
-        "endTime": 1758125375267.1455,
-        "message": "I see. Can you discuss the specific middleware you would use for rate limiting in Express.js?",
-        "duration": 5094.841064453125,
-        "secondsFromStart": 642.3765720214843
-      },
-      {
-        "role": "user",
-        "time": 1758125379954.471,
-        "endTime": 1758125384275.9353,
-        "message": "There is a express rate limit package inside the MPM.",
-        "duration": 4321.46435546875,
-        "secondsFromStart": 652.1587385253906
-      },
-      {
-        "role": "agent",
-        "time": 1758125386027.2065,
-        "endTime": 1758125392532.913,
-        "message": "Understood. How would you handle HTTP status codes for rate limiting, specifically when a user exceeds the limit?",
-        "duration": 6505.70654296875,
-        "secondsFromStart": 658.2314741210937
-      },
-      {
-        "role": "user",
-        "time": 1758125394795.456,
-        "endTime": 1758125398923.5864,
-        "message": "Yeah. So I will be using four zero three forbidden code.",
-        "duration": 4128.13037109375,
-        "secondsFromStart": 666.9997236328124
-      },
-      {
-        "role": "agent",
-        "time": 1758125403645.044,
-        "endTime": 1758125404395.2434,
-        "message": "That's good.",
-        "duration": 750.199462890625,
-        "secondsFromStart": 675.8493115234374
-      },
-      {
-        "role": "user",
-        "time": 1758125403435.113,
-        "endTime": 1758125406093.0771,
-        "message": "Four four zero three code of HTTP.",
-        "duration": 2657.964111328125,
-        "secondsFromStart": 675.6393806152344
-      },
-      {
-        "role": "agent",
-        "time": 1758125407945.95,
-        "endTime": 1758125416383.8394,
-        "message": "Right. Now, let's move on to the next question. \n\nWhen might you choose to use GraphQL over REST for an API, and what are the trade-offs?",
-        "duration": 8437.889404296875,
-        "secondsFromStart": 680.1502175292969
-      },
-      {
-        "role": "user",
-        "time": 1758125417714.9272,
-        "endTime": 1758125527921.54,
-        "message": "Yeah. So, basically, traditionally, what was happening that there are let's say, there are two main approaches in the API building. One is rest, second is GraphQL. Traditionally, we were using the rest API. Inside the rest API, there is the control inside the back end side that whatever the parameters are needs to be provided will only be provided. So the complete control is inside is for is the back end side. And front end can only request the API, and they can only pro they can be only getting the things which are I would say, are decided by the back end. But what happened Facebook got the problem where were developing the ecommerce this what I would say, this social media platform. Where they face that what there are multiple variable things that any front end developer might need to access. Right? So at that point of time, front end knows that what are the things that are required by my side. Right? So what the GraphQL does is that it provides the limited control to both to the front end developer to access the parameters that they want. So I would say that if I'm having the feature where front end guys only needs and they can be provided, and they're most at what are the exact amount of things that, uh, they require to call from the back end. So I will be using GraphQL.",
-        "duration": 110206.61279296875,
-        "secondsFromStart": 689.9191948242187
-      },
-      {
-        "role": "agent",
-        "time": 1758125529643.733,
-        "endTime": 1758125530079.1575,
-        "message": "That's a",
-        "duration": 435.424560546875,
-        "secondsFromStart": 801.8480004882813
-      },
-      {
-        "role": "user",
-        "time": 1758125417714.9272,
-        "endTime": 1758125527921.54,
-        "message": "Apart from that, rest is best.",
-        "duration": 110206.61279296875,
-        "secondsFromStart": 689.9191948242187
-      },
-      {
-        "role": "agent",
-        "time": 1758125532101.798,
-        "endTime": 1758125539468.7559,
-        "message": "Understood. Can you discuss some of the trade-offs or challenges associated with using GraphQL compared to REST?",
-        "duration": 7366.957763671875,
-        "secondsFromStart": 804.3060656738281
-      },
-      {
-        "role": "user",
-        "time": 1758125543155.9868,
-        "endTime": 1758125586094.8352,
-        "message": "Yes. When I'm using the graph, needs be managed is that what are the sensitive parameters that are there which I cannot provide to the front end developer? Let's say, I'm the user login API. Right? So at that point of time, I will I will need to check that the passwords should not be provided to the front end developers because, uh, with the flex the developer has the responsibility. The back end developer especially has the responsibility that it, uh, keeps the check that only the necessary things should be opened up for the front end developers.",
-        "duration": 42938.848388671875,
-        "secondsFromStart": 815.3602543945312
-      },
-      {
-        "role": "user",
-        "time": 1758125586735.423,
-        "endTime": 1758125590605.6008,
-        "message": "So, yes, this is the thing, which which are the challenges for it.",
-        "duration": 3870.177734375,
-        "secondsFromStart": 858.9396906738282
-      },
-      {
-        "role": "agent",
-        "time": 1758125593895.5479,
-        "endTime": 1758125598805.4507,
-        "message": "I see. Can you also mention any complexities related to caching when using GraphQL?",
-        "duration": 4909.90283203125,
-        "secondsFromStart": 866.0998154296875
-      },
-      {
-        "role": "user",
-        "time": 1758125603595.2554,
-        "endTime": 1758125605395.8054,
-        "message": "I'll have to check on that.",
-        "duration": 1800.550048828125,
-        "secondsFromStart": 875.7995229492187
-      },
-      {
-        "role": "agent",
-        "time": 1758125608596.6655,
-        "endTime": 1758125621396.9866,
-        "message": "That's alright. Let's move on to the next question.\n\nDescribe a challenging performance issue you resolved in a Node.js application, including how you diagnosed and fixed it.",
-        "duration": 12800.321044921875,
-        "secondsFromStart": 880.8009331054687
-      },
-      {
-        "role": "user",
-        "time": 1758125630574.8994,
-        "endTime": 1758125669778.4385,
-        "message": "Yeah. So, like, talking about the CPU intensive task that I was performing. That I was using like, January thing, where I had the I would say, the ML inferencing inside the mergers application. And that was the CPU intensive task that I had performed inside the module. So, yeah, that was the thing. So what I had did, I had forwarded the cluster for the same where the multiple processes were running And in separate cluster, I had provide I I had done the CPU intensive task.",
-        "duration": 39203.5390625,
-        "secondsFromStart": 902.7791669921875
-      },
-      {
-        "role": "agent",
-        "time": 1758125671905.7468,
-        "endTime": 1758125679508.3906,
-        "message": "Understood. Can you provide specific metrics you monitored during this performance issue, such as CPU usage or latency?",
-        "duration": 7602.643798828125,
-        "secondsFromStart": 944.1100144042969
-      },
-      {
-        "role": "user",
-        "time": 1758125680365.4846,
-        "endTime": 1758125705937.1394,
-        "message": "Yeah. Yeah. Yeah. So there was the, uh, the CPU usage of the server was very high. At that point of time. So I had monitored via the task manager in my local And also the EC two instance, I had checked the CPU usage is set dashboard of the EC two. So the CPU usage was very high.",
-        "duration": 25571.65478515625,
-        "secondsFromStart": 952.5697521972656
-      },
-      {
-        "role": "agent",
-        "time": 1758125707719.9417,
-        "endTime": 1758125708433.0488,
-        "message": "I see. What",
-        "duration": 713.107177734375,
-        "secondsFromStart": 979.9242092285157
-      },
-      {
-        "role": "user",
-        "time": 1758125706834.4993,
-        "endTime": 1758125715755.6597,
-        "message": "And the the latency inside the API was also there. And I had calculated the latency for the APIs.",
-        "duration": 8921.160400390625,
-        "secondsFromStart": 979.0387668457031
-      },
-      {
-        "role": "agent",
-        "time": 1758125717590.1096,
-        "endTime": 1758125722317.614,
-        "message": "Understood. Can you describe the debugging tools you used to diagnose the performance issue?",
-        "duration": 4727.50439453125,
-        "secondsFromStart": 989.7943771972656
-      },
-      {
-        "role": "user",
-        "time": 1758125746034.9153,
-        "endTime": 1758125755375.8696,
-        "message": "So, basically, there is a logging thing that I had done. I had checked the API logs that I had indicated while monitoring. So at that point of time, I had checked at APIs that were there. Which are very slow in nature. So I checked the logs for this end, and even I checked I had tracked the time for the same.",
-        "duration": 9340.954345703125,
-        "secondsFromStart": 1018.2391828613281
-      },
-      {
-        "role": "agent",
-        "time": 1758125759642.0217,
-        "endTime": 1758125764056.7727,
-        "message": "That's good. Can you explain the root cause of the performance issue you identified?",
-        "duration": 4414.7509765625,
-        "secondsFromStart": 1031.8462893066405
-      },
-      {
-        "role": "user",
-        "time": 1758125766154.6333,
-        "endTime": 1758125785906.1804,
-        "message": "Yes. Because the nature of the js application and the Mode. Js is a single threaded synchronous not synchronous, but it's a single threaded language. Right? So basically, it is not meant to be using the CPU intensive.",
-        "duration": 19751.547119140625,
-        "secondsFromStart": 1038.3589008789063
-      },
-      {
-        "role": "user",
-        "time": 1758125786035.661,
-        "endTime": 1758125800177.0479,
-        "message": "Task. This is one of the biggest drawback of the new applications. So the Node. Js is for simple things. Right? To whenever you want to do any, like, say, web streaming or any simple task.",
-        "duration": 14141.386962890625,
-        "secondsFromStart": 1058.239928466797
-      },
-      {
-        "role": "user",
-        "time": 1758125800233.7244,
-        "endTime": 1758125821677.6033,
-        "message": "Any simple input output that you want to perform. So it is meant to be for that. But, uh, let let's see if you want to use any ML inferencing. So there, you can use the clustering portion. Or choose any other framework or library If you have so much CPU intensive work, like, you cannot go for fast API or anything like that.",
-        "duration": 21443.87890625,
-        "secondsFromStart": 1072.4379919433593
-      },
-      {
-        "role": "agent",
-        "time": 1758125823814.4473,
-        "endTime": 1758125835934.0007,
-        "message": "Understood. Let's move on to the next question.\n\nHow would you implement proper error handling in a TypeScript Node.js application to prevent uncaught exceptions from crashing the server?",
-        "duration": 12119.553466796875,
-        "secondsFromStart": 1096.01871484375
-      },
-      {
-        "role": "user",
-        "time": 1758125838415.6602,
-        "endTime": 1758125868718.327,
-        "message": "Yeah. So what I will do I will have the wrapper in the middleware. In the app dot use. Right? So I will be the error handling code inside the middleware. Where if any of the uncaught or unhandled exceptions arises, That app instance has that error, and I can use that.",
-        "duration": 30302.666748046875,
-        "secondsFromStart": 1110.619927734375
-      },
-      {
-        "role": "agent",
-        "time": 1758125874247.7427,
-        "endTime": 1758125880412.5908,
-        "message": "I see. Can you elaborate on how you would use try/catch with async/await for error handling?",
-        "duration": 6164.84814453125,
-        "secondsFromStart": 1146.4520102539063
-      },
-      {
-        "role": "user",
-        "time": 1758125883274.592,
-        "endTime": 1758125896395.9216,
-        "message": "Yeah. So, like, like, do you want me to the middleware that how I'll be using or you want the controller logic for the try catch and async for the other end.",
-        "duration": 13121.32958984375,
-        "secondsFromStart": 1155.4788596191406
-      },
-      {
-        "role": "agent",
-        "time": 1758125902128.6956,
-        "endTime": 1758125909052.7986,
-        "message": "Could you please explain how you would implement try/catch in the controller logic for handling async operations?",
-        "duration": 6924.10302734375,
-        "secondsFromStart": 1174.3329631347656
-      },
-      {
-        "role": "user",
-        "time": 1758125969584.8875,
-        "endTime": 1758125981933.515,
-        "message": "Okay. Understood. So talking about the structure that I follow. The request would become coming to the route and whatever route that I have specified I'll be having number of middlewares inside the route So one after the other, when the like, when there are I'll mention the function. That whatever I pass the reference to the function. Right? And let's say I'm making the user sign up API. Right? So I'll be using the, like, logging and all those things. A route, then, I'll pass the controller function. To the route. Inside the controller function, I'll be using the try and catch where like, defining the function and be using the try and whatever code that needs to be successfully executed right inside the track.",
-        "duration": 12348.62744140625,
-        "secondsFromStart": 1241.7891550292968
-      },
-      {
-        "role": "user",
-        "time": 1758126001163.684,
-        "endTime": 1758126003505.4075,
-        "message": "And make the function first. And then I'll write the exception that any of the exception comes. The common function that I'll be making for the response handler. I'll pass that server error to my response handler, and my response handler would be responsible for forwarding the response to the",
-        "duration": 2341.723388671875,
-        "secondsFromStart": 1273.3679516601562
-      },
-      {
-        "role": "agent",
-        "time": 1758126010373.9841,
-        "endTime": 1758126021553.9475,
-        "message": "client. That's good. Can you also mention how you would handle uncaught exceptions using the process uncaughtException handler?",
-        "duration": 11179.96337890625,
-        "secondsFromStart": 1282.5782517089845
-      },
-      {
-        "role": "user",
-        "time": 1758126024174.312,
-        "endTime": 1758126025804.9067,
-        "message": "I'll have to check.",
-        "duration": 1630.5947265625,
-        "secondsFromStart": 1296.3785795898436
-      },
-      {
-        "role": "agent",
-        "time": 1758126029906.1992,
-        "endTime": 1758126042939.9995,
-        "message": "That's alright. Let's move on to the next question.\n\nYou have a users table with 1M records where searches by last name are frequent. How would you optimize these queries using PostgreSQL features?",
-        "duration": 13033.80029296875,
-        "secondsFromStart": 1302.110466796875
-      },
-      {
-        "role": "user",
-        "time": 1758126065743.0999,
-        "endTime": 1758126085076.9705,
-        "message": "Yeah. So, like, there are the concept of indexing where which I can use. So what I will do, I'll be index the last name And based on that indexes, this last name where is MB make can be made ultimately fast. Apart from that, I will ensure that whatever query are passed by the user. Right? Let's say there is one million users inside the table. There'll be lots and lots of data. So at that point of time, what I'll be doing",
-        "duration": 19333.87060546875,
-        "secondsFromStart": 1337.9473674316407
-      },
-      {
-        "role": "user",
-        "time": 1758126085774.666,
-        "endTime": 1758126111477.9512,
-        "message": "I'll be using I'll be using the paginated response. And I'll ensure that only the limited response from the queries should come, and I'll be passing that to my users. So pagination indexing is the primary thing that I'll be using. Apart from that, I can also use the view of the SQL, which are ultimately very fast.",
-        "duration": 25703.28515625,
-        "secondsFromStart": 1357.97893359375
-      },
-      {
-        "role": "agent",
-        "time": 1758126113433.4695,
-        "endTime": 1758126114675.5715,
-        "message": "Understood. Can you explain",
-        "duration": 1242.10205078125,
-        "secondsFromStart": 1385.637737060547
-      },
-      {
-        "role": "user",
-        "time": 1758126113775.1123,
-        "endTime": 1758126115404.709,
-        "message": "For the fetching the data.",
-        "duration": 1629.5966796875,
-        "secondsFromStart": 1385.9793798828125
-      },
-      {
-        "role": "agent",
-        "time": 1758126118371.145,
-        "endTime": 1758126126025.0286,
-        "message": "Can you also discuss any case-insensitive requirements you would consider when creating the index on the last name column?",
-        "duration": 7653.883544921875,
-        "secondsFromStart": 1390.5754125976562
-      },
-      {
-        "role": "user",
-        "time": 1758126144274.6965,
-        "endTime": 1758126155986.0986,
-        "message": "Yeah. So I'll put the string case insensitive things. Because, let's say, if I'm doing John Doe. Right? So I'll have the lower case case insensitive. Index. I'll create the lowercase case insensitive index. So I can get all the responses.",
-        "duration": 11711.402099609375,
-        "secondsFromStart": 1416.4789641113282
-      },
-      {
-        "role": "agent",
-        "time": 1758126158143.3345,
-        "endTime": 1758126163603.7373,
-        "message": "That's good. How would you verify the effectiveness of your indexing strategy using PostgreSQL?",
-        "duration": 5460.40283203125,
-        "secondsFromStart": 1430.3476020507812
-      },
-      {
-        "role": "user",
-        "time": 1758126166604.896,
-        "endTime": 1758126168464.5554,
-        "message": "Sorry. Can you please repeat",
-        "duration": 1859.659423828125,
-        "secondsFromStart": 1438.8091635742187
-      },
-      {
-        "role": "agent",
-        "time": 1758126175478.9395,
-        "endTime": 1758126181410.219,
-        "message": "Sure! How would you verify the effectiveness of your indexing strategy using PostgreSQL features like EXPLAIN ANALYZE?",
-        "duration": 5931.279541015625,
-        "secondsFromStart": 1447.68320703125
-      },
-      {
-        "role": "user",
-        "time": 1758126187023.351,
-        "endTime": 1758126205487.6377,
-        "message": "Yes. Yes. Yes. So like, as you mentioned that and analyze are two features that we can use inside the SQL. But explain when I write the query, it basically explains me the complete query.",
-        "duration": 18464.28662109375,
-        "secondsFromStart": 1459.2276186523438
-      },
-      {
-        "role": "agent",
-        "time": 1758126207954.0234,
-        "endTime": 1758126208400.3755,
-        "message": "Understood.",
-        "duration": 446.35205078125,
-        "secondsFromStart": 1480.158291015625
-      },
-      {
-        "role": "user",
-        "time": 1758126206284.6345,
-        "endTime": 1758126210255.0225,
-        "message": "And analyze analyzes the complete query then.",
-        "duration": 3970.387939453125,
-        "secondsFromStart": 1478.4889020996093
-      },
-      {
-        "role": "agent",
-        "time": 1758126212164.4182,
-        "endTime": 1758126223108.8242,
-        "message": "Great! Now, let's move on to the next question.\n\nWhen optimizing a slow report query scanning millions of rows in PostgreSQL, what approaches would you consider and what trade-offs exist?",
-        "duration": 10944.406005859375,
-        "secondsFromStart": 1484.3686857910157
-      },
-      {
-        "role": "user",
-        "time": 1758126294603.4102,
-        "endTime": 1758126299635.88,
-        "message": "Okay. So let's say you were you asked me about this slow report query, whether millions of record inside the Postgres SQL. So as I told earlier also, I'll be using the pagination. Right? Pagination is the one of the most used and should be applied and must apply thing that that that is recommended for the millions of record thing. Apart from that, what I can do, I can create the read replica of the SQL. Where I will ensure that rights are maintained inside the one table and create replica only handles the read request from the users. Apart from that, as I told, I'll be creating the SQL view, which is one of the power new way to fetch the table. Right?",
-        "duration": 5032.4697265625,
-        "secondsFromStart": 1566.807677734375
-      },
-      {
-        "role": "user",
-        "time": 1758126294603.4102,
-        "endTime": 1758126299635.88,
-        "message": "Apart from that, what I will ensure that we'll be using the cache.",
-        "duration": 5032.4697265625,
-        "secondsFromStart": 1566.807677734375
-      },
-      {
-        "role": "agent",
-        "time": 1758126302115.3682,
-        "endTime": 1758126303853.8696,
-        "message": "I see. Can you discuss the trade-offs",
-        "duration": 1738.50146484375,
-        "secondsFromStart": 1574.3196357421875
-      },
-      {
-        "role": "user",
-        "time": 1758126300208.6128,
-        "endTime": 1758126304815.064,
-        "message": "For the frequently used data.",
-        "duration": 4606.451171875,
-        "secondsFromStart": 1572.4128803710937
-      },
-      {
-        "role": "agent",
-        "time": 1758126306586.8335,
-        "endTime": 1758126312465.4182,
-        "message": "Understood. Can you also mention any considerations you would take into account regarding indexing versus query rewriting?",
-        "duration": 5878.584716796875,
-        "secondsFromStart": 1578.7911010742187
-      },
-      {
-        "role": "user",
-        "time": 1758126314284.565,
-        "endTime": 1758126315955.3818,
-        "message": "I'll have to check.",
-        "duration": 1670.81689453125,
-        "secondsFromStart": 1586.4888325195313
-      },
-      {
-        "role": "agent",
-        "time": 1758126318358.1594,
-        "endTime": 1758126328416.6084,
-        "message": "That's alright. Let's move on to the next question.\n\nYou need to model e-commerce product data where products have varying attributes. How would you structure this in MongoDB?",
-        "duration": 10058.448974609375,
-        "secondsFromStart": 1590.5624270019532
-      },
-      {
-        "role": "user",
-        "time": 1758126338155.685,
-        "endTime": 1758126345003.226,
-        "message": "Okay. So let's assume that I'm building an ecommerce platform, which is very huge.",
-        "duration": 6847.541015625,
-        "secondsFromStart": 1610.3599526367188
-      },
-      {
-        "role": "agent",
-        "time": 1758126346798.953,
-        "endTime": 1758126352275.404,
-        "message": "Could you please explain how you would structure the product data in MongoDB, considering the varying attributes?",
-        "duration": 5476.451171875,
-        "secondsFromStart": 1619.0032204589843
-      },
-      {
-        "role": "user",
-        "time": 1758126351914.7102,
-        "endTime": 1758126353455.1023,
-        "message": "And ecommerce front Yeah.",
-        "duration": 1540.39208984375,
-        "secondsFromStart": 1624.118977783203
-      },
-      {
-        "role": "agent",
-        "time": 1758126355365.535,
-        "endTime": 1758126355795.372,
-        "message": "It seems",
-        "duration": 429.837158203125,
-        "secondsFromStart": 1627.5698024902345
-      },
-      {
-        "role": "user",
-        "time": 1758126361293.6125,
-        "endTime": 1758126362575.4832,
-        "message": "Yeah. So considering the varying attributes, Hello?",
-        "duration": 1281.87060546875,
-        "secondsFromStart": 1633.497880126953
-      },
-      {
-        "role": "agent",
-        "time": 1758126366341.703,
-        "endTime": 1758126372219.6145,
-        "message": "Yes, I'm here. Please go ahead with your explanation on how you would structure the product data in MongoDB.",
-        "duration": 5877.91162109375,
-        "secondsFromStart": 1638.5459704589844
-      },
-      {
-        "role": "user",
-        "time": 1758126374636.245,
-        "endTime": 1758126385745.416,
-        "message": "Yeah. So, basically, talking about the product I'll be using the product name, right, product price.",
-        "duration": 11109.1708984375,
-        "secondsFromStart": 1646.8405126953126
-      },
-      {
-        "role": "user",
-        "time": 1758126374636.245,
-        "endTime": 1758126385745.416,
-        "message": "Then I'll be having the product description.",
-        "duration": 11109.1708984375,
-        "secondsFromStart": 1646.8405126953126
-      },
-      {
-        "role": "user",
-        "time": 1758126386314.1038,
-        "endTime": 1758126428079.1633,
-        "message": "Right? Created it, deleted it, updated it. Apart from that, I will have a window where whatever things that are there, which are extra and which are unmatched, of the products can easily be ingested inside the MongoDB. Like, let's say, if, uh, one product has the manufacturing date and the other product has and the other product has both manufacturing date and expiry date. Right? So, yeah, it's like some things does not expire. Right? Let's say if I'm having any speaker problem.",
-        "duration": 41765.0595703125,
-        "secondsFromStart": 1658.5183713378906
-      },
-      {
-        "role": "user",
-        "time": 1758126447664.4988,
-        "endTime": 1758126465007.2568,
-        "message": "So it has the manufacturing date, but it does not has the expiry date. So But if I'm talking about the medicines, it has the manufacturing date as well as it has the expiry date. Right? So expiry date will be there inside the medicines or in the food items, but there have been no expiry dates inside the speaker. So this is how I'll have the variable attributes inside the normal DB. Apart from that, yeah, all the data that needs to be stored inside, which are and necessary should be kept upon inside the convoluted video database table.",
-        "duration": 17342.758056640625,
-        "secondsFromStart": 1719.868766357422
-      },
-      {
-        "role": "agent",
-        "time": 1758126467282.4778,
-        "endTime": 1758126475537.5574,
-        "message": "Understood. Can you also mention any indexing strategies you would consider for optimizing search queries in this MongoDB structure?",
-        "duration": 8255.07958984375,
-        "secondsFromStart": 1739.486745361328
-      },
-      {
-        "role": "user",
-        "time": 1758126481835.286,
-        "endTime": 1758126494706.1733,
-        "message": "So I'll be using the aggregation framework, which is ultimately very, very fast for querying the large datasets and varied datasets",
-        "duration": 12870.887451171875,
-        "secondsFromStart": 1754.0395534667969
-      },
-      {
-        "role": "agent",
-        "time": 1758126496442.301,
-        "endTime": 1758126506916.6694,
-        "message": "That's good. Now, let's move on to the next question.\n\nYour application has a frequently accessed but slowly generated user profile view. How would you implement Redis caching for this?",
-        "duration": 10474.368408203125,
-        "secondsFromStart": 1768.6465686035156
-      },
-      {
-        "role": "user",
-        "time": 1758126553585.5022,
-        "endTime": 1758126575477.1313,
-        "message": "Yeah. So, um, frequently accessed, but slowly generated. So I'll be using the Redis cache. So Redis has to completely a database where we can store by the unique ID. Right? So let's say if I want to access the frequently access profiles. Right? Let's say there is a user profile which is frequently accessed or anything like that. So what I'll be doing, I'll be having the data inside the red dash that these are the things that you need to do. Right? So before doing the database part, what I'll be doing, I'll be doing the Redis fetch that whether I'm getting the perfect data from the Redis or not. Right? If not, I'll be storing the cache inside the Redis.",
-        "duration": 21891.629150390625,
-        "secondsFromStart": 1825.7897697753906
-      },
-      {
-        "role": "user",
-        "time": 1758126575884.7124,
-        "endTime": 1758126577425.2905,
-        "message": "So before querying, I'll be using caching. And yeah.",
-        "duration": 1540.578125,
-        "secondsFromStart": 1848.0889799804688
-      },
-      {
-        "role": "agent",
-        "time": 1758126583650.7693,
-        "endTime": 1758126589110.4585,
-        "message": "I see. Can you explain the cache-aside pattern and how it applies to your Redis caching implementation?",
-        "duration": 5459.689208984375,
-        "secondsFromStart": 1855.8550368652343
-      },
-      {
-        "role": "user",
-        "time": 1758126597555.1204,
-        "endTime": 1758126600655.2217,
-        "message": "I'll have to check on the cache aside.",
-        "duration": 3100.101318359375,
-        "secondsFromStart": 1869.759387939453
-      },
-      {
-        "role": "agent",
-        "time": 1758126606029.8818,
-        "endTime": 1758126615721.0334,
-        "message": "That's alright. Let's move on to the next question.\n\nGiven a slow-running report query, what specific steps would you take to diagnose and improve its performance?",
-        "duration": 9691.151611328125,
-        "secondsFromStart": 1878.2341494140626
-      },
-      {
-        "role": "user",
-        "time": 1758126618674.7764,
-        "endTime": 1758126648948.0803,
-        "message": "Yeah. So let's say there is a slow running query. Right? So, basically, I will, uh, I will check for the n plus one problem, which is a very famous problem inside the SQL queries. Where the developers are fetching first the user It's a user who has multiple posts. So what they'll do, they'll query for the post. So I'll check for the n plus one problem.",
-        "duration": 30273.303955078125,
-        "secondsFromStart": 1890.8790439453126
-      },
-      {
-        "role": "user",
-        "time": 1758126618674.7764,
-        "endTime": 1758126648948.0803,
-        "message": "Whether it, uh, consists in my problem or not.",
-        "duration": 30273.303955078125,
-        "secondsFromStart": 1890.8790439453126
-      },
-      {
-        "role": "user",
-        "time": 1758126678155.2139,
-        "endTime": 1758126680144.4236,
-        "message": "I'll be using this app files wherever I can. If not, I can use the emergence because image also has a limitation. So in that case, I'll be using this. But I can Apart from that, whatever things I have mentioned, like like, caching and pagingation and all these things.",
-        "duration": 1989.209716796875,
-        "secondsFromStart": 1950.3594814453124
-      },
-      {
-        "role": "agent",
-        "time": 1758126681968.06,
-        "endTime": 1758126682852.6528,
-        "message": "Understood. Can you",
-        "duration": 884.5927734375,
-        "secondsFromStart": 1954.1723276367188
-      },
-      {
-        "role": "user",
-        "time": 1758126678155.2139,
-        "endTime": 1758126680144.4236,
-        "message": "I'll be implementing that.",
-        "duration": 1989.209716796875,
-        "secondsFromStart": 1950.3594814453124
-      },
-      {
-        "role": "agent",
-        "time": 1758126684895.0598,
-        "endTime": 1758126691425.9312,
-        "message": "Understood. Can you also mention how you would check the execution plan of the query to identify potential bottlenecks?",
-        "duration": 6530.871337890625,
-        "secondsFromStart": 1957.099327392578
-      },
-      {
-        "role": "agent",
-        "time": 1758126701950.129,
-        "endTime": 1758126703047.467,
-        "message": "Are you still there?",
-        "duration": 1097.338134765625,
-        "secondsFromStart": 1974.154396484375
-      },
-      {
-        "role": "user",
-        "time": 1758126706764.9707,
-        "endTime": 1758126712943.3862,
-        "message": "Yes. Yes. I'm still here. Just execution plan, like, can you please elaborate that what do you want to ask on this?",
-        "duration": 6178.41552734375,
-        "secondsFromStart": 1978.96923828125
-      },
-      {
-        "role": "agent",
-        "time": 1758126715222.7961,
-        "endTime": 1758126724001.003,
-        "message": "Sure! How would you use tools like EXPLAIN in PostgreSQL to analyze the execution plan of a slow-running query and identify potential bottlenecks?",
-        "duration": 8778.206787109375,
-        "secondsFromStart": 1987.427063720703
-      },
-      {
-        "role": "user",
-        "time": 1758126734737.5767,
-        "endTime": 1758126738156.1833,
-        "message": "Yeah. So explain query, as I told earlier it provides me the complete analysis of the query that how much time is it taking",
-        "duration": 3418.606689453125,
-        "secondsFromStart": 2006.9418442382812
-      },
-      {
-        "role": "user",
-        "time": 1758126743434.1711,
-        "endTime": 1758126746124.7537,
-        "message": "And by this, I'll be ensure the slow learning queries and",
-        "duration": 2690.58251953125,
-        "secondsFromStart": 2015.638438720703
-      },
-      {
-        "role": "agent",
-        "time": 1758126752862.0352,
-        "endTime": 1758126769947.462,
-        "message": "I see. Thank you for your detailed responses, Mihir. \n\nNow, let's wrap up the interview. \n\nThanks for your time today, Mihir. I appreciate the insights you provided. I'll share your profile with our hiring team, and we'll update you on the next steps. Do you have any questions before we wrap up?",
-        "duration": 17085.4267578125,
-        "secondsFromStart": 2025.066302734375
-      },
-      {
-        "role": "user",
-        "time": 1758126772715.0999,
-        "endTime": 1758126776275.4265,
-        "message": "No.",
-        "duration": 3560.32666015625,
-        "secondsFromStart": 2044.9193674316407
-      },
-      {
-        "role": "user",
-        "time": 1758126772715.0999,
-        "endTime": 1758126776275.4265,
-        "message": "Like, do you have any feedback for me?",
-        "duration": 3560.32666015625,
-        "secondsFromStart": 2044.9193674316407
-      },
-      {
-        "role": "agent",
-        "time": 1758126752862.0352,
-        "endTime": 1758126769948.409,
-        "message": "Goodbye, have a great day!",
-        "duration": 17086.373779296875,
-        "secondsFromStart": 2025.066302734375
-      }
-    ],
-    "stats": {
-      "startTime": 1758124727795.7324,
-      "endTime": 1758126779014.6074,
-      "duration": 2051218.875,
-      "userSpeakingTime": 1394852.8872070312,
-      "agentSpeakingTime": 334999.4509277344
-    }
-  },
   "resume": {
-    "resume": "Mihir Poojara\n-------------\n\nEmail: mihirpoojara100@gmail.com\nPhone: +919106104376\n\nWORK EXPERIENCE\n---------------\n\n1.  at \n   present/present\n\n2.  at \n   present/present",
+    "resume": "Dinesh Kumar J\n--------------\n\nEmail: dineshjayakumar16@gmail.com\nPhone: +916383849408\n\nWORK EXPERIENCE\n---------------\n\n1.  at \n   present/present\n\n2.  at \n   present/present\n\nAWARDS\n------\n\n1. Award: Google Drive Integration\n   Issuer: N/A\n   Date: N/A\n\n2. Award: Microsoft SharePoint Integration\n   Issuer: N/A\n   Date: N/A",
     "job_title": "Senior Nodejs Developer",
     "company_name": "F22 Labs",
     "salary_range": "Not specified",
-    "candidate_name": "Mihir",
+    "candidate_name": "Dinesh",
     "company_profile": "About the Company\n\n\nF22 Labs is a startup software studio based in Chennai. We power startups worldwide by building high-quality software products. From web apps to mobile platforms, we help entrepreneurs turn their ideas into beautifully crafted solutions. If you're passionate about software development and eager to build real products that solve real problems, you’ll fit right in.",
     "job_requirements": "Position Overview\n\nWe are seeking a talented and experienced Senior Node.js Developer to join our growing engineering team. In this role, you will be instrumental in designing, developing, and maintaining the backbone of our applications. You'll leverage your 3-5 years of expertise to build robust, scalable, and high-performance backend services and APIs. You will also play a key role in making architectural decisions, mentoring junior developers, and driving best practices within the team. If you're eager to tackle complex problems, contribute to innovative projects, and lead by example, this position is for you.\n\nKey Responsibilities\n● Design, develop, test, deploy, and maintain highly scalable and reliable backend services, APIs, and systems using Node.js (with frameworks like Express.js or NestJS) and TypeScript/JavaScript.\n● Architect and implement robust solutions for complex business requirements, ensuring code quality, performance, and security.\n● Collaborate closely with cross-functional teams including front-end developers, product managers, QA engineers, and designers to deliver high-quality products.\n● Lead and participate in code reviews, providing constructive feedback to ensure adherence to coding standards and best practices.\n● Design and manage database schemas (SQL and NoSQL, e.g., PostgreSQL, MongoDB, Redis) and optimize database queries for performance.\n● Develop and maintain comprehensive unit, integration, and E2E tests to ensure software quality and reliability.\n● Work with containerization technologies like Docker and orchestration tools like Kubernetes for deploying and managing applications.\n● Implement and maintain CI/CD pipelines for automated building, testing, and deployment of applications.\n● Mentor and guide junior developers, fostering a culture of learning and continuous improvement.\n● Troubleshoot, debug, and upgrade existing software, identifying and resolving performance bottlenecks.\n● Stay up-to-date with emerging technologies, industry trends, and best practices in Node.js development and backend architecture.\n● Contribute to architectural discussions and decisions, helping to shape the future of our backend systems.\n\nQualifications and Requirements\n● 3-5 years of professional experience in backend development with a strong focus on Node.js.\n● Expert proficiency in TypeScript.\n● Proven experience with Node.js frameworks such as Express.js or NestJS (highly preferred).\n● Strong understanding of asynchronous programming, event-driven architecture, and design patterns.\n● Solid experience in designing, building, and consuming RESTful APIs; experience with GraphQL is a plus.\n● Proficiency with both SQL (e.g., PostgreSQL, MySQL) and NoSQL (e.g., MongoDB, Redis) database technologies, including data modeling and query optimization.\n● Hands-on experience with containerization technologies (Docker) and a good understanding of container orchestration (Kubernetes).\n● Experience with CI/CD tools and practices (e.g., Jenkins, GitLab CI, GitHub Actions).\n● Experience deploying and managing applications on cloud platforms (AWS, Azure, or GCP), including familiarity with relevant services (e.g., EC2, S3, Lambda, RDS).\n● Strong problem-solving, analytical, and critical thinking skills.\n● Excellent communication and collaboration skills, with the ability to work effectively in a team environment.\n● Proven ability to mentor junior team members.\n● Familiarity with Git and collaborative development workflows.\n\nGood to have:\n● Experience with testing frameworks (e.g., Jest, Mocha, Chai) and a commitment to writing well-tested code.\n● Experience with microservices architecture and distributed systems.\n● Experience with serverless architecture (e.g., AWS Lambda, Azure Functions).\n● Knowledge of message queue systems (e.g., Kafka, RabbitMQ, AWS SQS).\n● Familiarity with Infrastructure as Code (IaC) tools like Terraform or CloudFormation.\n● Understanding of front-end technologies (e.g., React, Angular, Vue.js) to facilitate better collaboration.\n● Experience with performance monitoring and optimization tools.\n● Active contributions to open-source projects or a strong portfolio of personal projects.\n\nWhy Join Us (Perks & Benefits)\n● Flexible work timings.\n● Fast-paced, hands-on learning environment.\n● Fun, collaborative, and supportive team culture.\n● Real-world impact from day one.",
-    "candidate_contact": "+919106104376",
-    "lead_contact_name": "Mihir",
+    "candidate_contact": "+916383849408",
+    "lead_contact_name": "Dinesh",
     "additional_questions": "Q1: Are you open to working from office in Chennai?\nG1: If they are not open to work from office, politely let them know that we cannot proceed.\n\nQ2: Which city are you currently based out of?\nG2: If they are not based in Chennai, ask them if they are open to relocating to Chennai.\n\nQ3: What is your total years of work experience?\nG3: Just ask the total years of work experience and note it down.\n\nQ4: What is your years of experience with Nodejs?\nG4: Just ask the years of experience with Nodejs and note it down.\n\nQ5: What is your current CTC?\nG5: Just ask the CTC and note it down.\n\nQ6: What is your salary expectation?\nG6: Once the candidate tells their salary expectation, ask them if they are open to negotiate. Let them tell the salary expectation first before you ask if it is negotiable.\n\nQ7: What is your current notice period?\nG7: Just ask the notice period and note it down.\n\nQ1: How does Node.js handle asynchronous operations, and what role does the event loop play in this process?\nG1: Green flags:\n- Clearly explains non-blocking I/O model\n- Mentions phases of event loop (timers, poll, check)\n- References libuv library implementation\n\nRed flags:\n- Confuses with browser JavaScript event loop\n- States Node.js uses multiple threads for all operations\n- Cannot describe callback queue processing\n\nQ2: Describe how you would implement a rate-limiting mechanism for an API endpoint in Express.js.\nG2: Green flags:\n- Mentions specific middleware like express-rate-limit\n- Discusses storage mechanisms (memory store vs Redis)\n- Explains HTTP status codes for rate limiting (429)\n\nRed flags:\n- Suggests blocking endpoint completely after limit\n- Confuses rate limiting with authentication\n- Cannot differentiate between IP-based vs user-based limiting\n\nQ3: When might you choose to use GraphQL over REST for an API, and what are the trade-offs?\nG3: Green flags:\n- Identifies use cases like flexible client queries\n- Discusses over-fetching/under-fetching problems\n- Mentions schema evolution challenges\n\nRed flags:\n- Claims GraphQL always performs better than REST\n- Ignores caching complexities with GraphQL\n- Suggests GraphQL eliminates need for API versioning\n\nQ4: Describe a challenging performance issue you resolved in a Node.js application, including how you diagnosed and fixed it.\nG4: Green flags:\n- Provides specific metrics (CPU, memory, latency)\n- Describes debugging tools (clinic.js, Chrome DevTools)\n- Explains root cause like callback hell or memory leaks\n\nRed flags:\n- Vague description with no technical details\n- Blames infrastructure without evidence\n- Confuses symptoms with root causes\n\nQ5: How would you implement proper error handling in a TypeScript Node.js application to prevent uncaught exceptions from crashing the server?\nG5: Green flags:\n- Discusses try/catch with async/await\n- Mentions process uncaughtException handler\n- References error middleware in Express\n\nRed flags:\n- Suggests wrapping everything in try/catch blocks\n- Ignores async error propagation issues\n- Claims TypeScript eliminates runtime errors\n\nQ6: You have a users table with 1M records where searches by last name are frequent. How would you optimize these queries using PostgreSQL features?\nG6: Green flags:\n- Recommends creating index on last_name column\n- Considers case-insensitive requirements (e.g., idx_last_name_lower)\n- Mentions EXPLAIN ANALYZE for verification\n\nRed flags:\n- Suggests indexing all columns\n- Proposes denormalization prematurely\n- Confuses indexes with caching\n\nQ7: When optimizing a slow report query scanning millions of rows in PostgreSQL, what approaches would you consider and what trade-offs exist?\nG7: Green flags:\n- Evaluates indexing vs query rewriting\n- Considers materialized views for aggregates\n- Mentions partitioning for large tables\n\nRed flags:\n- Recommends adding indexes without analysis\n- Proposes hardware upgrade as first solution\n- Ignores execution plan examination\n\nQ8: You need to model e-commerce product data where products have varying attributes. How would you structure this in MongoDB?\nG8: Green flags:\n- Proposes embedded attributes collection\n- Considers schema versioning\n- Mentions indexing strategy for search\n\nRed flags:\n- Suggests one collection per product type\n- Recommends storing as BLOBs\n- Ignores query performance impact\n\nQ9: Your application has a frequently accessed but slowly generated user profile view. How would you implement Redis caching for this?\nG9: Green flags:\n- Proposes cache-aside pattern\n- Considers JSON serialization\n- Mentions appropriate TTL settings\n\nRed flags:\n- Suggests full-page caching\n- Recommends infinite TTL\n- Ignores cache stampede protection\n\nQ10: Given a slow-running report query, what specific steps would you take to diagnose and improve its performance?\nG10: Green flags:\n- References EXPLAIN ANALYZE\n- Checks index usage\n- Considers query restructuring\n\nRed flags:\n- Immediately suggests index creation\n- Proposes increasing server resources\n- Ignores filtering condition efficiency",
     "recruitment_firm_name": "F22 Labs",
     "non_technical_questions": "Q1: Are you open to working from office in Chennai?\nG1: If they are not open to work from office, politely let them know that we cannot proceed.\n\nQ2: Which city are you currently based out of?\nG2: If they are not based in Chennai, ask them if they are open to relocating to Chennai.\n\nQ3: What is your total years of work experience?\nG3: Just ask the total years of work experience and note it down.\n\nQ4: What is your years of experience with Nodejs?\nG4: Just ask the years of experience with Nodejs and note it down.\n\nQ5: What is your current CTC?\nG5: Just ask the CTC and note it down.\n\nQ6: What is your salary expectation?\nG6: Once the candidate tells their salary expectation, ask them if they are open to negotiate. Let them tell the salary expectation first before you ask if it is negotiable.\n\nQ7: What is your current notice period?\nG7: Just ask the notice period and note it down."
   },
+  "transcript": {
+    "messages": [
+      {
+        "role": "agent",
+        "time": 1758099707547.1914,
+        "endTime": 1758099715516.1245,
+        "message": "Hi Dinesh, I'm Sarah, your AI interviewer from F22 Labs. Thanks for joining this virtual interview! How are you doing today?",
+        "duration": 7968.93310546875,
+        "secondsFromStart": 12.255727294921876
+      },
+      {
+        "role": "user",
+        "time": 1758099717696.4832,
+        "endTime": 1758099720679.19,
+        "message": "Yeah. I'm doing well. What about you?",
+        "duration": 2982.706787109375,
+        "secondsFromStart": 22.40501904296875
+      },
+      {
+        "role": "agent",
+        "time": 1758099722780.4895,
+        "endTime": 1758099740780.063,
+        "message": "I'm glad to hear that you're doing well! I'm doing well too, thank you for asking. It's great to see your interest in the Senior Nodejs Developer role at F22 Labs. I'll be asking you a few questions to understand your background and how well you might fit the role. Are you ready to go ahead with the interview?",
+        "duration": 17999.573486328125,
+        "secondsFromStart": 27.489025390625
+      },
+      {
+        "role": "user",
+        "time": 1758099742176.1177,
+        "endTime": 1758099743846.1477,
+        "message": "Yeah. Sure.",
+        "duration": 1670.030029296875,
+        "secondsFromStart": 46.884653564453124
+      },
+      {
+        "role": "agent",
+        "time": 1758099745775.1494,
+        "endTime": 1758099751862.792,
+        "message": "Great! Let's start with a few questions to get to know you better.\n\nAre you open to working from office in Chennai?",
+        "duration": 6087.642578125,
+        "secondsFromStart": 50.48368530273437
+      },
+      {
+        "role": "user",
+        "time": 1758099753316.3567,
+        "endTime": 1758099757566.4885,
+        "message": "Yeah. I'm, uh, I'm able to work, uh, in office",
+        "duration": 4250.1318359375,
+        "secondsFromStart": 58.024892578125
+      },
+      {
+        "role": "agent",
+        "time": 1758099758614.7239,
+        "endTime": 1758099762036.405,
+        "message": "That's good to hear! Which city are you currently based out of?",
+        "duration": 3421.68115234375,
+        "secondsFromStart": 63.323259765625
+      },
+      {
+        "role": "user",
+        "time": 1758099763523.851,
+        "endTime": 1758099766046.0847,
+        "message": "I'm currently located at Chennai.",
+        "duration": 2522.233642578125,
+        "secondsFromStart": 68.23238696289063
+      },
+      {
+        "role": "agent",
+        "time": 1758099768391.1404,
+        "endTime": 1758099771815.0586,
+        "message": "Understood. What is your total years of work experience?",
+        "duration": 3423.918212890625,
+        "secondsFromStart": 73.09967626953124
+      },
+      {
+        "role": "user",
+        "time": 1758099773506.2593,
+        "endTime": 1758099781126.2888,
+        "message": "Uh, I have around three point five years of experience",
+        "duration": 7620.029541015625,
+        "secondsFromStart": 78.21479516601562
+      },
+      {
+        "role": "user",
+        "time": 1758099773506.2593,
+        "endTime": 1758099781126.2888,
+        "message": "in full stack development. I'm a specialized in React and Node. Js.",
+        "duration": 7620.029541015625,
+        "secondsFromStart": 78.21479516601562
+      },
+      {
+        "role": "agent",
+        "time": 1758099782541.5515,
+        "endTime": 1758099787087.8574,
+        "message": "Thank you for sharing that. What is your years of experience with Node.js?",
+        "duration": 4546.305908203125,
+        "secondsFromStart": 87.25008740234375
+      },
+      {
+        "role": "user",
+        "time": 1758099789125.0305,
+        "endTime": 1758099796895.8796,
+        "message": "Yeah. Around the three point five. I'm doing both different both React and Node.",
+        "duration": 7770.84912109375,
+        "secondsFromStart": 93.83356640625
+      },
+      {
+        "role": "agent",
+        "time": 1758099798196.1868,
+        "endTime": 1758099798562.0342,
+        "message": "Got",
+        "duration": 365.847412109375,
+        "secondsFromStart": 102.90472265625
+      },
+      {
+        "role": "user",
+        "time": 1758099789125.0305,
+        "endTime": 1758099796895.8796,
+        "message": "I'm a full struggle upper.",
+        "duration": 7770.84912109375,
+        "secondsFromStart": 93.83356640625
+      },
+      {
+        "role": "agent",
+        "time": 1758099799551.0703,
+        "endTime": 1758099801302.225,
+        "message": "Got it! What is your current CTC?",
+        "duration": 1751.15478515625,
+        "secondsFromStart": 104.25960620117188
+      },
+      {
+        "role": "user",
+        "time": 1758099803005.5278,
+        "endTime": 1758099807076.1465,
+        "message": "My current status is, uh, four point six LPA.",
+        "duration": 4070.61865234375,
+        "secondsFromStart": 107.71406372070312
+      },
+      {
+        "role": "agent",
+        "time": 1758099808334.1147,
+        "endTime": 1758099811260.684,
+        "message": "Thank you for that information. What is your salary expectation?",
+        "duration": 2926.5693359375,
+        "secondsFromStart": 113.04265063476562
+      },
+      {
+        "role": "user",
+        "time": 1758099812647.1152,
+        "endTime": 1758099817797.5913,
+        "message": "I expected up to eight l eight lakh to eight point five lakh.",
+        "duration": 5150.47607421875,
+        "secondsFromStart": 117.35565112304687
+      },
+      {
+        "role": "agent",
+        "time": 1758099819481.606,
+        "endTime": 1758099822851.2495,
+        "message": "Understood. Are you open to negotiate on your salary expectation?",
+        "duration": 3369.6435546875,
+        "secondsFromStart": 124.19014184570312
+      },
+      {
+        "role": "user",
+        "time": 1758099824415.4902,
+        "endTime": 1758099828896.4883,
+        "message": "Yeah. Yeah. Eighty only are negotiable.",
+        "duration": 4480.998046875,
+        "secondsFromStart": 129.1240261230469
+      },
+      {
+        "role": "agent",
+        "time": 1758099830503.505,
+        "endTime": 1758099834945.094,
+        "message": "Thank you for clarifying that. Lastly, what is your current notice period?",
+        "duration": 4441.589111328125,
+        "secondsFromStart": 135.21204077148437
+      },
+      {
+        "role": "user",
+        "time": 1758099836835.9785,
+        "endTime": 1758099842206.028,
+        "message": "I'm serving a notice period Still, I have fourteen days remaining.",
+        "duration": 5370.049560546875,
+        "secondsFromStart": 141.54451440429688
+      },
+      {
+        "role": "agent",
+        "time": 1758099844119.791,
+        "endTime": 1758099858095.1787,
+        "message": "Thank you for providing all that information, Dinesh. Now, let's move on to some technical questions.\n\nHow does Node.js handle asynchronous operations, and what role does the event loop play in this process?",
+        "duration": 13975.3876953125,
+        "secondsFromStart": 148.8283269042969
+      },
+      {
+        "role": "agent",
+        "time": 1758099869357.2087,
+        "endTime": 1758099870455.7285,
+        "message": "Are you still there?",
+        "duration": 1098.519775390625,
+        "secondsFromStart": 174.06574462890626
+      },
+      {
+        "role": "user",
+        "time": 1758099871366.0215,
+        "endTime": 1758099873566.4314,
+        "message": "Yeah. Yeah. Yeah. I'm there.",
+        "duration": 2200.409912109375,
+        "secondsFromStart": 176.07455737304687
+      },
+      {
+        "role": "agent",
+        "time": 1758099875540.233,
+        "endTime": 1758099884971.3577,
+        "message": "Great! Please go ahead with your response on how Node.js handles asynchronous operations and the role of the event loop in this process.",
+        "duration": 9431.124755859375,
+        "secondsFromStart": 180.24876879882814
+      },
+      {
+        "role": "user",
+        "time": 1758099910946.0007,
+        "endTime": 1758099912414.1455,
+        "message": "Yeah. Okay. Uh, Node. J s works on Chrome's a v eight engine, and it works on the event event it works on the event loop, and it's handle the all talks in queue. And then it goes to the first, it goes to the call stack. And then it goes to the queue. And then, uh, and the response will be given to the front end.",
+        "duration": 1468.144775390625,
+        "secondsFromStart": 215.65453662109374
+      },
+      {
+        "role": "agent",
+        "time": 1758099914721.2502,
+        "endTime": 1758099919030.3552,
+        "message": "I see. Can you explain what the non-blocking I/O model is in Node.js?",
+        "duration": 4309.10498046875,
+        "secondsFromStart": 219.4297861328125
+      },
+      {
+        "role": "user",
+        "time": 1758099924065.5596,
+        "endTime": 1758099932676.838,
+        "message": "Yeah. Non nonblocking means if we if we run all the codes in the run, it does not block the code.",
+        "duration": 8611.2783203125,
+        "secondsFromStart": 228.77409545898436
+      },
+      {
+        "role": "agent",
+        "time": 1758099936992.3313,
+        "endTime": 1758099938116.847,
+        "message": "Understood. Can you",
+        "duration": 1124.515625,
+        "secondsFromStart": 241.7008671875
+      },
+      {
+        "role": "user",
+        "time": 1758099936256.0906,
+        "endTime": 1758099938816.2466,
+        "message": "It it runs every line.",
+        "duration": 2560.156005859375,
+        "secondsFromStart": 240.96462646484375
+      },
+      {
+        "role": "agent",
+        "time": 1758099940314.3462,
+        "endTime": 1758099946062.9434,
+        "message": "Right. Can you elaborate on the different phases of the event loop in Node.js?",
+        "duration": 5748.59716796875,
+        "secondsFromStart": 245.02288208007812
+      },
+      {
+        "role": "user",
+        "time": 1758099951746.4968,
+        "endTime": 1758099978339.1094,
+        "message": "Yeah. But yeah. Okay. Uh, for example, uh, there are many requests are, uh, taken from the front end. It all the all the requests are like, an all the all all the all the requests are standard like an queue. And then the one after one, the the call even will work, and then the request will be processed.",
+        "duration": 26592.612548828125,
+        "secondsFromStart": 256.45503271484375
+      },
+      {
+        "role": "agent",
+        "time": 1758099979770.5293,
+        "endTime": 1758099981186.0864,
+        "message": "Thank you for your response.",
+        "duration": 1415.55712890625,
+        "secondsFromStart": 284.47906518554686
+      },
+      {
+        "role": "user",
+        "time": 1758099951746.4968,
+        "endTime": 1758099978339.1094,
+        "message": "It's like a queue.",
+        "duration": 26592.612548828125,
+        "secondsFromStart": 256.45503271484375
+      },
+      {
+        "role": "agent",
+        "time": 1758099982446.4648,
+        "endTime": 1758099984196.4583,
+        "message": "Understood. Can you explain the role",
+        "duration": 1749.993408203125,
+        "secondsFromStart": 287.15500073242185
+      },
+      {
+        "role": "user",
+        "time": 1758099983205.745,
+        "endTime": 1758099985534.417,
+        "message": "Is it is it okay?",
+        "duration": 2328.671875,
+        "secondsFromStart": 287.9142810058594
+      },
+      {
+        "role": "agent",
+        "time": 1758099987065.0513,
+        "endTime": 1758099999500.5251,
+        "message": "Yes, your explanation is clear. Let's move on to the next question.\n\nDescribe how you would implement a rate-limiting mechanism for an API endpoint in Express.js.",
+        "duration": 12435.473876953125,
+        "secondsFromStart": 291.7735871582031
+      },
+      {
+        "role": "user",
+        "time": 1758100005666.3503,
+        "endTime": 1758100014527.9905,
+        "message": "Yeah. Rate limiting by using an a throttler mechanism in Node. Js.",
+        "duration": 8861.64013671875,
+        "secondsFromStart": 310.37488623046875
+      },
+      {
+        "role": "user",
+        "time": 1758100025534.0762,
+        "endTime": 1758100027006.6785,
+        "message": "We use rate limiter. For a single time, we we we put some conditions like at the same time, we process thirty requests at a time. Like that.",
+        "duration": 1472.602294921875,
+        "secondsFromStart": 330.2426120605469
+      },
+      {
+        "role": "agent",
+        "time": 1758100029231.9873,
+        "endTime": 1758100034744.0603,
+        "message": "I see. Can you mention any specific middleware you would use for rate limiting in Express.js?",
+        "duration": 5512.072998046875,
+        "secondsFromStart": 333.94052319335935
+      },
+      {
+        "role": "user",
+        "time": 1758100037475.662,
+        "endTime": 1758100044577.208,
+        "message": "Middleware, we are using, uh, a JWT for middlewares.",
+        "duration": 7101.5458984375,
+        "secondsFromStart": 342.1841979980469
+      },
+      {
+        "role": "agent",
+        "time": 1758100046298.4773,
+        "endTime": 1758100051550.2786,
+        "message": "Understood. Can you explain the difference between IP-based and user-based rate limiting?",
+        "duration": 5251.80126953125,
+        "secondsFromStart": 351.00701318359376
+      },
+      {
+        "role": "user",
+        "time": 1758100081025.2485,
+        "endTime": 1758100086527.3784,
+        "message": "Yeah. Okay. IP based remains it though there was an b r u we are we we are inserted in courses, some of this like that. That domain will be allowed to or allowed to access the other IPs other than we mentioned, that will be not accessed. Are using, uh, course for this for for handling, uh, IP.",
+        "duration": 5502.1298828125,
+        "secondsFromStart": 385.7337844238281
+      },
+      {
+        "role": "agent",
+        "time": 1758100088463.773,
+        "endTime": 1758100097188.3835,
+        "message": "Right. Can you also explain how you would handle HTTP status codes for rate limiting, specifically what code you would return when a user exceeds their limit?",
+        "duration": 8724.610595703125,
+        "secondsFromStart": 393.1723088378906
+      },
+      {
+        "role": "user",
+        "time": 1758100108574.922,
+        "endTime": 1758100111106.1863,
+        "message": "Yeah. User access limits we we throw five hundred like that.",
+        "duration": 2531.26416015625,
+        "secondsFromStart": 413.2834580078125
+      },
+      {
+        "role": "agent",
+        "time": 1758100113967.0007,
+        "endTime": 1758100117856.5012,
+        "message": "Thank you for your response. Let's move on to the next question.",
+        "duration": 3889.50048828125,
+        "secondsFromStart": 418.6755366210937
+      },
+      {
+        "role": "user",
+        "time": 1758100118465.599,
+        "endTime": 1758100124895.9683,
+        "message": "Yeah. Based around the based on the user's output, we change the code.",
+        "duration": 6430.369140625,
+        "secondsFromStart": 423.1741350097656
+      },
+      {
+        "role": "agent",
+        "time": 1758100126540.7942,
+        "endTime": 1758100132052.2368,
+        "message": "Understood. When might you choose to use GraphQL over REST for an API, and what are the trade-offs?",
+        "duration": 5511.442626953125,
+        "secondsFromStart": 431.249330078125
+      },
+      {
+        "role": "user",
+        "time": 1758100135325.6318,
+        "endTime": 1758100154787.9138,
+        "message": "In GraphQL, we are having queries and mutation. Queries is for all the database are inside that query. For mutations, we put post under put method and delete method are are inside the mutations.",
+        "duration": 19462.281982421875,
+        "secondsFromStart": 440.03416772460935
+      },
+      {
+        "role": "agent",
+        "time": 1758100156118.8386,
+        "endTime": 1758100161212.6775,
+        "message": "I see. Can you identify some use cases where flexible client queries would be beneficial?",
+        "duration": 5093.8388671875,
+        "secondsFromStart": 460.82737451171874
+      },
+      {
+        "role": "user",
+        "time": 1758100164805.776,
+        "endTime": 1758100166595.6765,
+        "message": "K. I'll do this on this.",
+        "duration": 1789.900634765625,
+        "secondsFromStart": 469.51431176757814
+      },
+      {
+        "role": "agent",
+        "time": 1758100168565.987,
+        "endTime": 1758100175514.2732,
+        "message": "Understood. Can you discuss the issues of over-fetching and under-fetching that can occur with REST APIs?",
+        "duration": 6948.2861328125,
+        "secondsFromStart": 473.27452294921875
+      },
+      {
+        "role": "user",
+        "time": 1758100181765.0833,
+        "endTime": 1758100183106.0066,
+        "message": "Sorry. Pardon?",
+        "duration": 1340.92333984375,
+        "secondsFromStart": 486.473619140625
+      },
+      {
+        "role": "agent",
+        "time": 1758100184856.5825,
+        "endTime": 1758100191545.7576,
+        "message": "Could you explain the issues of over-fetching and under-fetching that can occur when using REST APIs?",
+        "duration": 6689.175048828125,
+        "secondsFromStart": 489.56511840820315
+      },
+      {
+        "role": "user",
+        "time": 1758100197156.293,
+        "endTime": 1758100210246.7683,
+        "message": "Yeah. Both are user for to communicate communicate response between the client and the server side.",
+        "duration": 13090.475341796875,
+        "secondsFromStart": 501.86482885742186
+      },
+      {
+        "role": "agent",
+        "time": 1758100211491.6936,
+        "endTime": 1758100212265.241,
+        "message": "Right. Can you mention",
+        "duration": 773.54736328125,
+        "secondsFromStart": 516.2002294921875
+      },
+      {
+        "role": "user",
+        "time": 1758100197156.293,
+        "endTime": 1758100210246.7683,
+        "message": "We are using rest APIs.",
+        "duration": 13090.475341796875,
+        "secondsFromStart": 501.86482885742186
+      },
+      {
+        "role": "agent",
+        "time": 1758100213597.9395,
+        "endTime": 1758100217909.7031,
+        "message": "Right. Can you mention any challenges related to schema evolution when using GraphQL?",
+        "duration": 4311.763671875,
+        "secondsFromStart": 518.3064753417968
+      },
+      {
+        "role": "user",
+        "time": 1758100223205.986,
+        "endTime": 1758100231906.7869,
+        "message": "Yeah. We use our grass GraphQL without any interfaces. We face the that type of issues like that.",
+        "duration": 8700.80078125,
+        "secondsFromStart": 527.9145219726563
+      },
+      {
+        "role": "agent",
+        "time": 1758100233552.8906,
+        "endTime": 1758100234980.541,
+        "message": "Thank you for your response. Let's",
+        "duration": 1427.650390625,
+        "secondsFromStart": 538.2614265136718
+      },
+      {
+        "role": "user",
+        "time": 1758100244355.7603,
+        "endTime": 1758100245856.2273,
+        "message": "We have to mention we have to mention interfaces for the schema. It will be more more perfect.",
+        "duration": 1500.467041015625,
+        "secondsFromStart": 549.0642961425781
+      },
+      {
+        "role": "agent",
+        "time": 1758100248219.975,
+        "endTime": 1758100258486.5232,
+        "message": "Understood. Let's move on to the next question.\n\nDescribe a challenging performance issue you resolved in a Node.js application, including how you diagnosed and fixed it.",
+        "duration": 10266.548095703125,
+        "secondsFromStart": 552.9285109863281
+      },
+      {
+        "role": "user",
+        "time": 1758100285125.9492,
+        "endTime": 1758100287686.464,
+        "message": "Yeah. I noticed I have faced with the, uh, issues like, uh, there were a sore number of users hit at a single time. In that time, I used cluster like that to split the request into separate instances.",
+        "duration": 2560.514892578125,
+        "secondsFromStart": 589.8344851074219
+      },
+      {
+        "role": "user",
+        "time": 1758100285125.9492,
+        "endTime": 1758100287686.464,
+        "message": "To manage the load balances.",
+        "duration": 2560.514892578125,
+        "secondsFromStart": 589.8344851074219
+      },
+      {
+        "role": "agent",
+        "time": 1758100289294.63,
+        "endTime": 1758100289955.9182,
+        "message": "I see.",
+        "duration": 661.288330078125,
+        "secondsFromStart": 594.0031657714844
+      },
+      {
+        "role": "user",
+        "time": 1758100288606.208,
+        "endTime": 1758100313667.3528,
+        "message": "And then and then I and then I face one one of the issues also. And, yeah, we are using a type forum for the query management. The query management. In that the query get API query takes too much of time. In that time, I used raw query for this to optimize the query.",
+        "duration": 25061.144775390625,
+        "secondsFromStart": 593.3147438964844
+      },
+      {
+        "role": "agent",
+        "time": 1758100315615.1343,
+        "endTime": 1758100316692.0195,
+        "message": "Understood. Can you provide",
+        "duration": 1076.88525390625,
+        "secondsFromStart": 620.3236701660156
+      },
+      {
+        "role": "user",
+        "time": 1758100313856.1602,
+        "endTime": 1758100316446.37,
+        "message": "And for efficiency performance.",
+        "duration": 2590.2099609375,
+        "secondsFromStart": 618.5646960449219
+      },
+      {
+        "role": "agent",
+        "time": 1758100318050.432,
+        "endTime": 1758100325651.978,
+        "message": "Understood. Can you provide specific metrics you monitored to diagnose the performance issue, such as CPU or memory usage?",
+        "duration": 7601.546142578125,
+        "secondsFromStart": 622.7589677734375
+      },
+      {
+        "role": "user",
+        "time": 1758100328445.9392,
+        "endTime": 1758100340898.1802,
+        "message": "We are using a h we are using a Linux server I can use a h t h stop command",
+        "duration": 12452.240966796875,
+        "secondsFromStart": 633.1544750976562
+      },
+      {
+        "role": "user",
+        "time": 1758100328445.9392,
+        "endTime": 1758100340898.1802,
+        "message": "to track the CPU usages.",
+        "duration": 12452.240966796875,
+        "secondsFromStart": 633.1544750976562
+      },
+      {
+        "role": "agent",
+        "time": 1758100343273.6052,
+        "endTime": 1758100345764.975,
+        "message": "Thank you for sharing that. Let's move on to the next question.",
+        "duration": 2491.369873046875,
+        "secondsFromStart": 647.9821411132813
+      },
+      {
+        "role": "user",
+        "time": 1758100344896.3262,
+        "endTime": 1758100346435.6196,
+        "message": "Head stop.",
+        "duration": 1539.29345703125,
+        "secondsFromStart": 649.6048620605469
+      },
+      {
+        "role": "user",
+        "time": 1758100347106.1873,
+        "endTime": 1758100350246.3733,
+        "message": "Head stop. Head stop.",
+        "duration": 3140.18603515625,
+        "secondsFromStart": 651.8147231445313
+      },
+      {
+        "role": "agent",
+        "time": 1758100351596.6323,
+        "endTime": 1758100352417.9548,
+        "message": "Got it.",
+        "duration": 821.322509765625,
+        "secondsFromStart": 656.3051682128906
+      },
+      {
+        "role": "user",
+        "time": 1758100351363.669,
+        "endTime": 1758100354303.509,
+        "message": "Head stop command.",
+        "duration": 2939.840087890625,
+        "secondsFromStart": 656.0722048339844
+      },
+      {
+        "role": "user",
+        "time": 1758100351363.669,
+        "endTime": 1758100354303.509,
+        "message": "H t o p, start command.",
+        "duration": 2939.840087890625,
+        "secondsFromStart": 656.0722048339844
+      },
+      {
+        "role": "agent",
+        "time": 1758100357597.5942,
+        "endTime": 1758100369719.049,
+        "message": "Understood. Let's proceed to the next question.\n\nHow would you implement proper error handling in a TypeScript Node.js application to prevent uncaught exceptions from crashing the server?",
+        "duration": 12121.454833984375,
+        "secondsFromStart": 662.3061301269531
+      },
+      {
+        "role": "user",
+        "time": 1758100372006.366,
+        "endTime": 1758100388358.117,
+        "message": "Yeah. We use try catcher for this to handle the errors And then then catch and then we manually throw the error using HTTP exception, that type of like that.",
+        "duration": 16351.7509765625,
+        "secondsFromStart": 676.7149018554687
+      },
+      {
+        "role": "agent",
+        "time": 1758100393225.5151,
+        "endTime": 1758100399572.3652,
+        "message": "I see. Can you explain how you would handle uncaught exceptions using the process uncaughtException handler?",
+        "duration": 6346.85009765625,
+        "secondsFromStart": 697.9340510253907
+      },
+      {
+        "role": "user",
+        "time": 1758100403007.029,
+        "endTime": 1758100424258.0383,
+        "message": "Yeah. I've got exception handler, I mostly usually in catch. And then if I put some of the conditions, inside the API, if I want to throw a error, I I pass the error commands in HTTP extension.",
+        "duration": 21251.00927734375,
+        "secondsFromStart": 707.7155649414062
+      },
+      {
+        "role": "agent",
+        "time": 1758100426014.42,
+        "endTime": 1758100431447.462,
+        "message": "Understood. Can you also mention how you would use error middleware in Express for handling errors?",
+        "duration": 5433.0419921875,
+        "secondsFromStart": 730.7229558105469
+      },
+      {
+        "role": "user",
+        "time": 1758100437186.2993,
+        "endTime": 1758100439525.484,
+        "message": "Use exception handler.",
+        "duration": 2339.1845703125,
+        "secondsFromStart": 741.8948352050782
+      },
+      {
+        "role": "agent",
+        "time": 1758100441180.505,
+        "endTime": 1758100454266.5505,
+        "message": "Right. Let's move on to the next question.\n\nYou have a users table with 1M records where searches by last name are frequent. How would you optimize these queries using PostgreSQL features?",
+        "duration": 13086.045654296875,
+        "secondsFromStart": 745.8890407714844
+      },
+      {
+        "role": "user",
+        "time": 1758100465475.9253,
+        "endTime": 1758100468006.0828,
+        "message": "Yeah. Yeah. I host limit to a limit to one command to for this to get the data.",
+        "duration": 2530.157470703125,
+        "secondsFromStart": 770.1844611816406
+      },
+      {
+        "role": "agent",
+        "time": 1758100470191.4246,
+        "endTime": 1758100476722.249,
+        "message": "Can you explain how creating an index on the last_name column would help optimize these queries?",
+        "duration": 6530.824462890625,
+        "secondsFromStart": 774.8999604492187
+      },
+      {
+        "role": "user",
+        "time": 1758100486755.7134,
+        "endTime": 1758100488325.6377,
+        "message": "Can you explain Sorry. Pardon?",
+        "duration": 1569.92431640625,
+        "secondsFromStart": 791.4642492675781
+      },
+      {
+        "role": "agent",
+        "time": 1758100490940.601,
+        "endTime": 1758100498829.7705,
+        "message": "Can you explain how creating an index on the last_name column would help in optimizing the search queries?",
+        "duration": 7889.16943359375,
+        "secondsFromStart": 795.6491369628907
+      },
+      {
+        "role": "user",
+        "time": 1758100500326.3804,
+        "endTime": 1758100513727.3071,
+        "message": "Yeah. Uh, by by using the indexes, it it won't search all the tables in the column. It goes to the particular index and get the filter data.",
+        "duration": 13400.9267578125,
+        "secondsFromStart": 805.0349162597656
+      },
+      {
+        "role": "agent",
+        "time": 1758100515036.1042,
+        "endTime": 1758100521255.508,
+        "message": "Understood. Can you also discuss any considerations for case-insensitive searches when creating an index?",
+        "duration": 6219.40380859375,
+        "secondsFromStart": 819.7446401367188
+      },
+      {
+        "role": "user",
+        "time": 1758100523395.854,
+        "endTime": 1758100544707.609,
+        "message": "Uh, Yeah. Uh, we we have both login and the user table, uh, and there was a number of accounts for this. Uh, we use, uh, uh, what that particular we mentioned that particular index at that that time. The particular result will be, uh, returned to our response.",
+        "duration": 21311.7548828125,
+        "secondsFromStart": 828.1043898925781
+      },
+      {
+        "role": "agent",
+        "time": 1758100546099.4155,
+        "endTime": 1758100559292.0637,
+        "message": "Thank you for your response. Let's move on to the next question.\n\nWhen optimizing a slow report query scanning millions of rows in PostgreSQL, what approaches would you consider and what trade-offs exist?",
+        "duration": 13192.648193359375,
+        "secondsFromStart": 850.8079514160156
+      },
+      {
+        "role": "agent",
+        "time": 1758100570096.5337,
+        "endTime": 1758100571193.8389,
+        "message": "Are you still there?",
+        "duration": 1097.30517578125,
+        "secondsFromStart": 874.8050695800781
+      },
+      {
+        "role": "user",
+        "time": 1758100570245.165,
+        "endTime": 1758100574406.0894,
+        "message": "Yeah. Yeah. I'm still there.",
+        "duration": 4160.92431640625,
+        "secondsFromStart": 874.9537009277344
+      },
+      {
+        "role": "agent",
+        "time": 1758100576755.9912,
+        "endTime": 1758100582373.1902,
+        "message": "Great! Please go ahead with your response on optimizing a slow report query in PostgreSQL.",
+        "duration": 5617.198974609375,
+        "secondsFromStart": 881.4645270996094
+      },
+      {
+        "role": "user",
+        "time": 1758100584383.7861,
+        "endTime": 1758100592036.9822,
+        "message": "Yeah. By by using indexes we get we get the query faster.",
+        "duration": 7653.196044921875,
+        "secondsFromStart": 889.0923220214844
+      },
+      {
+        "role": "agent",
+        "time": 1758100593317.3083,
+        "endTime": 1758100599065.1707,
+        "message": "I see. Can you discuss the trade-offs of using indexing versus query rewriting for optimization?",
+        "duration": 5747.8623046875,
+        "secondsFromStart": 898.0258442382813
+      },
+      {
+        "role": "agent",
+        "time": 1758100609503.1277,
+        "endTime": 1758100610522.8665,
+        "message": "Are you still there?",
+        "duration": 1019.73876953125,
+        "secondsFromStart": 914.2116635742187
+      },
+      {
+        "role": "user",
+        "time": 1758100616065.9668,
+        "endTime": 1758100618656.1711,
+        "message": "Yeah. Yeah. That's So I don't know.",
+        "duration": 2590.204345703125,
+        "secondsFromStart": 920.7745026855468
+      },
+      {
+        "role": "agent",
+        "time": 1758100621025.8535,
+        "endTime": 1758100630402.126,
+        "message": "No worries! Let's move on to the next question.\n\nYou need to model e-commerce product data where products have varying attributes. How would you structure this in MongoDB?",
+        "duration": 9376.2724609375,
+        "secondsFromStart": 925.7343894042968
+      },
+      {
+        "role": "user",
+        "time": 1758100651845.8381,
+        "endTime": 1758100661184.0996,
+        "message": "Yes. Structure this model will be using we design a a login and user table for a login. And then I I I create a table I I create tables for products, like that. And then what are the what are all the tables required for ecommerce website?",
+        "duration": 9338.261474609375,
+        "secondsFromStart": 956.5543740234375
+      },
+      {
+        "role": "user",
+        "time": 1758100651845.8381,
+        "endTime": 1758100661184.0996,
+        "message": "I will create that in my go MongoDB MongoDB.",
+        "duration": 9338.261474609375,
+        "secondsFromStart": 956.5543740234375
+      },
+      {
+        "role": "agent",
+        "time": 1758100662822.4111,
+        "endTime": 1758100670372.5156,
+        "message": "Understood. Can you explain how you would handle embedded attributes for products with varying characteristics in MongoDB?",
+        "duration": 7550.1044921875,
+        "secondsFromStart": 967.5309470214844
+      },
+      {
+        "role": "user",
+        "time": 1758100682726.211,
+        "endTime": 1758100684485.1934,
+        "message": "The embedded attributes embedded attributes like no. I don't know.",
+        "duration": 1758.982421875,
+        "secondsFromStart": 987.4347468261719
+      },
+      {
+        "role": "agent",
+        "time": 1758100685831.8242,
+        "endTime": 1758100699235.2637,
+        "message": "That's okay! Let's move on to the next question.\n\nYour application has a frequently accessed but slowly generated user profile view. How would you implement Redis caching for this?",
+        "duration": 13403.439453125,
+        "secondsFromStart": 990.5403601074219
+      },
+      {
+        "role": "user",
+        "time": 1758100716444.2097,
+        "endTime": 1758100724127.0405,
+        "message": "I can get the I can get the queries from the table, and then I show it in the release.",
+        "duration": 7682.830810546875,
+        "secondsFromStart": 1021.1527456054688
+      },
+      {
+        "role": "user",
+        "time": 1758100716444.2097,
+        "endTime": 1758100724127.0405,
+        "message": "For a user optimization.",
+        "duration": 7682.830810546875,
+        "secondsFromStart": 1021.1527456054688
+      },
+      {
+        "role": "agent",
+        "time": 1758100725856.3562,
+        "endTime": 1758100726404.502,
+        "message": "I see.",
+        "duration": 548.145751953125,
+        "secondsFromStart": 1030.5648920898439
+      },
+      {
+        "role": "user",
+        "time": 1758100724765.9792,
+        "endTime": 1758100729923.8254,
+        "message": "It reduces it it won't hit. It hit for the both time.",
+        "duration": 5157.84619140625,
+        "secondsFromStart": 1029.4745151367188
+      },
+      {
+        "role": "agent",
+        "time": 1758100731392.254,
+        "endTime": 1758100733723.9165,
+        "message": "Understood. Can you explain the cache-aside pattern and",
+        "duration": 2331.66259765625,
+        "secondsFromStart": 1036.1007897949219
+      },
+      {
+        "role": "user",
+        "time": 1758100732674.8528,
+        "endTime": 1758100737766.4438,
+        "message": "It gets the data from the it gets the data from the Redis.",
+        "duration": 5091.591064453125,
+        "secondsFromStart": 1037.383388671875
+      },
+      {
+        "role": "agent",
+        "time": 1758100739096.6736,
+        "endTime": 1758100744556.7783,
+        "message": "Right. Can you also discuss how you would handle appropriate TTL settings for the cached data?",
+        "duration": 5460.104736328125,
+        "secondsFromStart": 1043.8052094726563
+      },
+      {
+        "role": "user",
+        "time": 1758100747265.7593,
+        "endTime": 1758100749055.753,
+        "message": "No. I don't know.",
+        "duration": 1789.99365234375,
+        "secondsFromStart": 1051.9742951660157
+      },
+      {
+        "role": "agent",
+        "time": 1758100751517.495,
+        "endTime": 1758100761210.1843,
+        "message": "That's alright! Let's move on to the final question.\n\nGiven a slow-running report query, what specific steps would you take to diagnose and improve its performance?",
+        "duration": 9692.689208984375,
+        "secondsFromStart": 1056.2260310058593
+      },
+      {
+        "role": "user",
+        "time": 1758100765285.326,
+        "endTime": 1758100778631.5957,
+        "message": "Yeah. For your slow running query, we use cron jobs for getting the get for getting the all the data to data.",
+        "duration": 13346.269775390625,
+        "secondsFromStart": 1069.9938618164063
+      },
+      {
+        "role": "agent",
+        "time": 1758100780396.9675,
+        "endTime": 1758100789619.3386,
+        "message": "Thank you for your response. Can you mention how you would use EXPLAIN ANALYZE to diagnose the performance of a query?",
+        "duration": 9222.37109375,
+        "secondsFromStart": 1085.1055034179687
+      },
+      {
+        "role": "user",
+        "time": 1758100813245.9712,
+        "endTime": 1758100820196.343,
+        "message": "To analyze the query, we use when it will when will the query will be executed We denoted it like an it it will it runs like a ten ms, twenty ms, like that. We can, uh, analyze this by using the when how much time it takes",
+        "duration": 6950.371826171875,
+        "secondsFromStart": 1117.9545070800782
+      },
+      {
+        "role": "agent",
+        "time": 1758100826265.752,
+        "endTime": 1758100830864.0256,
+        "message": "Understood. Can you also discuss how you would check index usage for the query?",
+        "duration": 4598.273681640625,
+        "secondsFromStart": 1130.974287841797
+      },
+      {
+        "role": "user",
+        "time": 1758100836256.7412,
+        "endTime": 1758100847847.0244,
+        "message": "Yeah. I checked the the index by by using the column properties in database.",
+        "duration": 11590.283203125,
+        "secondsFromStart": 1140.9652770996095
+      },
+      {
+        "role": "agent",
+        "time": 1758100850805.0713,
+        "endTime": 1758100865668.007,
+        "message": "Thank you for your responses, Dinesh. \n\nThat concludes the technical questions. \n\nThanks for your time today. I appreciate the insights you provided. I'll share your profile with our hiring team, and we'll update you on the next steps. Do you have any questions before we wrap up?",
+        "duration": 14862.935791015625,
+        "secondsFromStart": 1155.5136071777345
+      },
+      {
+        "role": "user",
+        "time": 1758100873825.483,
+        "endTime": 1758100875135.55,
+        "message": "Yeah. The when will the the my result will be shown?",
+        "duration": 1310.067138671875,
+        "secondsFromStart": 1178.5340187988281
+      },
+      {
+        "role": "agent",
+        "time": 1758100876963.096,
+        "endTime": 1758100891853.2332,
+        "message": "That's a great question. I don't have the exact timeline right now, but typically, our hiring team reviews profiles within a week. I'll ensure to follow up and keep you updated on the progress. \n\nIf you have any other questions or need assistance, feel free to ask!",
+        "duration": 14890.13720703125,
+        "secondsFromStart": 1181.6716318359374
+      },
+      {
+        "role": "user",
+        "time": 1758100893444.5178,
+        "endTime": 1758100900576.3184,
+        "message": "Yeah. Uh, if I got selected, uh, what is my roles and responsibility in the in your company?",
+        "duration": 7131.800537109375,
+        "secondsFromStart": 1198.1530537109375
+      },
+      {
+        "role": "agent",
+        "time": 1758100902365.168,
+        "endTime": 1758100936585.2173,
+        "message": "In the Senior Node.js Developer role at F22 Labs, your responsibilities would include designing, developing, testing, deploying, and maintaining highly scalable backend services and APIs using Node.js. You would also collaborate with cross-functional teams, lead code reviews, manage database schemas, and mentor junior developers. Additionally, you would be involved in troubleshooting, debugging, and optimizing performance.\n\nIf you have any more questions or need further clarification, feel free to ask!",
+        "duration": 34220.04931640625,
+        "secondsFromStart": 1207.0737038574218
+      },
+      {
+        "role": "user",
+        "time": 1758100938596.279,
+        "endTime": 1758100941376.6692,
+        "message": "Yeah. Okay. I had one more question.",
+        "duration": 2780.39013671875,
+        "secondsFromStart": 1243.3048149414062
+      },
+      {
+        "role": "agent",
+        "time": 1758100943173.0676,
+        "endTime": 1758100944611.5576,
+        "message": "Of course! What’s your question?",
+        "duration": 1438.489990234375,
+        "secondsFromStart": 1247.881603515625
+      },
+      {
+        "role": "user",
+        "time": 1758100948444.109,
+        "endTime": 1758100952864.1133,
+        "message": "How I did my interview how how I did this interview?",
+        "duration": 4420.00439453125,
+        "secondsFromStart": 1253.1526447753906
+      },
+      {
+        "role": "user",
+        "time": 1758100953183.8328,
+        "endTime": 1758100957506.125,
+        "message": "Is there any feedbacks I have to improve?",
+        "duration": 4322.292236328125,
+        "secondsFromStart": 1257.8923686523437
+      },
+      {
+        "role": "user",
+        "time": 1758100958305.1897,
+        "endTime": 1758100961665.924,
+        "message": "Is there any suggestion give please give.",
+        "duration": 3360.734375,
+        "secondsFromStart": 1263.0137255859374
+      },
+      {
+        "role": "agent",
+        "time": 1758100963654.1045,
+        "endTime": 1758100987191.4578,
+        "message": "I appreciate your interest in feedback! While I can't provide specific evaluations, I encourage you to focus on clearly articulating your technical knowledge and providing detailed examples from your experience. Practicing your responses to common technical questions can also help improve your confidence and clarity.\n\nIf you have any other questions or need assistance, feel free to ask!",
+        "duration": 23537.353271484375,
+        "secondsFromStart": 1268.3626403808594
+      },
+      {
+        "role": "user",
+        "time": 1758100989315.226,
+        "endTime": 1758100991206.8562,
+        "message": "No. That's it.",
+        "duration": 1891.630126953125,
+        "secondsFromStart": 1294.0237619628906
+      },
+      {
+        "role": "agent",
+        "time": 1758100995822.6663,
+        "endTime": 1758100997209.0413,
+        "message": "Goodbye, have a great day!",
+        "duration": 1386.375,
+        "secondsFromStart": 1300.5312021484374
+      }
+    ],
+    "stats": {
+      "startTime": 1758099695291.464,
+      "endTime": 1758100997209.911,
+      "duration": 1301918.4467773438,
+      "userSpeakingTime": 577727.4731445312,
+      "agentSpeakingTime": 417873.974609375
+    }
+  },
+  "technical_questions": "Q1: How does Node.js handle asynchronous operations, and what role does the event loop play in this process?\nG1: Green flags:\n- Clearly explains non-blocking I/O model\n- Mentions phases of event loop (timers, poll, check)\n- References libuv library implementation\n\nRed flags:\n- Confuses with browser JavaScript event loop\n- States Node.js uses multiple threads for all operations\n- Cannot describe callback queue processing\n\nQ2: Describe how you would implement a rate-limiting mechanism for an API endpoint in Express.js.\nG2: Green flags:\n- Mentions specific middleware like express-rate-limit\n- Discusses storage mechanisms (memory store vs Redis)\n- Explains HTTP status codes for rate limiting (429)\n\nRed flags:\n- Suggests blocking endpoint completely after limit\n- Confuses rate limiting with authentication\n- Cannot differentiate between IP-based vs user-based limiting\n\nQ3: When might you choose to use GraphQL over REST for an API, and what are the trade-offs?\nG3: Green flags:\n- Identifies use cases like flexible client queries\n- Discusses over-fetching/under-fetching problems\n- Mentions schema evolution challenges\n\nRed flags:\n- Claims GraphQL always performs better than REST\n- Ignores caching complexities with GraphQL\n- Suggests GraphQL eliminates need for API versioning\n\nQ4: Describe a challenging performance issue you resolved in a Node.js application, including how you diagnosed and fixed it.\nG4: Green flags:\n- Provides specific metrics (CPU, memory, latency)\n- Describes debugging tools (clinic.js, Chrome DevTools)\n- Explains root cause like callback hell or memory leaks\n\nRed flags:\n- Vague description with no technical details\n- Blames infrastructure without evidence\n- Confuses symptoms with root causes\n\nQ5: How would you implement proper error handling in a TypeScript Node.js application to prevent uncaught exceptions from crashing the server?\nG5: Green flags:\n- Discusses try/catch with async/await\n- Mentions process uncaughtException handler\n- References error middleware in Express\n\nRed flags:\n- Suggests wrapping everything in try/catch blocks\n- Ignores async error propagation issues\n- Claims TypeScript eliminates runtime errors\n\nQ6: You have a users table with 1M records where searches by last name are frequent. How would you optimize these queries using PostgreSQL features?\nG6: Green flags:\n- Recommends creating index on last_name column\n- Considers case-insensitive requirements (e.g., idx_last_name_lower)\n- Mentions EXPLAIN ANALYZE for verification\n\nRed flags:\n- Suggests indexing all columns\n- Proposes denormalization prematurely\n- Confuses indexes with caching\n\nQ7: When optimizing a slow report query scanning millions of rows in PostgreSQL, what approaches would you consider and what trade-offs exist?\nG7: Green flags:\n- Evaluates indexing vs query rewriting\n- Considers materialized views for aggregates\n- Mentions partitioning for large tables\n\nRed flags:\n- Recommends adding indexes without analysis\n- Proposes hardware upgrade as first solution\n- Ignores execution plan examination\n\nQ8: You need to model e-commerce product data where products have varying attributes. How would you structure this in MongoDB?\nG8: Green flags:\n- Proposes embedded attributes collection\n- Considers schema versioning\n- Mentions indexing strategy for search\n\nRed flags:\n- Suggests one collection per product type\n- Recommends storing as BLOBs\n- Ignores query performance impact\n\nQ9: Your application has a frequently accessed but slowly generated user profile view. How would you implement Redis caching for this?\nG9: Green flags:\n- Proposes cache-aside pattern\n- Considers JSON serialization\n- Mentions appropriate TTL settings\n\nRed flags:\n- Suggests full-page caching\n- Recommends infinite TTL\n- Ignores cache stampede protection\n\nQ10: Given a slow-running report query, what specific steps would you take to diagnose and improve its performance?\nG10: Green flags:\n- References EXPLAIN ANALYZE\n- Checks index usage\n- Considers query restructuring\n\nRed flags:\n- Immediately suggests index creation\n- Proposes increasing server resources\n- Ignores filtering condition efficiency",
   "key_skill_areas": [
     {
       "name": "Programming & Development",
@@ -1110,5 +1119,5 @@
       "difficultyLevel": "low"
     }
   ],
-  "call_id": "interview-73f95c09-e443-48c3-b173-6c70e2815841-0375dd38-61ef-41cc-bb31-96a4c9a95bf7"
+  "call_id": "interview-fdca0001-8263-40c2-9e3f-e2a4206b6949-1da8647e-bd8d-4d11-bf33-d41d56a6dead"
 }

@@ -257,18 +257,7 @@ def create_evaluation_json(supabase_data: dict, postgres_data: dict, job_details
 
     # Extract resume details from Supabase variables field
     resume_data = {
-        "resume": "Resume content not available",
-        "job_title": "Job title not available",
-        "company_name": "Company name not available",
-        "salary_range": "Not specified",
-        "candidate_name": "Candidate name not available",
-        "company_profile": "Company profile not available",
-        "job_requirements": "Job requirements not available",
-        "candidate_contact": "Contact not available",
-        "lead_contact_name": "Lead contact not available",
-        "additional_questions": "Additional questions not available",
-        "recruitment_firm_name": "HireVox",
-        "non_technical_questions": ""
+       
     }
 
     # Try to extract resume details from Supabase variables
@@ -277,25 +266,25 @@ def create_evaluation_json(supabase_data: dict, postgres_data: dict, job_details
         if isinstance(variables, dict):
             # Extract all available fields from variables
             resume_data.update({
-                "resume": variables.get("resume", resume_data["resume"]),
-                "job_title": variables.get("job_title", resume_data["job_title"]),
-                "company_name": variables.get("company_name", resume_data["company_name"]),
-                "salary_range": variables.get("salary_range", resume_data["salary_range"]),
-                "candidate_name": variables.get("candidate_name", resume_data["candidate_name"]),
-                "company_profile": variables.get("company_profile", resume_data["company_profile"]),
-                "job_requirements": variables.get("job_requirements", resume_data["job_requirements"]),
-                "candidate_contact": variables.get("candidate_contact", resume_data["candidate_contact"]),
-                "lead_contact_name": variables.get("lead_contact_name", resume_data["lead_contact_name"]),
-                "additional_questions": variables.get("additional_questions", resume_data["additional_questions"]),
-                "recruitment_firm_name": variables.get("recruitment_firm_name", resume_data["recruitment_firm_name"]),
-                "non_technical_questions": variables.get("non_technical_questions", resume_data["non_technical_questions"])
+                "resume": variables.get("resume"),
+                "job_title": variables.get("job_title"),
+                "company_name": variables.get("company_name"),
+                "salary_range": variables.get("salary_range"),
+                "candidate_name": variables.get("candidate_name"),
+                "company_profile": variables.get("company_profile"),
+                "job_requirements": variables.get("job_requirements"),
+                "candidate_contact": variables.get("candidate_contact"),
+                "lead_contact_name": variables.get("lead_contact_name"),
+                "additional_questions": variables.get("additional_questions"),
+                "recruitment_firm_name": variables.get("recruitment_firm_name"),
+                "non_technical_questions": variables.get("non_technical_questions"),
             })
 
     # Build the evaluation JSON structure
     evaluation_json = {
         "resume": resume_data,
         "transcript": transcript_data,
-        "technical_questions": "Technical questions not available",
+        "technical_questions": variables.get('technical_questions', []),
         "key_skill_areas": job_details.get('key_skill_areas', []) if job_details else []
     }
 
@@ -456,11 +445,7 @@ def call_generate_report_api(evaluation_json: dict, call_id: str = None, api_url
         Dictionary containing the API response
     """
     # Transform evaluation_json to match API request structure
-    api_request = {
-        "transcript": evaluation_json.get("transcript", {}),
-        "resume": evaluation_json.get("resume", {}),
-        "key_skill_areas": evaluation_json.get("key_skill_areas", [])
-    }
+    api_request = evaluation_json
 
     # Include call_id if provided for custom filename
     if call_id:
@@ -555,92 +540,84 @@ def main():
     # Generate evaluation JSON for API
     if supabase_data or postgres_data:
         evaluation_json = create_evaluation_json(supabase_data, postgres_data, job_details)
+        #save evaluation_json to a file for debugging
+        with open("evaluation_json_debug.json", "w") as f:
+            json.dump(evaluation_json, f, indent=2, ensure_ascii=False, default=str)
+        # Call the API for report generation
+        print(f"\nCalling /generate-report API at {args.api_url}...")
+        api_response = call_generate_report_api(evaluation_json, args.call_id, args.api_url)
 
-        if args.local_only:
-            # Output local data only
-            print("\n" + "="*50)
-            print("LOCAL EVALUATION DATA")
-            print("="*50)
-            if args.pretty:
-                print(json.dumps(evaluation_json, indent=2, default=str))
-            else:
-                print(json.dumps(evaluation_json, default=str))
-        else:
-            # Call the API for report generation
-            print(f"\nCalling /generate-report API at {args.api_url}...")
-            api_response = call_generate_report_api(evaluation_json, args.call_id, args.api_url)
+        if api_response:
+            print("✓ Report generated successfully")
+            print("\n" + "="*60)
+            print("INTERVIEW EVALUATION REPORT")
+            print("="*60)
 
-            if api_response:
-                print("✓ Report generated successfully")
-                print("\n" + "="*60)
-                print("INTERVIEW EVALUATION REPORT")
-                print("="*60)
-
-                if args.json:
-                    # Output full API response
-                    if args.pretty:
-                        print(json.dumps(api_response, indent=2, default=str))
-                    else:
-                        print(json.dumps(api_response, default=str))
+            if args.json:
+                # Output full API response
+                if args.pretty:
+                    print(json.dumps(api_response, indent=2, default=str))
                 else:
-                    # Extract and display key information from API response
-                    if 'evaluation' in api_response:
-                        evaluation = api_response['evaluation']
-
-                        # Display overall score and recommendation
-                        if 'overall_recommendation' in evaluation:
-                            rec = evaluation['overall_recommendation']
-                            print(f"Overall Score: {rec.get('overall_score', 'N/A')}/10")
-                            print(f"Recommendation: {rec.get('recommendation', 'N/A')}")
-                            print(f"Confidence: {rec.get('confidence_level', 'N/A')}")
-
-                        # Display skill area evaluations
-                        if 'skill_area_evaluations' in evaluation:
-                            print(f"\n🎯 SKILL AREA EVALUATIONS")
-                            print("-" * 30)
-                            for skill_eval in evaluation['skill_area_evaluations']:
-                                skill_name = skill_eval.get('skill_area_name', 'Unknown')
-                                score = skill_eval.get('score', 'N/A')
-                                print(f"{skill_name}: {score}/10")
-
-                        # Display technical assessment
-                        if 'technical_assessment' in evaluation:
-                            tech = evaluation['technical_assessment']
-                            print(f"\n💻 TECHNICAL ASSESSMENT")
-                            print("-" * 30)
-                            print(f"Problem Solving: {tech.get('problem_solving_score', 'N/A')}/10")
-                            print(f"Technical Depth: {tech.get('technical_depth_score', 'N/A')}/10")
-                            print(f"Communication: {tech.get('communication_score', 'N/A')}/10")
-
-                        # Display key insights
-                        if 'key_insights' in evaluation:
-                            insights = evaluation['key_insights']
-                            if insights.get('strengths'):
-                                print(f"\n✅ STRENGTHS")
-                                print("-" * 30)
-                                for strength in insights['strengths']:
-                                    print(f"• {strength}")
-
-                            if insights.get('areas_for_improvement'):
-                                print(f"\n⚠️ AREAS FOR IMPROVEMENT")
-                                print("-" * 30)
-                                for area in insights['areas_for_improvement']:
-                                    print(f"• {area}")
-
-                    # Display metadata
-                    if 'metadata' in api_response:
-                        meta = api_response['metadata']
-                        print(f"\n📊 METADATA")
-                        print("-" * 30)
-                        print(f"Processing Time: {meta.get('processing_time_seconds', 'N/A')}s")
-                        print(f"Model Used: {meta.get('model_used', 'N/A')}")
-                        print(f"Generated At: {meta.get('generated_at', 'N/A')}")
+                    print(json.dumps(api_response, default=str))
             else:
-                print("✗ Failed to generate report via API")
-                print("Falling back to local analysis...")
-                # Fallback to local report generation
-                report = generate_call_report(supabase_data, postgres_data, job_details)
-                print_report(report)
+                # Extract and display key information from API response
+                if 'evaluation' in api_response:
+                    evaluation = api_response['evaluation']
+
+                    # Display overall score and recommendation
+                    if 'overall_recommendation' in evaluation:
+                        rec = evaluation['overall_recommendation']
+                        print(f"Overall Score: {rec.get('overall_score', 'N/A')}/10")
+                        print(f"Recommendation: {rec.get('recommendation', 'N/A')}")
+                        print(f"Confidence: {rec.get('confidence_level', 'N/A')}")
+
+                    # Display skill area evaluations
+                    if 'skill_area_evaluations' in evaluation:
+                        print(f"\n🎯 SKILL AREA EVALUATIONS")
+                        print("-" * 30)
+                        for skill_eval in evaluation['skill_area_evaluations']:
+                            skill_name = skill_eval.get('skill_area_name', 'Unknown')
+                            score = skill_eval.get('score', 'N/A')
+                            print(f"{skill_name}: {score}/10")
+
+                    # Display technical assessment
+                    if 'technical_assessment' in evaluation:
+                        tech = evaluation['technical_assessment']
+                        print(f"\n💻 TECHNICAL ASSESSMENT")
+                        print("-" * 30)
+                        print(f"Problem Solving: {tech.get('problem_solving_score', 'N/A')}/10")
+                        print(f"Technical Depth: {tech.get('technical_depth_score', 'N/A')}/10")
+                        print(f"Communication: {tech.get('communication_score', 'N/A')}/10")
+
+                    # Display key insights
+                    if 'key_insights' in evaluation:
+                        insights = evaluation['key_insights']
+                        if insights.get('strengths'):
+                            print(f"\n✅ STRENGTHS")
+                            print("-" * 30)
+                            for strength in insights['strengths']:
+                                print(f"• {strength}")
+
+                        if insights.get('areas_for_improvement'):
+                            print(f"\n⚠️ AREAS FOR IMPROVEMENT")
+                            print("-" * 30)
+                            for area in insights['areas_for_improvement']:
+                                print(f"• {area}")
+
+                # Display metadata
+                if 'metadata' in api_response:
+                    meta = api_response['metadata']
+                    print(f"\n📊 METADATA")
+                    print("-" * 30)
+                    print(f"Processing Time: {meta.get('processing_time_seconds', 'N/A')}s")
+                    print(f"Model Used: {meta.get('model_used', 'N/A')}")
+                    print(f"Generated At: {meta.get('generated_at', 'N/A')}")
+        else:
+            print("✗ Failed to generate report via API")
+            print("Falling back to local analysis...")
+            # Fallback to local report generation
+            report = generate_call_report(supabase_data, postgres_data, job_details)
+            print_report(report)
 
         # Show summary of saved files
         if not args.no_save:

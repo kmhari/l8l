@@ -14,10 +14,6 @@ from models import (
     GatherRequest, GatherResponse, EvaluateRequest, EvaluateResponse,
     SkillsAssessmentRequest, SkillsAssessmentResponse
 )
-from cache import (
-    generate_cache_key, load_from_cache, save_to_cache,
-    get_cache_stats, clear_cache, delete_cache_item
-)
 from utils import (
     parse_technical_questions, prepare_known_questions,
     build_conversations_from_indices, extract_candidate_info_from_transcript,
@@ -47,46 +43,6 @@ async def gather(request: GatherRequest):
         print(f"📊 Provider: {provider}")
         print(f"🤖 Model: {model}")
 
-        print("🔑 Generating cache key...")
-        cache_key = generate_cache_key(request)
-        print(f"✅ Cache key: {cache_key}")
-
-        print("🔍 Checking cache...")
-        cached_result = load_from_cache(cache_key)
-        if cached_result:
-            print("🎯 Cache hit! Returning cached result...")
-            cached_timestamp = cached_result.get("timestamp", 0)
-            age_minutes = (time.time() - cached_timestamp) / 60
-            print(f"📅 Cache age: {age_minutes:.1f} minutes")
-
-            response = GatherResponse(llm_output=cached_result["llm_output"])
-
-            try:
-                timestamp = int(time.time())
-                filename = f"gather_output_{timestamp}_cached.json"
-
-                output_data = {
-                    "timestamp": timestamp,
-                    "cached_from": cached_result["timestamp"],
-                    "cache_key": cache_key,
-                    "request_data": {
-                        "transcript_messages_count": len(request.transcript.get("messages", [])),
-                        "technical_questions_count": len(parse_technical_questions(request.technical_questions)),
-                        "key_skill_areas_count": len(request.key_skill_areas),
-                    },
-                    "llm_output": cached_result["llm_output"]
-                }
-
-                output_path = save_output_to_file(output_data, filename)
-                print(f"✅ Cached result also saved to: {output_path}")
-            except Exception as e:
-                print(f"⚠️  Failed to save cached result to output: {str(e)}")
-
-            print("✅ Report generation completed (from cache)!")
-            print("="*50 + "\n")
-            return response
-
-        print("💾 Cache miss - proceeding with LLM generation...")
 
         print("📝 Parsing technical questions...")
         questions = parse_technical_questions(request.technical_questions)
@@ -175,16 +131,7 @@ async def gather(request: GatherRequest):
         print("📊 Generating final response...")
         response = GatherResponse(llm_output=llm_output)
 
-        print("💾 Saving results to cache and disk...")
-
-        request_metadata = {
-            "transcript_messages_count": len(messages),
-            "technical_questions_count": len(questions),
-            "key_skill_areas_count": len(request.key_skill_areas),
-        }
-
-        if "error" not in llm_output:
-            save_to_cache(cache_key, llm_output, request_metadata)
+        print("💾 Saving results to disk...")
 
         try:
             timestamp = int(time.time())
@@ -192,8 +139,11 @@ async def gather(request: GatherRequest):
 
             output_data = {
                 "timestamp": timestamp,
-                "cache_key": cache_key,
-                "request_data": request_metadata,
+                "request_data": {
+                    "transcript_messages_count": len(messages),
+                    "technical_questions_count": len(questions),
+                    "key_skill_areas_count": len(request.key_skill_areas),
+                },
                 "llm_output": llm_output
             }
 
@@ -528,33 +478,6 @@ async def generate_report(request: EvaluateRequest):
         raise HTTPException(status_code=500, detail=f"Error generating comprehensive report: {str(e)}")
 
 
-@app.get("/cache/stats")
-async def cache_stats():
-    """Get cache statistics"""
-    try:
-        return get_cache_stats()
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error getting cache stats: {str(e)}")
-
-
-@app.delete("/cache/clear")
-async def clear_all_cache():
-    """Clear all cached gather results"""
-    try:
-        return clear_cache()
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error clearing cache: {str(e)}")
-
-
-@app.delete("/cache/{cache_key}")
-async def delete_specific_cache_item(cache_key: str):
-    """Delete a specific cached item"""
-    try:
-        return delete_cache_item(cache_key)
-    except FileNotFoundError:
-        raise HTTPException(status_code=404, detail=f"Cache item not found: {cache_key}")
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error deleting cache item: {str(e)}")
 
 
 @app.get("/scalar", include_in_schema=False)

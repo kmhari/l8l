@@ -103,7 +103,7 @@ class GroqProvider(LLMProvider):
             "model": self.model,
             "messages": messages,
             "temperature": 0.1,
-            "max_tokens": 8000,  # Groq has different token limits
+            "max_tokens": 28000,  # Groq has different token limits
         }
 
         # Groq doesn't support structured outputs yet, so we rely on prompt engineering

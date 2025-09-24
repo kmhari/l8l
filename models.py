@@ -64,6 +64,7 @@ class EvaluateRequest(BaseModel):
     resume: Optional[Dict[str, Any]] = None
     key_skill_areas: Optional[List[Dict[str, Any]]] = None
     call_id: Optional[str] = None  # Interview room name for custom filename
+    technical_questions: str = ''  
 
     class Config:
         pass
