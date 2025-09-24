@@ -672,7 +672,7 @@ async def merge_evaluations(evaluations: List[Dict[str, Any]],
 
     merged_report["improvement_recommendations"] = list(set(all_recommendations))
 
-    # Calculate overall scores and recommendations
+    # Calculate overall scores and recommendations (exclude custom questions)
     valid_evaluations = []
     for e in evaluations:
         if (isinstance(e, dict) and
@@ -681,11 +681,21 @@ async def merge_evaluations(evaluations: List[Dict[str, Any]],
             isinstance(e["overall_assessment"], dict) and
             "overall_score" in e["overall_assessment"] and
             isinstance(e["overall_assessment"]["overall_score"], (int, float))):
-            valid_evaluations.append(e)
+
+            # Check if this is a custom question (exclude from score calculation)
+            group_metadata = e.get("group_metadata", {})
+            question_id = group_metadata.get("question_id", "")
+
+            # Skip custom questions (those that start with "custom:")
+            if not question_id.startswith("custom:"):
+                valid_evaluations.append(e)
+            else:
+                print(f"🔍 Excluding custom question {question_id} from overall score calculation")
 
     if valid_evaluations:
         avg_score = sum(e["overall_assessment"]["overall_score"] for e in valid_evaluations) / len(valid_evaluations)
         merged_report["overall_assessment"]["overall_score"] = round(avg_score, 1)
+        print(f"📊 Overall score calculated from {len(valid_evaluations)} non-custom questions: {avg_score:.1f}")
 
         # Determine overall recommendation based on average score - more lenient thresholds
         if avg_score >= 75:
@@ -700,7 +710,14 @@ async def merge_evaluations(evaluations: List[Dict[str, Any]],
         # Add summary
         successful_evaluations = len(valid_evaluations)
         total_evaluations = len(evaluations)
-        merged_report["overall_assessment"]["summary"] = f"Evaluation based on {successful_evaluations}/{total_evaluations} successfully processed question groups."
+        custom_questions_count = sum(1 for e in evaluations if
+                                   isinstance(e, dict) and
+                                   e.get("group_metadata", {}).get("question_id", "").startswith("custom:"))
+
+        if custom_questions_count > 0:
+            merged_report["overall_assessment"]["summary"] = f"Evaluation based on {successful_evaluations} standard questions (excluded {custom_questions_count} custom questions from scoring)."
+        else:
+            merged_report["overall_assessment"]["summary"] = f"Evaluation based on {successful_evaluations}/{total_evaluations} successfully processed question groups."
 
     print("✅ Evaluation merging completed")
     return merged_report
