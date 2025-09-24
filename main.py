@@ -682,15 +682,16 @@ async def merge_evaluations(evaluations: List[Dict[str, Any]],
             "overall_score" in e["overall_assessment"] and
             isinstance(e["overall_assessment"]["overall_score"], (int, float))):
 
-            # Check if this is a custom question (exclude from score calculation)
+            # Check if this is a standard numbered question (only include Q1, Q2, etc.)
             group_metadata = e.get("group_metadata", {})
             question_id = group_metadata.get("question_id", "")
 
-            # Skip custom questions (those that start with "custom:")
-            if not question_id.startswith("custom:"):
+            # Only include questions that match the pattern Q1, Q2, Q3, etc.
+            if re.match(r'^Q\d+$', question_id):
                 valid_evaluations.append(e)
+                print(f"🔍 Including question {question_id} in overall score calculation")
             else:
-                print(f"🔍 Excluding custom question {question_id} from overall score calculation")
+                print(f"🔍 Excluding non-standard question {question_id} from overall score calculation")
 
     if valid_evaluations:
         avg_score = sum(e["overall_assessment"]["overall_score"] for e in valid_evaluations) / len(valid_evaluations)
@@ -710,12 +711,14 @@ async def merge_evaluations(evaluations: List[Dict[str, Any]],
         # Add summary
         successful_evaluations = len(valid_evaluations)
         total_evaluations = len(evaluations)
-        custom_questions_count = sum(1 for e in evaluations if
-                                   isinstance(e, dict) and
-                                   e.get("group_metadata", {}).get("question_id", "").startswith("custom:"))
 
-        if custom_questions_count > 0:
-            merged_report["overall_assessment"]["summary"] = f"Evaluation based on {successful_evaluations} standard questions (excluded {custom_questions_count} custom questions from scoring)."
+        # Count non-standard questions (anything that's not Q1, Q2, Q3, etc.)
+        non_standard_questions_count = sum(1 for e in evaluations if
+                                         isinstance(e, dict) and
+                                         not re.match(r'^Q\d+$', e.get("group_metadata", {}).get("question_id", "")))
+
+        if non_standard_questions_count > 0:
+            merged_report["overall_assessment"]["summary"] = f"Evaluation based on {successful_evaluations} standard Q-numbered questions (excluded {non_standard_questions_count} non-standard questions from scoring)."
         else:
             merged_report["overall_assessment"]["summary"] = f"Evaluation based on {successful_evaluations}/{total_evaluations} successfully processed question groups."
 
