@@ -1,0 +1,856 @@
+{
+  "metadata": {
+    "source": "postgres",
+    "data_type": "job_details",
+    "call_id": "interview-fdca0001-8263-40c2-9e3f-e2a4206b6949-1da8647e-bd8d-4d11-bf33-d41d56a6dead",
+    "timestamp": "20250923_180053",
+    "generated_at": "2025-09-23T18:00:53.480822"
+  },
+  "data": {
+    "id": 536,
+    "name": "F22 LABS - Senior Nodejs Developer | YOE 3-5 | New Questions",
+    "position": "Senior Nodejs Developer",
+    "description": "Position Overview\n\nWe are seeking a talented and experienced Senior Node.js Developer to join our growing engineering team. In this role, you will be instrumental in designing, developing, and maintaining the backbone of our applications. You'll leverage your 3-5 years of expertise to build robust, scalable, and high-performance backend services and APIs. You will also play a key role in making architectural decisions, mentoring junior developers, and driving best practices within the team. If you're eager to tackle complex problems, contribute to innovative projects, and lead by example, this position is for you.\n\nKey Responsibilities\n● Design, develop, test, deploy, and maintain highly scalable and reliable backend services, APIs, and systems using Node.js (with frameworks like Express.js or NestJS) and TypeScript/JavaScript.\n● Architect and implement robust solutions for complex business requirements, ensuring code quality, performance, and security.\n● Collaborate closely with cross-functional teams including front-end developers, product managers, QA engineers, and designers to deliver high-quality products.\n● Lead and participate in code reviews, providing constructive feedback to ensure adherence to coding standards and best practices.\n● Design and manage database schemas (SQL and NoSQL, e.g., PostgreSQL, MongoDB, Redis) and optimize database queries for performance.\n● Develop and maintain comprehensive unit, integration, and E2E tests to ensure software quality and reliability.\n● Work with containerization technologies like Docker and orchestration tools like Kubernetes for deploying and managing applications.\n● Implement and maintain CI/CD pipelines for automated building, testing, and deployment of applications.\n● Mentor and guide junior developers, fostering a culture of learning and continuous improvement.\n● Troubleshoot, debug, and upgrade existing software, identifying and resolving performance bottlenecks.\n● Stay up-to-date with emerging technologies, industry trends, and best practices in Node.js development and backend architecture.\n● Contribute to architectural discussions and decisions, helping to shape the future of our backend systems.\n\nQualifications and Requirements\n● 3-5 years of professional experience in backend development with a strong focus on Node.js.\n● Expert proficiency in TypeScript.\n● Proven experience with Node.js frameworks such as Express.js or NestJS (highly preferred).\n● Strong understanding of asynchronous programming, event-driven architecture, and design patterns.\n● Solid experience in designing, building, and consuming RESTful APIs; experience with GraphQL is a plus.\n● Proficiency with both SQL (e.g., PostgreSQL, MySQL) and NoSQL (e.g., MongoDB, Redis) database technologies, including data modeling and query optimization.\n● Hands-on experience with containerization technologies (Docker) and a good understanding of container orchestration (Kubernetes).\n● Experience with CI/CD tools and practices (e.g., Jenkins, GitLab CI, GitHub Actions).\n● Experience deploying and managing applications on cloud platforms (AWS, Azure, or GCP), including familiarity with relevant services (e.g., EC2, S3, Lambda, RDS).\n● Strong problem-solving, analytical, and critical thinking skills.\n● Excellent communication and collaboration skills, with the ability to work effectively in a team environment.\n● Proven ability to mentor junior team members.\n● Familiarity with Git and collaborative development workflows.\n\nGood to have:\n● Experience with testing frameworks (e.g., Jest, Mocha, Chai) and a commitment to writing well-tested code.\n● Experience with microservices architecture and distributed systems.\n● Experience with serverless architecture (e.g., AWS Lambda, Azure Functions).\n● Knowledge of message queue systems (e.g., Kafka, RabbitMQ, AWS SQS).\n● Familiarity with Infrastructure as Code (IaC) tools like Terraform or CloudFormation.\n● Understanding of front-end technologies (e.g., React, Angular, Vue.js) to facilitate better collaboration.\n● Experience with performance monitoring and optimization tools.\n● Active contributions to open-source projects or a strong portfolio of personal projects.\n\nWhy Join Us (Perks & Benefits)\n● Flexible work timings.\n● Fast-paced, hands-on learning environment.\n● Fun, collaborative, and supportive team culture.\n● Real-world impact from day one.",
+    "formula": {
+      "boost_values": [
+        10,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        8,
+        8,
+        8,
+        7,
+        7,
+        7,
+        6,
+        5,
+        4,
+        4
+      ],
+      "boost_indices": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "boosted_words": [
+        "Node.js",
+        "TypeScript",
+        "Express.js",
+        "NestJS",
+        "RESTful APIs",
+        "SQL",
+        "NoSQL",
+        "Docker",
+        "Kubernetes",
+        "CI/CD pipelines",
+        "AWS",
+        "cloud platforms",
+        "GraphQL",
+        "Redis",
+        "PostgreSQL",
+        "Mentor junior developers",
+        "Microservices architecture",
+        "Testing frameworks",
+        "Serverless architecture"
+      ],
+      "search_criteria": {
+        "location": "",
+        "team_size": 0,
+        "min_education": "none specified",
+        "certifications": [],
+        "min_experience": 3,
+        "required_skills": [
+          "Node.js",
+          "TypeScript",
+          "Express.js",
+          "NestJS",
+          "SQL",
+          "NoSQL",
+          "Docker"
+        ],
+        "preferred_skills": [
+          "GraphQL",
+          "Redis",
+          "AWS",
+          "Kubernetes",
+          "CI/CD tools"
+        ],
+        "industry_experience": []
+      }
+    },
+    "ranking": {
+      "job": {
+        "id": 536,
+        "name": "F22 LABS - Senior Nodejs Developer | YOE 3-5 | New Questions",
+        "formula": {
+          "boost_values": [
+            10,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            8,
+            8,
+            8,
+            7,
+            7,
+            7,
+            6,
+            5,
+            4,
+            4
+          ],
+          "boost_indices": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "boosted_words": [
+            "Node.js",
+            "TypeScript",
+            "Express.js",
+            "NestJS",
+            "RESTful APIs",
+            "SQL",
+            "NoSQL",
+            "Docker",
+            "Kubernetes",
+            "CI/CD pipelines",
+            "AWS",
+            "cloud platforms",
+            "GraphQL",
+            "Redis",
+            "PostgreSQL",
+            "Mentor junior developers",
+            "Microservices architecture",
+            "Testing frameworks",
+            "Serverless architecture"
+          ],
+          "search_criteria": {
+            "location": "",
+            "team_size": 0,
+            "min_education": "none specified",
+            "certifications": [],
+            "min_experience": 3,
+            "required_skills": [
+              "Node.js",
+              "TypeScript",
+              "Express.js",
+              "NestJS",
+              "SQL",
+              "NoSQL",
+              "Docker"
+            ],
+            "preferred_skills": [
+              "GraphQL",
+              "Redis",
+              "AWS",
+              "Kubernetes",
+              "CI/CD tools"
+            ],
+            "industry_experience": []
+          }
+        },
+        "position": "Senior Nodejs Developer",
+        "created_at": "2025-09-05T08:58:56.900Z",
+        "updated_at": "2025-09-09T12:54:37.592Z",
+        "description": "Position Overview\n\nWe are seeking a talented and experienced Senior Node.js Developer to join our growing engineering team. In this role, you will be instrumental in designing, developing, and maintaining the backbone of our applications. You'll leverage your 3-5 years of expertise to build robust, scalable, and high-performance backend services and APIs. You will also play a key role in making architectural decisions, mentoring junior developers, and driving best practices within the team. If you're eager to tackle complex problems, contribute to innovative projects, and lead by example, this position is for you.\n\nKey Responsibilities\n● Design, develop, test, deploy, and maintain highly scalable and reliable backend services, APIs, and systems using Node.js (with frameworks like Express.js or NestJS) and TypeScript/JavaScript.\n● Architect and implement robust solutions for complex business requirements, ensuring code quality, performance, and security.\n● Collaborate closely with cross-functional teams including front-end developers, product managers, QA engineers, and designers to deliver high-quality products.\n● Lead and participate in code reviews, providing constructive feedback to ensure adherence to coding standards and best practices.\n● Design and manage database schemas (SQL and NoSQL, e.g., PostgreSQL, MongoDB, Redis) and optimize database queries for performance.\n● Develop and maintain comprehensive unit, integration, and E2E tests to ensure software quality and reliability.\n● Work with containerization technologies like Docker and orchestration tools like Kubernetes for deploying and managing applications.\n● Implement and maintain CI/CD pipelines for automated building, testing, and deployment of applications.\n● Mentor and guide junior developers, fostering a culture of learning and continuous improvement.\n● Troubleshoot, debug, and upgrade existing software, identifying and resolving performance bottlenecks.\n● Stay up-to-date with emerging technologies, industry trends, and best practices in Node.js development and backend architecture.\n● Contribute to architectural discussions and decisions, helping to shape the future of our backend systems.\n\nQualifications and Requirements\n● 3-5 years of professional experience in backend development with a strong focus on Node.js.\n● Expert proficiency in TypeScript.\n● Proven experience with Node.js frameworks such as Express.js or NestJS (highly preferred).\n● Strong understanding of asynchronous programming, event-driven architecture, and design patterns.\n● Solid experience in designing, building, and consuming RESTful APIs; experience with GraphQL is a plus.\n● Proficiency with both SQL (e.g., PostgreSQL, MySQL) and NoSQL (e.g., MongoDB, Redis) database technologies, including data modeling and query optimization.\n● Hands-on experience with containerization technologies (Docker) and a good understanding of container orchestration (Kubernetes).\n● Experience with CI/CD tools and practices (e.g., Jenkins, GitLab CI, GitHub Actions).\n● Experience deploying and managing applications on cloud platforms (AWS, Azure, or GCP), including familiarity with relevant services (e.g., EC2, S3, Lambda, RDS).\n● Strong problem-solving, analytical, and critical thinking skills.\n● Excellent communication and collaboration skills, with the ability to work effectively in a team environment.\n● Proven ability to mentor junior team members.\n● Familiarity with Git and collaborative development workflows.\n\nGood to have:\n● Experience with testing frameworks (e.g., Jest, Mocha, Chai) and a commitment to writing well-tested code.\n● Experience with microservices architecture and distributed systems.\n● Experience with serverless architecture (e.g., AWS Lambda, Azure Functions).\n● Knowledge of message queue systems (e.g., Kafka, RabbitMQ, AWS SQS).\n● Familiarity with Infrastructure as Code (IaC) tools like Terraform or CloudFormation.\n● Understanding of front-end technologies (e.g., React, Angular, Vue.js) to facilitate better collaboration.\n● Experience with performance monitoring and optimization tools.\n● Active contributions to open-source projects or a strong portfolio of personal projects.\n\nWhy Join Us (Perks & Benefits)\n● Flexible work timings.\n● Fast-paced, hands-on learning environment.\n● Fun, collaborative, and supportive team culture.\n● Real-world impact from day one."
+      },
+      "ranking": {
+        "job_id": 536,
+        "ranking": [
+          {
+            "id": 6588,
+            "score": 64.21048
+          }
+        ],
+        "boost_details": {
+          "boost_values": [
+            10,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            9,
+            8,
+            8,
+            8,
+            7,
+            7,
+            7,
+            6,
+            5,
+            4,
+            4
+          ],
+          "boost_indices": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "boosted_words": [
+            "Node.js",
+            "TypeScript",
+            "Express.js",
+            "NestJS",
+            "RESTful APIs",
+            "SQL",
+            "NoSQL",
+            "Docker",
+            "Kubernetes",
+            "CI/CD pipelines",
+            "AWS",
+            "cloud platforms",
+            "GraphQL",
+            "Redis",
+            "PostgreSQL",
+            "Mentor junior developers",
+            "Microservices architecture",
+            "Testing frameworks",
+            "Serverless architecture"
+          ]
+        },
+        "ranked_resumes": [
+          {
+            "score": 64.21048,
+            "resume": {
+              "id": 6588,
+              "name": "BALAGANESH DEVARAJ",
+              "summary": null,
+              "projects": [],
+              "education": [],
+              "workExperiences": [],
+              "total_months_of_experience": 37
+            },
+            "resume_id": 6588,
+            "match_reasoning": {
+              "cons": [
+                "No formal education records found",
+                "Limited achievements showcased"
+              ],
+              "pros": [
+                "Strong technical match",
+                "Moderate experience (3.1 years)"
+              ],
+              "boosted_words": [
+                "Node.js",
+                "TypeScript",
+                "Express.js",
+                "NestJS",
+                "RESTful APIs",
+                "SQL",
+                "NoSQL",
+                "Docker",
+                "Kubernetes",
+                "CI/CD pipelines",
+                "AWS",
+                "cloud platforms",
+                "GraphQL",
+                "Redis",
+                "PostgreSQL",
+                "Mentor junior developers",
+                "Microservices architecture",
+                "Testing frameworks",
+                "Serverless architecture"
+              ],
+              "recommendations": [
+                "Provide details of academic qualifications",
+                "Highlight relevant projects and accomplishments"
+              ],
+              "matched_boost_words": []
+            }
+          }
+        ]
+      },
+      "rankedProfiles": [
+        {
+          "score": 22755.54561,
+          "resume": {
+            "id": 1502,
+            "name": "Shubham Hota",
+            "summary": "A Full-Stack Web Developer who specializes in JavaScript Technologies(ReactJs, NodeJs, ExpressJs). Experience building complete webapplications with backend API systems.",
+            "projects": [],
+            "education": [],
+            "workExperiences": [],
+            "total_months_of_experience": 40
+          },
+          "profile": {
+            "id": 1502,
+            "city": "Raigarh",
+            "name": "Shubham Hota",
+            "state": "Chhattisgarh",
+            "summary": "A Full-Stack Web Developer who specializes in JavaScript Technologies(ReactJs, NodeJs, ExpressJs). Experience building complete webapplications with backend API systems.",
+            "primary_email": "shubham.ophota@gmail.com",
+            "primary_phone": "+917389846145",
+            "profileSkills": [],
+            "total_months_of_experience": 44
+          },
+          "resume_id": 1502,
+          "match_reasoning": {
+            "cons": [
+              "No formal education records found",
+              "Limited achievements showcased"
+            ],
+            "pros": [
+              "Strong technical match",
+              "Moderate experience (3.3 years)"
+            ],
+            "boosted_words": [
+              "Node.js",
+              "TypeScript",
+              "Express.js",
+              "NestJS",
+              "RESTful APIs",
+              "SQL",
+              "NoSQL",
+              "Docker",
+              "Kubernetes",
+              "CI/CD pipelines",
+              "AWS",
+              "cloud platforms",
+              "GraphQL",
+              "Redis",
+              "PostgreSQL",
+              "Mentor junior developers",
+              "Microservices architecture",
+              "Testing frameworks",
+              "Serverless architecture"
+            ],
+            "recommendations": [
+              "Provide details of academic qualifications",
+              "Highlight relevant projects and accomplishments"
+            ],
+            "matched_boost_words": [
+              "Mentor junior developers",
+              "RESTful APIs"
+            ]
+          }
+        },
+        {
+          "score": 64.21048,
+          "resume": {
+            "id": 6588,
+            "name": "BALAGANESH DEVARAJ",
+            "summary": null,
+            "projects": [],
+            "education": [],
+            "workExperiences": [],
+            "total_months_of_experience": 37
+          },
+          "profile": {
+            "id": 6588,
+            "city": null,
+            "name": "BALAGANESH DEVARAJ",
+            "state": null,
+            "summary": null,
+            "primary_email": "balaganeshdevaraj@gmail.com",
+            "primary_phone": "+917358672386",
+            "profileSkills": [],
+            "total_months_of_experience": 37
+          },
+          "resume_id": 6588,
+          "match_reasoning": {
+            "cons": [
+              "No formal education records found",
+              "Limited achievements showcased"
+            ],
+            "pros": [
+              "Strong technical match",
+              "Moderate experience (3.1 years)"
+            ],
+            "boosted_words": [
+              "Node.js",
+              "TypeScript",
+              "Express.js",
+              "NestJS",
+              "RESTful APIs",
+              "SQL",
+              "NoSQL",
+              "Docker",
+              "Kubernetes",
+              "CI/CD pipelines",
+              "AWS",
+              "cloud platforms",
+              "GraphQL",
+              "Redis",
+              "PostgreSQL",
+              "Mentor junior developers",
+              "Microservices architecture",
+              "Testing frameworks",
+              "Serverless architecture"
+            ],
+            "recommendations": [
+              "Provide details of academic qualifications",
+              "Highlight relevant projects and accomplishments"
+            ],
+            "matched_boost_words": []
+          }
+        },
+        {
+          "score": 58.864258,
+          "resume": {
+            "id": 6629,
+            "name": "CHAITANYA RAYALA",
+            "summary": null,
+            "projects": [],
+            "education": [],
+            "workExperiences": [],
+            "total_months_of_experience": 44
+          },
+          "profile": {
+            "id": 6629,
+            "city": null,
+            "name": "CHAITANYA RAYALA",
+            "state": null,
+            "summary": null,
+            "primary_email": "rayalachaitanya6@gmail.com",
+            "primary_phone": "+916304419911",
+            "profileSkills": [],
+            "total_months_of_experience": 44
+          },
+          "resume_id": 6629,
+          "match_reasoning": {
+            "cons": [
+              "No formal education records found",
+              "Limited achievements showcased"
+            ],
+            "pros": [
+              "Strong technical match",
+              "Moderate experience (3.7 years)"
+            ],
+            "boosted_words": [
+              "Node.js",
+              "TypeScript",
+              "Express.js",
+              "NestJS",
+              "RESTful APIs",
+              "SQL",
+              "NoSQL",
+              "Docker",
+              "Kubernetes",
+              "CI/CD pipelines",
+              "AWS",
+              "cloud platforms",
+              "GraphQL",
+              "Redis",
+              "PostgreSQL",
+              "Mentor junior developers",
+              "Microservices architecture",
+              "Testing frameworks",
+              "Serverless architecture"
+            ],
+            "recommendations": [
+              "Provide details of academic qualifications",
+              "Highlight relevant projects and accomplishments"
+            ],
+            "matched_boost_words": []
+          }
+        },
+        {
+          "score": 54.30248,
+          "resume": {
+            "id": 6589,
+            "name": "SATHYALAKSHMI.S",
+            "summary": null,
+            "projects": [],
+            "education": [],
+            "workExperiences": [],
+            "total_months_of_experience": 73
+          },
+          "profile": {
+            "id": 6589,
+            "city": null,
+            "name": "SATHYALAKSHMI.S",
+            "state": null,
+            "summary": null,
+            "primary_email": "sathyalsundhar@gmail.com",
+            "primary_phone": "+91903312749",
+            "profileSkills": [],
+            "total_months_of_experience": 73
+          },
+          "resume_id": 6589,
+          "match_reasoning": {
+            "cons": [
+              "No formal education records found",
+              "Limited achievements showcased"
+            ],
+            "pros": [
+              "Strong technical match",
+              "Extensive experience (6.1 years)"
+            ],
+            "boosted_words": [
+              "Node.js",
+              "TypeScript",
+              "Express.js",
+              "NestJS",
+              "RESTful APIs",
+              "SQL",
+              "NoSQL",
+              "Docker",
+              "Kubernetes",
+              "CI/CD pipelines",
+              "AWS",
+              "cloud platforms",
+              "GraphQL",
+              "Redis",
+              "PostgreSQL",
+              "Mentor junior developers",
+              "Microservices architecture",
+              "Testing frameworks",
+              "Serverless architecture"
+            ],
+            "recommendations": [
+              "Provide details of academic qualifications",
+              "Highlight relevant projects and accomplishments"
+            ],
+            "matched_boost_words": []
+          }
+        },
+        {
+          "score": 52.263336,
+          "resume": {
+            "id": 6827,
+            "name": "SURAJ SINGH",
+            "summary": null,
+            "projects": [],
+            "education": [],
+            "workExperiences": [],
+            "total_months_of_experience": 45
+          },
+          "profile": {
+            "id": 6827,
+            "city": null,
+            "name": "SURAJ SINGH",
+            "state": null,
+            "summary": null,
+            "primary_email": "sursingh1996@gmail.com",
+            "primary_phone": "+919318321411",
+            "profileSkills": [],
+            "total_months_of_experience": 45
+          },
+          "resume_id": 6827,
+          "match_reasoning": {
+            "cons": [
+              "No formal education records found",
+              "Limited achievements showcased"
+            ],
+            "pros": [
+              "Strong technical match",
+              "Moderate experience (3.8 years)"
+            ],
+            "boosted_words": [
+              "Node.js",
+              "TypeScript",
+              "Express.js",
+              "NestJS",
+              "RESTful APIs",
+              "SQL",
+              "NoSQL",
+              "Docker",
+              "Kubernetes",
+              "CI/CD pipelines",
+              "AWS",
+              "cloud platforms",
+              "GraphQL",
+              "Redis",
+              "PostgreSQL",
+              "Mentor junior developers",
+              "Microservices architecture",
+              "Testing frameworks",
+              "Serverless architecture"
+            ],
+            "recommendations": [
+              "Provide details of academic qualifications",
+              "Highlight relevant projects and accomplishments"
+            ],
+            "matched_boost_words": []
+          }
+        },
+        {
+          "score": 49.768066,
+          "resume": {
+            "id": 4979,
+            "name": "Kavi Priya K",
+            "summary": null,
+            "projects": [],
+            "education": [],
+            "workExperiences": [],
+            "total_months_of_experience": 4
+          },
+          "profile": {
+            "id": 4979,
+            "city": "Chennai",
+            "name": "Kavi Priya K",
+            "state": null,
+            "summary": null,
+            "primary_email": "Kavipriyakarthikeyan193@gmail.com",
+            "primary_phone": "+919840151680",
+            "profileSkills": [],
+            "total_months_of_experience": 4
+          },
+          "resume_id": 4979,
+          "match_reasoning": {
+            "cons": [
+              "Limited industry experience",
+              "No formal education records found",
+              "Limited achievements showcased"
+            ],
+            "pros": [
+              "Strong technical match"
+            ],
+            "boosted_words": [
+              "Node.js",
+              "TypeScript",
+              "Express.js",
+              "NestJS",
+              "RESTful APIs",
+              "SQL",
+              "NoSQL",
+              "Docker",
+              "Kubernetes",
+              "CI/CD pipelines",
+              "AWS",
+              "cloud platforms",
+              "GraphQL",
+              "Redis",
+              "PostgreSQL",
+              "Mentor junior developers",
+              "Microservices architecture",
+              "Testing frameworks",
+              "Serverless architecture"
+            ],
+            "recommendations": [
+              "Gain more practical work experience",
+              "Provide details of academic qualifications",
+              "Highlight relevant projects and accomplishments"
+            ],
+            "matched_boost_words": []
+          }
+        }
+      ]
+    },
+    "user_id": 148,
+    "organization_id": 2,
+    "created_at": "2025-09-05 08:58:56.900000+00:00",
+    "updated_at": "2025-09-18 10:28:49.060000+00:00",
+    "questions": [
+      {
+        "type": "technical",
+        "title": "Programming & Development - Node.js Runtime",
+        "guidance": "Green flags:\n- Clearly explains non-blocking I/O model\n- Mentions phases of event loop (timers, poll, check)\n- References libuv library implementation\n\nRed flags:\n- Confuses with browser JavaScript event loop\n- States Node.js uses multiple threads for all operations\n- Cannot describe callback queue processing",
+        "question": "How does Node.js handle asynchronous operations, and what role does the event loop play in this process?",
+        "linkedSkillArea": "Programming & Development",
+        "linkedSubSkillArea": "Node.js Runtime"
+      },
+      {
+        "type": "technical",
+        "title": "Programming & Development - Express.js/NestJS Frameworks",
+        "guidance": "Green flags:\n- Mentions specific middleware like express-rate-limit\n- Discusses storage mechanisms (memory store vs Redis)\n- Explains HTTP status codes for rate limiting (429)\n\nRed flags:\n- Suggests blocking endpoint completely after limit\n- Confuses rate limiting with authentication\n- Cannot differentiate between IP-based vs user-based limiting",
+        "question": "Describe how you would implement a rate-limiting mechanism for an API endpoint in Express.js.",
+        "linkedSkillArea": "Programming & Development",
+        "linkedSubSkillArea": "Express.js/NestJS Frameworks"
+      },
+      {
+        "type": "technical",
+        "title": "Programming & Development - GraphQL Implementation",
+        "guidance": "Green flags:\n- Identifies use cases like flexible client queries\n- Discusses over-fetching/under-fetching problems\n- Mentions schema evolution challenges\n\nRed flags:\n- Claims GraphQL always performs better than REST\n- Ignores caching complexities with GraphQL\n- Suggests GraphQL eliminates need for API versioning",
+        "question": "When might you choose to use GraphQL over REST for an API, and what are the trade-offs?",
+        "linkedSkillArea": "Programming & Development",
+        "linkedSubSkillArea": "GraphQL Implementation"
+      },
+      {
+        "type": "technical",
+        "title": "Programming & Development - Asynchronous Programming",
+        "guidance": "Green flags:\n- Provides specific metrics (CPU, memory, latency)\n- Describes debugging tools (clinic.js, Chrome DevTools)\n- Explains root cause like callback hell or memory leaks\n\nRed flags:\n- Vague description with no technical details\n- Blames infrastructure without evidence\n- Confuses symptoms with root causes",
+        "question": "Describe a challenging performance issue you resolved in a Node.js application, including how you diagnosed and fixed it.",
+        "linkedSkillArea": "Programming & Development",
+        "linkedSubSkillArea": "Asynchronous Programming"
+      },
+      {
+        "type": "technical",
+        "title": "Programming & Development - TypeScript Advanced Patterns",
+        "guidance": "Green flags:\n- Discusses try/catch with async/await\n- Mentions process uncaughtException handler\n- References error middleware in Express\n\nRed flags:\n- Suggests wrapping everything in try/catch blocks\n- Ignores async error propagation issues\n- Claims TypeScript eliminates runtime errors",
+        "question": "How would you implement proper error handling in a TypeScript Node.js application to prevent uncaught exceptions from crashing the server?",
+        "linkedSkillArea": "Programming & Development",
+        "linkedSubSkillArea": "TypeScript Advanced Patterns"
+      },
+      {
+        "type": "technical",
+        "title": "Data Management - SQL Database Optimization (PostgreSQL)",
+        "guidance": "Green flags:\n- Recommends creating index on last_name column\n- Considers case-insensitive requirements (e.g., idx_last_name_lower)\n- Mentions EXPLAIN ANALYZE for verification\n\nRed flags:\n- Suggests indexing all columns\n- Proposes denormalization prematurely\n- Confuses indexes with caching",
+        "question": "You have a users table with 1M records where searches by last name are frequent. How would you optimize these queries using PostgreSQL features?",
+        "linkedSkillArea": "Data Management",
+        "linkedSubSkillArea": "SQL Database Optimization (PostgreSQL)"
+      },
+      {
+        "type": "technical",
+        "title": "Data Management - NoSQL Data Modeling (MongoDB)",
+        "guidance": "Green flags:\n- Proposes embedded attributes collection\n- Considers schema versioning\n- Mentions indexing strategy for search\n\nRed flags:\n- Suggests one collection per product type\n- Recommends storing as BLOBs\n- Ignores query performance impact",
+        "question": "You need to model e-commerce product data where products have varying attributes. How would you structure this in MongoDB?",
+        "linkedSkillArea": "Data Management",
+        "linkedSubSkillArea": "NoSQL Data Modeling (MongoDB)"
+      },
+      {
+        "type": "technical",
+        "title": "Data Management - Caching Strategies (Redis)",
+        "guidance": "Green flags:\n- Proposes cache-aside pattern\n- Considers JSON serialization\n- Mentions appropriate TTL settings\n\nRed flags:\n- Suggests full-page caching\n- Recommends infinite TTL\n- Ignores cache stampede protection",
+        "question": "Your application has a frequently accessed but slowly generated user profile view. How would you implement Redis caching for this?",
+        "linkedSkillArea": "Data Management",
+        "linkedSubSkillArea": "Caching Strategies (Redis)"
+      },
+      {
+        "type": "technical",
+        "title": "Data Management - SQL Database Optimization (PostgreSQL)",
+        "guidance": "Green flags:\n- References low-cardinality columns\n- Notes write performance impact\n- Considers small table sizes\n\nRed flags:\n- Believes all WHERE columns need indexes\n- Suggests indexing primary keys unnecessarily\n- Ignores query frequency considerations",
+        "question": "When would you deliberately avoid indexing a frequently queried column in PostgreSQL?",
+        "linkedSkillArea": "Data Management",
+        "linkedSubSkillArea": "SQL Database Optimization (PostgreSQL)"
+      },
+      {
+        "type": "technical",
+        "title": "Data Management - SQL Database Optimization (PostgreSQL)",
+        "guidance": "Green flags:\n- Candidate demonstrates practical strategies for balancing index usage with bulk operation performance, such as using conditional indexing.\n- Candidate shows a clear understanding of how to analyze and mitigate performance issues using PostgreSQL specific tools and techniques.\n- Candidate discusses experience with optimizing and restructuring database schemas to improve both read and write performance.\n\nRed flags:\n- Candidate relies solely on disabling indexes for bulk operations without offering insights into other optimization methods.\n- Candidate's response lacks specifics on how to apply query optimization techniques within PostgreSQL.\n- Candidate appears unfamiliar with balancing performance trade-offs in production environments or leveraging PostgreSQL's features effectively.",
+        "question": "How would you handle a situation where an index speeds up reads but causes significant slowdowns during bulk inserts or updates?",
+        "linkedSkillArea": "Data Management",
+        "linkedSubSkillArea": "SQL Database Optimization (PostgreSQL)"
+      }
+    ],
+    "salary_range": "",
+    "company_profile": "About the Company\n\n\nF22 Labs is a startup software studio based in Chennai. We power startups worldwide by building high-quality software products. From web apps to mobile platforms, we help entrepreneurs turn their ideas into beautifully crafted solutions. If you're passionate about software development and eager to build real products that solve real problems, you’ll fit right in.",
+    "company_name": "F22 Labs",
+    "recruitment_firm_name": "",
+    "key_skill_areas": [
+      {
+        "name": "Programming & Development",
+        "subSkillAreas": [
+          "Node.js Runtime",
+          "TypeScript Advanced Patterns",
+          "Express.js/NestJS Frameworks",
+          "Asynchronous Programming",
+          "GraphQL Implementation"
+        ],
+        "difficultyLevel": "low"
+      },
+      {
+        "name": "Data Management",
+        "subSkillAreas": [
+          "SQL Database Optimization (PostgreSQL)",
+          "NoSQL Data Modeling (MongoDB)",
+          "Caching Strategies (Redis)"
+        ],
+        "difficultyLevel": "low"
+      }
+    ],
+    "uuid": "278fc7df-6127-419c-a371-269c4e833b11",
+    "is_open": true,
+    "fit_score_levels": {
+      "weak_fit": 50,
+      "strong_fit": 20,
+      "moderate_fit": 30
+    },
+    "public_form_questions": [
+      {
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "question": "Are you currently based in Chennai?",
+        "required": true,
+        "questionType": "radio",
+        "needValidation": false
+      },
+      {
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "question": "This is full time work from office role in Chennai. Are you okay with this?",
+        "required": true,
+        "questionType": "radio",
+        "needValidation": false
+      },
+      {
+        "question": "What is your current CTC?",
+        "required": true,
+        "questionType": "number",
+        "needValidation": false
+      },
+      {
+        "question": "What is your expected CTC?",
+        "required": true,
+        "questionType": "number",
+        "needValidation": false
+      },
+      {
+        "question": "If you are selected, in how many days can you join? (Mention 0 if you can join immediately)",
+        "required": true,
+        "questionType": "number",
+        "needValidation": false
+      }
+    ],
+    "is_public": false,
+    "status": "active",
+    "interview_type": "video"
+  }
+}

@@ -9,6 +9,54 @@ import argparse
 import json
 import requests
 from urllib.parse import urlparse, parse_qs
+from pathlib import Path
+from datetime import datetime
+
+def save_response_to_json(data: dict, source: str, call_id: str, data_type: str = "call_logs", output_dir: str = "database_responses") -> str:
+    """
+    Save database response to JSON file
+
+    Args:
+        data: The response data to save
+        source: The data source ('supabase' or 'postgres')
+        call_id: The call ID for naming the file
+        data_type: Type of data ('call_logs', 'job_details')
+
+    Returns:
+        Path to the saved file
+    """
+    # Create output directory if it doesn't exist
+    output_path = Path(output_dir)
+    output_path.mkdir(exist_ok=True)
+
+    # Create timestamp for filename
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+
+    # Create filename
+    filename = f"{source}_{data_type}_{call_id}_{timestamp}.json"
+    file_path = output_path / filename
+
+    # Prepare data with metadata
+    output_data = {
+        "metadata": {
+            "source": source,
+            "data_type": data_type,
+            "call_id": call_id,
+            "timestamp": timestamp,
+            "generated_at": datetime.now().isoformat()
+        },
+        "data": data
+    }
+
+    # Save to file
+    try:
+        with open(file_path, 'w', encoding='utf-8') as f:
+            json.dump(output_data, f, indent=2, ensure_ascii=False, default=str)
+        print(f"✅ Saved {source} {data_type} response to: {file_path}")
+        return str(file_path)
+    except Exception as e:
+        print(f"❌ Failed to save {source} response: {e}")
+        return ""
 
 def fetch_call_log_variables_supabase(room_name: str) -> dict:
     """
@@ -406,10 +454,17 @@ def call_generate_report_api(evaluation_json: dict, api_url: str = "http://local
     Returns:
         Dictionary containing the API response
     """
+    # Transform evaluation_json to match API request structure
+    api_request = {
+        "transcript": evaluation_json.get("transcript", {}),
+        "resume": evaluation_json.get("resume", {}),
+        "key_skill_areas": evaluation_json.get("key_skill_areas", [])
+    }
+
     try:
         response = requests.post(
             f"{api_url}/generate-report",
-            json=evaluation_json,
+            json=api_request,
             headers={"Content-Type": "application/json"},
             timeout=300  # 5 minute timeout for LLM processing
         )
@@ -431,6 +486,8 @@ def main():
     parser.add_argument('--pretty', action='store_true', help='Pretty print JSON output')
     parser.add_argument('--api-url', default='http://localhost:8000', help='API base URL')
     parser.add_argument('--local-only', action='store_true', help='Skip API call, show only local data')
+    parser.add_argument('--no-save', action='store_true', help='Skip saving database responses to JSON files')
+    parser.add_argument('--save-dir', default='database_responses', help='Directory to save JSON files (default: database_responses)')
 
     args = parser.parse_args()
 
@@ -439,10 +496,14 @@ def main():
     # Fetch from Supabase
     print("Fetching from Supabase...")
     supabase_data = {}
+    supabase_file_path = ""
     try:
         supabase_data = fetch_call_log_variables_supabase(args.call_id)
         if supabase_data:
             print("✓ Found data in Supabase")
+            # Save Supabase response to JSON file
+            if not args.no_save:
+                supabase_file_path = save_response_to_json(supabase_data, "supabase", args.call_id, "call_logs", args.save_dir)
         else:
             print("✗ No data found in Supabase")
     except Exception as e:
@@ -451,10 +512,14 @@ def main():
     # Fetch from PostgreSQL
     print("Fetching from PostgreSQL...")
     postgres_data = {}
+    postgres_file_path = ""
     try:
         postgres_data = fetch_call_log_variables_postgres(args.call_id)
         if postgres_data:
             print("✓ Found data in PostgreSQL")
+            # Save PostgreSQL response to JSON file
+            if not args.no_save:
+                postgres_file_path = save_response_to_json(postgres_data, "postgres", args.call_id, "call_logs", args.save_dir)
         else:
             print("✗ No data found in PostgreSQL")
     except Exception as e:
@@ -462,6 +527,7 @@ def main():
 
     # Fetch job details if we have job_id
     job_details = {}
+    job_details_file_path = ""
     if postgres_data and 'job_id' in postgres_data:
         job_id = postgres_data['job_id']
         print(f"Fetching job details for job_id: {job_id}")
@@ -469,6 +535,9 @@ def main():
             job_details = fetch_job_details_postgres(job_id)
             if job_details:
                 print("✓ Found job details")
+                # Save job details response to JSON file
+                if not args.no_save:
+                    job_details_file_path = save_response_to_json(job_details, "postgres", args.call_id, "job_details", args.save_dir)
             else:
                 print("✗ No job details found")
         except Exception as e:
@@ -563,6 +632,21 @@ def main():
                 # Fallback to local report generation
                 report = generate_call_report(supabase_data, postgres_data, job_details)
                 print_report(report)
+
+        # Show summary of saved files
+        if not args.no_save:
+            print(f"\n📁 SAVED FILES SUMMARY")
+            print("-" * 30)
+            if supabase_file_path:
+                print(f"Supabase call_logs: {supabase_file_path}")
+            if postgres_file_path:
+                print(f"PostgreSQL call_logs: {postgres_file_path}")
+            if job_details_file_path:
+                print(f"Job details: {job_details_file_path}")
+            if not any([supabase_file_path, postgres_file_path, job_details_file_path]):
+                print("No files were saved (no data found)")
+        else:
+            print(f"\n📁 File saving was disabled (--no-save flag used)")
     else:
         print("No data found from any source")
 

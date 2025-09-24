@@ -226,21 +226,7 @@ class GatherRequest(BaseModel):
     )
 
     class Config:
-        @staticmethod
-        def _load_sample_data():
-            try:
-                return json.loads(Path("sample/gather.json").read_text())
-            except:
-                return {
-                    "transcript": {"messages": []},
-                    "technical_questions": "Sample questions...",
-                    "key_skill_areas": [],
-                    "llm_settings": {"provider": "openrouter", "model": "openai/gpt-oss-120b:nitro"}
-                }
-
-        json_schema_extra = {
-            "example": _load_sample_data()
-        }
+        pass
 
 class QuestionData(BaseModel):
     question: str
@@ -283,14 +269,7 @@ class GatherResponse(BaseModel):
                         }
                     ],
                     "misc_or_unclear": [],
-                    "pre_inferred_facts_global": {
-                        "candidate_name": "Mohammed",
-                        "experience_years": 3,
-                        "current_location": "Coimbatore",
-                        "willing_to_relocate": True,
-                        "current_ctc": 7.3,
-                        "expected_ctc": 9.5,
-                        "notice_period": "10-15 days"
+                    "pre_inferred_facts_global": {                        
                     }
                 }
             }
@@ -298,6 +277,7 @@ class GatherResponse(BaseModel):
 
 class EvaluateRequest(BaseModel):
     transcript: Dict[str, Any]
+    resume: Optional[Dict[str, Any]] = None
     key_skill_areas: Optional[List[Dict[str, Any]]] = None
     llm_settings: Optional[LLMSettings] = LLMSettings(
         provider=config.EVALUATION_CONFIG["provider"],
@@ -305,24 +285,7 @@ class EvaluateRequest(BaseModel):
     )
 
     class Config:
-        @staticmethod
-        def _load_sample_data():
-            try:
-                # Load the full sample but only return the fields we need
-                full_sample = json.loads(Path("sample/evaluate.json").read_text())
-                return {
-                    "transcript": full_sample.get("transcript", {"messages": []}),
-                    "llm_settings": {"provider": config.EVALUATION_CONFIG["provider"], "model": config.EVALUATION_CONFIG["model"]}
-                }
-            except:
-                return {
-                    "transcript": {"messages": []},
-                    "llm_settings": {"provider": config.EVALUATION_CONFIG["provider"], "model": config.EVALUATION_CONFIG["model"]}
-                }
-
-        json_schema_extra = {
-            "example": _load_sample_data()
-        }
+        pass
 
 class EvaluateResponse(BaseModel):
     evaluation_report: Dict[str, Any]
@@ -1113,10 +1076,45 @@ async def merge_evaluations(evaluations: List[Dict[str, Any]],
     print("✅ Evaluation merging completed")
     return merged_report
 
+def extract_candidate_info_from_transcript(transcript: Dict[str, Any]) -> Dict[str, str]:
+    """
+    Extract candidate information from transcript variables field
+
+    Args:
+        transcript: The transcript data containing variables field
+
+    Returns:
+        Dictionary with candidate information
+    """
+    candidate_info = {
+        "candidate_name": "Unknown",
+        "job_title": "Unknown",
+        "company_name": "Unknown",
+        "salary_range": "Not specified",
+        "company_profile": "Not available",
+        "job_requirements": "Not available"
+    }
+
+    # Check if variables field exists in transcript
+    if "variables" in transcript:
+        variables = transcript["variables"]
+        if isinstance(variables, dict):
+            # Extract all available fields from variables
+            candidate_info.update({
+                "candidate_name": variables.get("candidate_name", candidate_info["candidate_name"]),
+                "job_title": variables.get("job_title", candidate_info["job_title"]),
+                "company_name": variables.get("company_name", candidate_info["company_name"]),
+                "salary_range": variables.get("salary_range", candidate_info["salary_range"]),
+                "company_profile": variables.get("company_profile", candidate_info["company_profile"]),
+                "job_requirements": variables.get("job_requirements", candidate_info["job_requirements"])
+            })
+
+    return candidate_info
+
 async def load_evaluation_config():
     """Load resume, job requirements, and key skill areas from sample data"""
     try:
-        sample_data = json.loads(Path("sample/evaluate.json").read_text())
+        sample_data = json.loads(Path("samplenomore/evaluate.json").read_text())
         return {
             "resume": sample_data.get("resume", {}),
             "job_requirements": sample_data.get("resume", {}).get("job_requirements", ""),
@@ -1126,7 +1124,12 @@ async def load_evaluation_config():
     except Exception as e:
         print(f"⚠️  Failed to load evaluation config: {str(e)}")
         return {
-            "resume": {"candidate_name": "Unknown", "job_requirements": "No job requirements specified"},
+            "resume": {
+                "candidate_name": "Sample Candidate",
+                "job_title": "Software Developer",
+                "company_name": "Tech Company",
+                "job_requirements": "No job requirements specified"
+            },
             "job_requirements": "No job requirements specified",
             "technical_questions": "No technical questions specified",
             "key_skill_areas": []
@@ -1145,6 +1148,34 @@ async def generate_report(request: EvaluateRequest):
         print("📋 Loading evaluation configuration...")
         eval_config = await load_evaluation_config()
         print("✅ Evaluation configuration loaded")
+
+        # Extract candidate information from request (either resume field or transcript variables)
+        candidate_info = {}
+        if request.resume:
+            # Use resume data from request if available (from fetch_call_logs.py)
+            candidate_info = {
+                "candidate_name": request.resume.get("candidate_name", "Unknown"),
+                "job_title": request.resume.get("job_title", "Unknown"),
+                "company_name": request.resume.get("company_name", "Unknown"),
+                "salary_range": request.resume.get("salary_range", "Not specified"),
+                "company_profile": request.resume.get("company_profile", "Not available"),
+                "job_requirements": request.resume.get("job_requirements", "Not available")
+            }
+            print(f"👤 Used resume field for candidate info: {candidate_info['candidate_name']} applying for {candidate_info['job_title']} at {candidate_info['company_name']}")
+        else:
+            # Fall back to extracting from transcript variables field
+            candidate_info = extract_candidate_info_from_transcript(request.transcript)
+            print(f"👤 Extracted candidate info from transcript: {candidate_info['candidate_name']} applying for {candidate_info['job_title']} at {candidate_info['company_name']}")
+
+        # Create resume structure from extracted candidate info
+        resume_data = {
+            "candidate_name": candidate_info["candidate_name"],
+            "job_title": candidate_info["job_title"],
+            "company_name": candidate_info["company_name"],
+            "salary_range": candidate_info["salary_range"],
+            "company_profile": candidate_info["company_profile"],
+            "job_requirements": candidate_info["job_requirements"]
+        }
 
         # Use key_skill_areas from request if provided, otherwise use sample data
         key_skill_areas = request.key_skill_areas if request.key_skill_areas else eval_config["key_skill_areas"]
@@ -1209,8 +1240,8 @@ async def generate_report(request: EvaluateRequest):
         for group in groups:
             task = evaluate_question_group(
                 group=group,
-                resume=eval_config["resume"],
-                job_requirements=eval_config["job_requirements"],
+                resume=resume_data,
+                job_requirements=candidate_info["job_requirements"],
                 key_skill_areas=key_skill_areas,
                 llm_client=eval_llm_client,
                 evaluation_prompt=evaluation_prompt,
@@ -1262,11 +1293,11 @@ async def generate_report(request: EvaluateRequest):
             output_data = {
                 "timestamp": timestamp,
                 "request_data": {
-                    "candidate_name": eval_config["resume"].get("candidate_name", "Unknown"),
-                    "job_title": eval_config["resume"].get("job_title", "Unknown"),
-                    "company": eval_config["resume"].get("company_name", "Unknown"),
+                    "candidate_name": candidate_info.get("candidate_name", "Unknown"),
+                    "job_title": candidate_info.get("job_title", "Unknown"),
+                    "company": candidate_info.get("company_name", "Unknown"),
                     "transcript_messages_count": len(request.transcript.get("messages", [])),
-                    "key_skill_areas_count": len(eval_config["key_skill_areas"]),
+                    "key_skill_areas_count": len(key_skill_areas),
                     "llm_settings": request.llm_settings.dict()
                 },
                 "evaluation_report": final_evaluation,
@@ -1292,29 +1323,6 @@ async def generate_report(request: EvaluateRequest):
         print(f"❌ Error during comprehensive report generation: {str(e)}")
         print("="*50 + "\n")
         raise HTTPException(status_code=500, detail=f"Error generating comprehensive report: {str(e)}")
-
-@app.get("/sample", response_model=GatherRequest)
-async def get_sample_data():
-    """Get sample data for testing the API"""
-    try:
-        sample_data = json.loads(Path("sample/gather.json").read_text())
-        return GatherRequest(**sample_data)
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error loading sample data: {str(e)}")
-
-@app.get("/sample-evaluate", response_model=EvaluateRequest)
-async def get_evaluate_sample_data():
-    """Get sample data for testing the evaluation API"""
-    try:
-        sample_data = json.loads(Path("sample/evaluate.json").read_text())
-        # Only return the fields that are now required for EvaluateRequest
-        filtered_sample = {
-            "transcript": sample_data.get("transcript", {"messages": []}),
-            "llm_settings": sample_data.get("llm_settings", {"provider": config.EVALUATION_CONFIG["provider"], "model": config.EVALUATION_CONFIG["model"]})
-        }
-        return EvaluateRequest(**filtered_sample)
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error loading evaluate sample data: {str(e)}")
 
 @app.get("/cache/stats")
 async def get_cache_stats():

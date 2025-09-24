@@ -1,0 +1,12 @@
+{
+  "metadata": {
+    "source": "postgres",
+    "data_type": "call_logs",
+    "call_id": "interview-fdca0001-8263-40c2-9e3f-e2a4206b6949-1da8647e-bd8d-4d11-bf33-d41d56a6dead",
+    "timestamp": "20250923_180850",
+    "generated_at": "2025-09-23T18:08:50.611495"
+  },
+  "data": {
+    "job_id": 536
+  }
+}

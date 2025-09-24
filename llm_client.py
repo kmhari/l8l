@@ -125,7 +125,6 @@ class OpenRouterProvider(LLMProvider):
             "max_tokens": 28000,  # Increase token limit for complex JSON responses
             "provider": {"only": ["cerebras"]},
         }
-        print("payload", payload)
 
         if schema:
             # Try OpenRouter's structured outputs feature first
