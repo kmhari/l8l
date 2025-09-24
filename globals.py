@@ -12,6 +12,13 @@ class CEREBRAS_MODELS:
     QWEN3_CODER = "qwen/qwen3-coder"
     QWEN3_2507 = "qwen/qwen3-235b-a22b-2507"
 
+class GROQ_MODELS:
+    GPT_OSS = "openai/gpt-oss-120b"
+    QWEN3_235B = "openai/gpt-oss-20b"
+    QWEN3_32B = "meta-llama/llama-guard-4-12b"
+
+
+
 
 # =============================================================================
 # GATHER ENDPOINT CONFIGURATION
@@ -65,15 +72,17 @@ def load_config_from_env():
     """Load model configurations from environment variables if available."""
     import os
 
-    # Load gather model from environment (provider is always openrouter)
+    # Load gather provider and model from environment
+    gather_provider = os.getenv('GATHER_PROVIDER', 'openrouter')  # Default to openrouter for backwards compatibility
     gather_model = os.getenv('GATHER_MODEL')
     if gather_model:
-        update_gather_model('openrouter', gather_model)
+        update_gather_model(gather_provider, gather_model)
 
-    # Load evaluation model from environment (provider is always openrouter)
+    # Load evaluation provider and model from environment
+    eval_provider = os.getenv('EVALUATION_PROVIDER', 'openrouter')  # Default to openrouter for backwards compatibility
     eval_model = os.getenv('EVALUATION_MODEL')
     if eval_model:
-        update_evaluation_model('openrouter', eval_model)
+        update_evaluation_model(eval_provider, eval_model)
 
 # Load environment overrides on import
 load_config_from_env()

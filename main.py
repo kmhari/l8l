@@ -21,9 +21,9 @@ from cache import (
 from utils import (
     parse_technical_questions, prepare_known_questions,
     build_conversations_from_indices, extract_candidate_info_from_transcript,
-    save_output_to_file
+    save_output_to_file, save_request_data_before_gather
 )
-from prompt_loader import load_prompts, load_evaluation_config, load_evaluation_prompts
+from prompt_loader import load_prompts, load_evaluation_prompts
 from evaluation import evaluate_question_group, evaluate_skills_holistically, merge_evaluations
 
 load_dotenv(override=True)
@@ -41,8 +41,8 @@ async def gather(request: GatherRequest):
         print("\n" + "="*50)
         print("🚀 Starting report generation...")
 
-        provider = "openrouter"
-        model = config.CEREBRAS_MODELS.GPT_OSS
+        provider = "groq"
+        model = config.GROQ_MODELS.GPT_OSS
 
         print(f"📊 Provider: {provider}")
         print(f"🤖 Model: {model}")
@@ -123,13 +123,13 @@ async def gather(request: GatherRequest):
         print(f"✅ Input data prepared ({len(llm_input['turns'])} turns)")
 
         print("🔑 Checking API key...")
-        api_key = os.getenv("OPENROUTER_API_KEY")
+        api_key = os.getenv("GROQ_API_KEY")
         if api_key:
-            print(f"✅ Using API key from environment: OPENROUTER_API_KEY")
+            print(f"✅ Using API key from environment: GROQ_API_KEY")
         else:
             raise HTTPException(
                 status_code=500,
-                detail="OPENROUTER_API_KEY not found in environment variables"
+                detail="GROQ_API_KEY not found in environment variables"
             )
 
         print("🔧 Creating LLM client...")
@@ -340,19 +340,17 @@ async def generate_report(request: EvaluateRequest):
         print(f"📊 Evaluation Provider: {eval_provider}")
         print(f"🤖 Evaluation Model: {eval_model}")
 
-        print("📋 Loading evaluation configuration...")
-        eval_config = await load_evaluation_config()
-        print("✅ Evaluation configuration loaded")
+        # No evaluation config loading - all data provided via request
 
         candidate_info = {}
         if request.resume:
             candidate_info = {
-                "candidate_name": request.resume.get("candidate_name", "Unknown"),
-                "job_title": request.resume.get("job_title", "Unknown"),
-                "company_name": request.resume.get("company_name", "Unknown"),
-                "salary_range": request.resume.get("salary_range", "Not specified"),
-                "company_profile": request.resume.get("company_profile", "Not available"),
-                "job_requirements": request.resume.get("job_requirements", "Not available")
+                "candidate_name": request.resume.get("candidate_name"),
+                "job_title": request.resume.get("job_title"),
+                "company_name": request.resume.get("company_name"),
+                "salary_range": request.resume.get("salary_range"),
+                "company_profile": request.resume.get("company_profile"),
+                "job_requirements": request.resume.get("job_requirements")
             }
             print(f"👤 Used resume field for candidate info: {candidate_info['candidate_name']} applying for {candidate_info['job_title']} at {candidate_info['company_name']}")
         else:
@@ -367,17 +365,31 @@ async def generate_report(request: EvaluateRequest):
             "company_profile": candidate_info["company_profile"],
             "job_requirements": candidate_info["job_requirements"]
         }
+        print(f"📋 Resume data prepared for evaluation", request.technical_questions)
+        # Only use data provided in the request - no fallbacks
+        if not request.key_skill_areas:
+            raise HTTPException(status_code=400, detail="key_skill_areas must be provided in request")
+        if not request.technical_questions:
+            raise HTTPException(status_code=400, detail="technical_questions must be provided in request")
 
-        key_skill_areas = request.key_skill_areas if request.key_skill_areas else eval_config["key_skill_areas"]
+        key_skill_areas = request.key_skill_areas
         print(f"🎯 Using {len(key_skill_areas)} skill areas: {[skill['name'] for skill in key_skill_areas]}")
 
         print("🔄 Step 1: Gathering question groups using /gather endpoint...")
 
         gather_data = {
             "transcript": request.transcript,
-            "technical_questions": eval_config["technical_questions"],
+            "technical_questions": request.technical_questions,
             "key_skill_areas": key_skill_areas,
         }
+
+        # Save data before sending to gather endpoint
+        print("💾 Saving request data before gather endpoint...")
+        try:
+            pre_gather_path = save_request_data_before_gather(gather_data, candidate_info)
+            print(f"✅ Pre-gather data saved to: {pre_gather_path}")
+        except Exception as e:
+            print(f"⚠️  Failed to save pre-gather data: {str(e)}")
 
         question_groups_result = await call_gather_endpoint(gather_data)
         groups = question_groups_result.get("groups", [])

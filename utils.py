@@ -90,26 +90,26 @@ def build_conversations_from_indices(groups: List[Dict], all_messages: List[Dict
 
 
 def extract_candidate_info_from_transcript(transcript: Dict[str, Any]) -> Dict[str, str]:
-    """Extract candidate information from transcript variables field"""
+    """Extract candidate information from transcript variables field - only uses provided data"""
     candidate_info = {
-        "candidate_name": "Unknown",
-        "job_title": "Unknown",
-        "company_name": "Unknown",
-        "salary_range": "Not specified",
-        "company_profile": "Not available",
-        "job_requirements": "Not available"
+        "candidate_name": None,
+        "job_title": None,
+        "company_name": None,
+        "salary_range": None,
+        "company_profile": None,
+        "job_requirements": None
     }
 
     if "variables" in transcript:
         variables = transcript["variables"]
         if isinstance(variables, dict):
             candidate_info.update({
-                "candidate_name": variables.get("candidate_name", candidate_info["candidate_name"]),
-                "job_title": variables.get("job_title", candidate_info["job_title"]),
-                "company_name": variables.get("company_name", candidate_info["company_name"]),
-                "salary_range": variables.get("salary_range", candidate_info["salary_range"]),
-                "company_profile": variables.get("company_profile", candidate_info["company_profile"]),
-                "job_requirements": variables.get("job_requirements", candidate_info["job_requirements"])
+                "candidate_name": variables.get("candidate_name"),
+                "job_title": variables.get("job_title"),
+                "company_name": variables.get("company_name"),
+                "salary_range": variables.get("salary_range"),
+                "company_profile": variables.get("company_profile"),
+                "job_requirements": variables.get("job_requirements")
             })
 
     return candidate_info
@@ -127,3 +127,31 @@ def save_output_to_file(output_data: Dict[str, Any], filename: str, directory: s
         json.dump(output_data, f, indent=2, ensure_ascii=False)
 
     return str(output_path)
+
+
+def save_request_data_before_gather(request_data: Dict[str, Any], candidate_info: Dict[str, str]) -> str:
+    """Save request data before sending to gather endpoint"""
+    import time
+    from pathlib import Path
+
+    # Ensure the pre_gather directory exists
+    pre_gather_dir = Path("output/pre_gather")
+    pre_gather_dir.mkdir(parents=True, exist_ok=True)
+
+    timestamp = int(time.time())
+    filename = f"pre_gather_data_{timestamp}.json"
+
+    output_data = {
+        "timestamp": timestamp,
+        "candidate_info": candidate_info,
+        "technical_questions": request_data.get("technical_questions", ""),
+        "key_skill_areas": request_data.get("key_skill_areas", []),
+        "request_metadata": {
+            "transcript_messages_count": len(request_data["transcript"].get("messages", [])),
+            "technical_questions_length": len(request_data.get("technical_questions", "")),
+            "key_skill_areas_count": len(request_data.get("key_skill_areas", [])),
+        },
+        "gather_request_data": request_data
+    }
+
+    return save_output_to_file(output_data, filename, "output/pre_gather")

@@ -35,25 +35,6 @@ async def load_skills_assessment_prompts() -> Tuple[str, Dict[str, Any]]:
 
 
 async def load_evaluation_config() -> Dict[str, Any]:
-    """Load resume, job requirements, and key skill areas from sample data"""
-    try:
-        sample_data = json.loads(Path("samplenomore/evaluate.json").read_text())
-        return {
-            "resume": sample_data.get("resume", {}),
-            "job_requirements": sample_data.get("resume", {}).get("job_requirements", ""),
-            "technical_questions": sample_data.get("technical_questions", ""),
-            "key_skill_areas": sample_data.get("key_skill_areas", [])
-        }
-    except Exception as e:
-        print(f"⚠️  Failed to load evaluation config: {str(e)}")
-        return {
-            "resume": {
-                "candidate_name": "Sample Candidate",
-                "job_title": "Software Developer",
-                "company_name": "Tech Company",
-                "job_requirements": "No job requirements specified"
-            },
-            "job_requirements": "No job requirements specified",
-            "technical_questions": "No technical questions specified",
-            "key_skill_areas": []
-        }
+    """Load evaluation configuration - returns empty config, expects data to be provided in requests"""
+    # Return empty configuration - all data should be provided via API requests
+    return {}
