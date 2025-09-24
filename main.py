@@ -677,26 +677,25 @@ async def merge_evaluations(evaluations: List[Dict[str, Any]],
     for e in evaluations:
         if (isinstance(e, dict) and
             "error" not in e and
-            "overall_assessment" in e and
-            isinstance(e["overall_assessment"], dict) and
-            "overall_score" in e["overall_assessment"] and
-            isinstance(e["overall_assessment"]["overall_score"], (int, float))):
+            "answer_quality" in e and
+            isinstance(e["answer_quality"], dict) and
+            "relevance_score" in e["answer_quality"] and
+            isinstance(e["answer_quality"]["relevance_score"], (int, float))):
 
             # Check if this is a standard numbered question (only include Q1, Q2, etc.)
-            group_metadata = e.get("group_metadata", {})
-            question_id = group_metadata.get("question_id", "")
+            question_id = e.get("question_id", "")
 
             # Only include questions that match the pattern Q1, Q2, Q3, etc.
             if re.match(r'^Q\d+$', question_id):
                 valid_evaluations.append(e)
-                print(f"🔍 Including question {question_id} in overall score calculation")
+                print(f"🔍 Including question {question_id} in overall score calculation (relevance_score: {e['answer_quality']['relevance_score']})")
             else:
                 print(f"🔍 Excluding non-standard question {question_id} from overall score calculation")
 
     if valid_evaluations:
-        avg_score = sum(e["overall_assessment"]["overall_score"] for e in valid_evaluations) / len(valid_evaluations)
+        avg_score = sum(e["answer_quality"]["relevance_score"] for e in valid_evaluations) / len(valid_evaluations)
         merged_report["overall_assessment"]["overall_score"] = round(avg_score, 1)
-        print(f"📊 Overall score calculated from {len(valid_evaluations)} non-custom questions: {avg_score:.1f}")
+        print(f"📊 Overall score calculated from {len(valid_evaluations)} Q-numbered questions: {avg_score:.1f}")
 
         # Determine overall recommendation based on average score - more lenient thresholds
         if avg_score >= 75:
