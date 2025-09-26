@@ -215,6 +215,78 @@ When evaluating competency_mapping:
    - Comment on practical vs theoretical knowledge
    - Provide specific, actionable insights
 
+## MANDATORY Skills Assessment Justification Requirements
+
+**CRITICAL: Every skills assessment MUST be accompanied by detailed justification AND numerical scores**
+
+For each **skill area**, you MUST provide:
+
+### Numerical Skill Scoring (0-100 Scale)
+
+**MANDATORY: Assign `skill_score` (0-100) for each skill area using these guidelines:**
+
+- **90-100**: Expert level - Exceptional demonstration with advanced insights and best practices
+- **80-89**: Advanced level - Strong competency with solid understanding and practical application
+- **70-79**: Intermediate level - Good understanding with some practical experience
+- **60-69**: Basic level - Fundamental knowledge with limited practical demonstration
+- **50-59**: Entry level - Some awareness but minimal practical knowledge
+- **0-49**: Not Demonstrated - Little to no evidence of competency
+
+**Score Calculation Factors:**
+1. **Depth of Understanding** (30%): Technical accuracy and conceptual grasp
+2. **Practical Application** (25%): Real-world experience and implementation knowledge
+3. **Problem-Solving** (20%): Ability to troubleshoot and think critically
+4. **Communication** (15%): Clear explanation of technical concepts
+5. **Best Practices** (10%): Awareness of industry standards and optimization
+
+### Sub-Skill Scoring (0-100 Scale)
+
+**MANDATORY: Assign `sub_skill_score` (0-100) for each sub-skill using the same scale.**
+
+- Consider the sub-skill's complexity and the candidate's demonstration level
+- Sub-skill scores should align with the overall skill area score
+- Use evidence-based scoring tied to specific transcript examples
+
+For each **skill area**, you MUST provide `assessment_justification` containing:
+
+1. **Proficiency Reasoning**:
+   - Explain why this specific proficiency level (Expert/Advanced/Intermediate/Basic/Entry/Not Demonstrated) was assigned
+   - **MANDATORY**: Justify the numerical score (0-100) by referencing the scoring factors above
+   - Cite specific examples, statements, or demonstrations from the interview transcript
+   - Reference the candidate's practical experience or theoretical knowledge shown
+   - Consider the complexity and depth of their responses in this skill area
+
+2. **Requirements Reasoning**:
+   - Clearly explain whether the candidate meets the job requirements for this skill area
+   - Reference the required difficulty level (high/medium/low) from the job description
+   - Compare the demonstrated proficiency against the expected competency level
+   - Justify the boolean decision with specific evidence
+
+3. **Confidence Reasoning**:
+   - Explain why you have High/Medium/Low confidence in this assessment
+   - Reference the quality and quantity of evidence available
+   - Note if the assessment is based on direct demonstration or inference
+   - Identify any factors that limit confidence in the evaluation
+
+4. **Key Evidence**:
+   - Provide specific quotes or detailed paraphrases from the interview transcript
+   - Include examples of the candidate's responses that demonstrate this skill area
+   - Reference any practical experience or projects mentioned by the candidate
+   - Document specific technical knowledge or problem-solving approaches shown
+
+5. **Evidence Gaps**:
+   - Identify areas where more evidence would have been helpful
+   - Note aspects of the skill area that weren't fully explored in the interview
+   - Acknowledge limitations in the assessment due to missing information
+
+For each **sub-skill**, you MUST provide `sub_skill_justification` containing:
+
+1. **Proficiency Reasoning**: Why this specific proficiency level was assigned for this sub-skill AND justify the numerical score (0-100)
+2. **Demonstration Reasoning**: Whether this sub-skill was clearly demonstrated or inferred, and why
+3. **Confidence Reasoning**: Why you have this confidence level in the sub-skill assessment
+
+**NO ARBITRARY SKILLS SCORING**: Every proficiency level, requirements assessment, and confidence rating must be backed by specific evidence from the interview transcript. This ensures fair, consistent, and defensible skills evaluation decisions.
+
 ## Special Instructions for Question Analysis
 
 You are evaluating a SINGLE question group in this request. Generate ONE question analysis entry with the following structure:

@@ -277,7 +277,39 @@
             background: #667eea;
             color: white;
             padding: 1rem;
-            text-align: center;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 1rem;
+            align-items: center;
+            text-align: left;
+        }
+
+        .skill-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .skill-level {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .skill-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+        }
+
+        .skill-meta span {
+            background: #f8f9fa;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            border: 1px solid #e9ecef;
         }
 
         .skill-score {
@@ -499,6 +531,186 @@
             border: 1px solid #f8d7da;
             border-radius: 4px;
             padding: 0.75rem;
+        }
+
+        /* Skills Assessment Justification Styles */
+        .skills-justification {
+            background: #f8fff9;
+            border-radius: 6px;
+            padding: 1rem;
+            margin: 1rem 0;
+            border: 1px solid #d4edda;
+            border-left: 4px solid #28a745;
+        }
+
+        .skills-justification h4 {
+            color: #28a745;
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .sub-skills-section {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+
+        .sub-skills-section h4 {
+            color: #495057;
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .sub-skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 0.75rem;
+            margin-top: 0.75rem;
+        }
+
+        .sub-skill-card {
+            background: white;
+            border-radius: 6px;
+            padding: 0.75rem;
+            border: 1px solid #e9ecef;
+        }
+
+        .sub-skill-header {
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            gap: 0.5rem;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .sub-skill-score {
+            background: #e9ecef;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-align: center;
+            min-width: 50px;
+        }
+
+        .sub-skill-name {
+            font-weight: 600;
+            color: #495057;
+            font-size: 0.9rem;
+        }
+
+        .sub-skill-proficiency {
+            background: #e9ecef;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .sub-skill-content {
+            font-size: 0.85rem;
+        }
+
+        .sub-skill-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .sub-skill-evidence, .sub-skill-gaps {
+            margin: 0.5rem 0;
+        }
+
+        .sub-skill-evidence ul, .sub-skill-gaps ul {
+            margin: 0.25rem 0;
+            padding-left: 1.25rem;
+            font-size: 0.8rem;
+        }
+
+        .sub-skill-evidence li, .sub-skill-gaps li {
+            margin-bottom: 0.2rem;
+        }
+
+        .sub-skill-justification {
+            margin-top: 0.75rem;
+            padding: 0.75rem;
+            background: #f0f8ff;
+            border-radius: 4px;
+            border: 1px solid #bee5eb;
+        }
+
+        .sub-skill-justification h5 {
+            color: #0c5460;
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .sub-justification-item {
+            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+
+        .sub-justification-item strong {
+            color: #495057;
+        }
+
+        .assessment-notes {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+
+        .assessment-notes ul {
+            margin: 0.5rem 0;
+            padding-left: 1.25rem;
+        }
+
+        .assessment-notes li {
+            margin-bottom: 0.25rem;
+            line-height: 1.4;
+        }
+
+        /* Score Color Classes */
+        .score-high {
+            background: #28a745 !important;
+            color: white !important;
+        }
+
+        .score-medium {
+            background: #ffc107 !important;
+            color: #212529 !important;
+        }
+
+        .score-low {
+            background: #dc3545 !important;
+            color: white !important;
+        }
+
+        .skill-score.score-high,
+        .sub-skill-score.score-high {
+            background: #28a745;
+            color: white;
+        }
+
+        .skill-score.score-medium,
+        .sub-skill-score.score-medium {
+            background: #ffc107;
+            color: #212529;
+        }
+
+        .skill-score.score-low,
+        .sub-skill-score.score-low {
+            background: #dc3545;
+            color: white;
         }
     </style>
 </head>
@@ -871,20 +1083,161 @@
                     const skillName = skill.skill_name || skill.skill_area || 'Unknown Skill';
                     const competencyLevel = skill.competency_level || skill.overall_assessment || 'Not specified';
                     const levelClass = `level-${competencyLevel.toLowerCase().replace(/\s+/g, '-')}`;
-                    const score = skill.score || 'N/A';
+                    const score = skill.skill_score !== undefined ? `${skill.skill_score}/100` : (skill.score || 'N/A');
+                    const assessmentJustification = skill.assessment_justification || {};
+
+                    // Determine score color class based on numerical score
+                    let scoreClass = 'score-medium';
+                    if (skill.skill_score !== undefined) {
+                        if (skill.skill_score >= 80) scoreClass = 'score-high';
+                        else if (skill.skill_score >= 60) scoreClass = 'score-medium';
+                        else scoreClass = 'score-low';
+                    }
 
                     html += `
                         <div class="skill-card">
                             <div class="skill-header">
-                                <div class="skill-score">${score}</div>
-                                <div>${skillName}</div>
+                                <div class="skill-score ${scoreClass}">${score}</div>
+                                <div class="skill-name">${skillName}</div>
+                                <div class="skill-level">${competencyLevel}</div>
                             </div>
                             <div class="skill-content">
-                                <div class="competency-level ${levelClass}">${competencyLevel}</div>
-                                ${skill.evidence ? `<p><strong>Evidence:</strong> ${Array.isArray(skill.evidence) ? skill.evidence.join(', ') : skill.evidence}</p>` : ''}
-                                ${skill.improvement_suggestions ? `<p><strong>Suggestions:</strong> ${skill.improvement_suggestions}</p>` : ''}
-                                ${skill.assessment_notes ? `<p><strong>Assessment Notes:</strong></p><ul>${skill.assessment_notes.map(note => `<li>${note}</li>`).join('')}</ul>` : ''}
-                                ${skill.meets_requirements !== undefined ? `<p><strong>Meets Requirements:</strong> ${skill.meets_requirements ? 'Yes' : 'No'}</p>` : ''}
+                                <div class="skill-meta">
+                                    ${skill.meets_requirements !== undefined ? `<span><strong>Meets Requirements:</strong> ${skill.meets_requirements ? 'Yes' : 'No'}</span>` : ''}
+                                    ${skill.confidence ? `<span><strong>Confidence:</strong> ${skill.confidence}</span>` : ''}
+                                </div>
+                    `;
+
+                    // Assessment Justification Section
+                    if (assessmentJustification && Object.keys(assessmentJustification).length > 0) {
+                        html += `
+                            <div class="skills-justification">
+                                <h4>Assessment Justification</h4>
+                                ${assessmentJustification.proficiency_reasoning ? `
+                                    <div class="justification-item">
+                                        <div class="justification-title">Proficiency Reasoning:</div>
+                                        <div class="justification-content">${assessmentJustification.proficiency_reasoning}</div>
+                                    </div>
+                                ` : ''}
+                                ${assessmentJustification.requirements_reasoning ? `
+                                    <div class="justification-item">
+                                        <div class="justification-title">Requirements Reasoning:</div>
+                                        <div class="justification-content">${assessmentJustification.requirements_reasoning}</div>
+                                    </div>
+                                ` : ''}
+                                ${assessmentJustification.confidence_reasoning ? `
+                                    <div class="justification-item">
+                                        <div class="justification-title">Confidence Reasoning:</div>
+                                        <div class="justification-content">${assessmentJustification.confidence_reasoning}</div>
+                                    </div>
+                                ` : ''}
+                                ${assessmentJustification.key_evidence && assessmentJustification.key_evidence.length > 0 ? `
+                                    <div class="justification-item">
+                                        <div class="justification-title">Key Evidence:</div>
+                                        <div class="justification-content">
+                                            <ul>
+                                                ${assessmentJustification.key_evidence.map(evidence => `<li>${evidence}</li>`).join('')}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                ` : ''}
+                                ${assessmentJustification.evidence_gaps && assessmentJustification.evidence_gaps.length > 0 ? `
+                                    <div class="justification-item">
+                                        <div class="justification-title">Evidence Gaps:</div>
+                                        <div class="justification-content">
+                                            <ul>
+                                                ${assessmentJustification.evidence_gaps.map(gap => `<li>${gap}</li>`).join('')}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        `;
+                    }
+
+                    // Sub-skills Section
+                    if (skill.sub_skills && skill.sub_skills.length > 0) {
+                        html += `
+                            <div class="sub-skills-section">
+                                <h4>Sub-Skills Assessment</h4>
+                                <div class="sub-skills-grid">
+                        `;
+
+                        skill.sub_skills.forEach(subSkill => {
+                            const subSkillJustification = subSkill.sub_skill_justification || {};
+                            const subSkillScore = subSkill.sub_skill_score !== undefined ? `${subSkill.sub_skill_score}/100` : 'N/A';
+
+                            // Determine sub-skill score color class
+                            let subScoreClass = 'score-medium';
+                            if (subSkill.sub_skill_score !== undefined) {
+                                if (subSkill.sub_skill_score >= 80) subScoreClass = 'score-high';
+                                else if (subSkill.sub_skill_score >= 60) subScoreClass = 'score-medium';
+                                else subScoreClass = 'score-low';
+                            }
+
+                            html += `
+                                <div class="sub-skill-card">
+                                    <div class="sub-skill-header">
+                                        <div class="sub-skill-name">${subSkill.name || 'Unknown Sub-skill'}</div>
+                                        <div class="sub-skill-score ${subScoreClass}">${subSkillScore}</div>
+                                        <div class="sub-skill-proficiency">${subSkill.proficiency || 'N/A'}</div>
+                                    </div>
+                                    <div class="sub-skill-content">
+                                        <div class="sub-skill-meta">
+                                            <span><strong>Demonstrated:</strong> ${subSkill.demonstrated ? 'Yes' : 'No'}</span>
+                                            <span><strong>Confidence:</strong> ${subSkill.confidence || 'N/A'}</span>
+                                        </div>
+                                        ${subSkill.evidence && subSkill.evidence.length > 0 ? `
+                                            <div class="sub-skill-evidence">
+                                                <strong>Evidence:</strong>
+                                                <ul>
+                                                    ${subSkill.evidence.map(ev => `<li>${ev}</li>`).join('')}
+                                                </ul>
+                                            </div>
+                                        ` : ''}
+                                        ${subSkill.gaps_identified && subSkill.gaps_identified.length > 0 ? `
+                                            <div class="sub-skill-gaps">
+                                                <strong>Gaps:</strong>
+                                                <ul>
+                                                    ${subSkill.gaps_identified.map(gap => `<li>${gap}</li>`).join('')}
+                                                </ul>
+                                            </div>
+                                        ` : ''}
+                            `;
+
+                            // Sub-skill Justification
+                            if (subSkillJustification && Object.keys(subSkillJustification).length > 0) {
+                                html += `
+                                    <div class="sub-skill-justification">
+                                        <h5>Justification</h5>
+                                        ${subSkillJustification.proficiency_reasoning ? `
+                                            <div class="sub-justification-item">
+                                                <strong>Proficiency:</strong> ${subSkillJustification.proficiency_reasoning}
+                                            </div>
+                                        ` : ''}
+                                        ${subSkillJustification.demonstration_reasoning ? `
+                                            <div class="sub-justification-item">
+                                                <strong>Demonstration:</strong> ${subSkillJustification.demonstration_reasoning}
+                                            </div>
+                                        ` : ''}
+                                        ${subSkillJustification.confidence_reasoning ? `
+                                            <div class="sub-justification-item">
+                                                <strong>Confidence:</strong> ${subSkillJustification.confidence_reasoning}
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                `;
+                            }
+
+                            html += '</div></div>'; // Close sub-skill-content, sub-skill-card
+                        });
+
+                        html += '</div></div>'; // Close sub-skills-grid, sub-skills-section
+                    }
+
+                    // Legacy fields
+                    html += `
+                                ${skill.assessment_notes ? `<div class="assessment-notes"><strong>Assessment Notes:</strong><ul>${skill.assessment_notes.map(note => `<li>${note}</li>`).join('')}</ul></div>` : ''}
                             </div>
                         </div>
                     `;

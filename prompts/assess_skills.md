@@ -146,6 +146,28 @@ For each skill area, provide 3-5 bullet points that:
 3. **Complete Skill Coverage**: Ensure every sub-skill is evaluated with appropriate proficiency levels
 4. **Detailed Assessment Notes**: Provide meaningful insights for each skill area
 5. **Confidence Ratings**: Assign appropriate confidence levels based on evidence strength
+6. **MANDATORY Numerical Scoring**: Every skill area and sub-skill must include numerical scores
+
+### Numerical Scoring Requirements (0-100 Scale)
+
+**CRITICAL: Every skill area must include `skill_score` (0-100) and every sub-skill must include `sub_skill_score` (0-100)**
+
+**Score Ranges:**
+- **90-100**: Expert level - Exceptional demonstration with advanced insights and best practices
+- **80-89**: Advanced level - Strong competency with solid understanding and practical application
+- **70-79**: Intermediate level - Good understanding with some practical experience
+- **60-69**: Basic level - Fundamental knowledge with limited practical demonstration
+- **50-59**: Entry level - Some awareness but minimal practical knowledge
+- **0-49**: Not Demonstrated - Little to no evidence of competency
+
+**Scoring Factors (for each skill and sub-skill):**
+1. **Depth of Understanding** (30%): Technical accuracy and conceptual grasp
+2. **Practical Application** (25%): Real-world experience and implementation knowledge
+3. **Problem-Solving** (20%): Ability to troubleshoot and think critically
+4. **Communication** (15%): Clear explanation of technical concepts
+5. **Best Practices** (10%): Awareness of industry standards and optimization
+
+**IMPORTANT**: All scores must be justified in the assessment_justification and sub_skill_justification fields with specific evidence from the transcript.
 
 ## Expected Response Structure
 

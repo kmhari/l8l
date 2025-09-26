@@ -18,6 +18,39 @@
             "enum": ["Expert", "Advanced", "Intermediate", "Basic", "Entry", "Not Demonstrated"],
             "description": "Overall proficiency level for this skill area based on holistic analysis"
           },
+          "skill_score": {
+            "type": "number",
+            "description": "Numerical score (0-100) representing the candidate's proficiency in this skill area"
+          },
+          "assessment_justification": {
+            "type": "object",
+            "properties": {
+              "proficiency_reasoning": {
+                "type": "string",
+                "description": "Detailed explanation of why this proficiency level was assigned, citing specific evidence from the interview transcript"
+              },
+              "requirements_reasoning": {
+                "type": "string",
+                "description": "Explanation of whether the candidate meets job requirements for this skill area and why"
+              },
+              "confidence_reasoning": {
+                "type": "string",
+                "description": "Justification for the confidence level based on the quality and quantity of evidence available"
+              },
+              "key_evidence": {
+                "type": "array",
+                "items": {"type": "string"},
+                "description": "Specific quotes, examples, or demonstrations from the interview that support the proficiency assessment"
+              },
+              "evidence_gaps": {
+                "type": "array",
+                "items": {"type": "string"},
+                "description": "Areas where more evidence would have been helpful for a more confident assessment"
+              }
+            },
+            "required": ["proficiency_reasoning", "requirements_reasoning", "confidence_reasoning", "key_evidence", "evidence_gaps"],
+            "additionalProperties": false
+          },
           "meets_requirements": {
             "type": "boolean",
             "description": "Whether the candidate meets the job requirements for this skill area"
@@ -47,6 +80,29 @@
                   "enum": ["Expert", "Advanced", "Intermediate", "Basic", "Entry", "Not Demonstrated"],
                   "description": "Demonstrated proficiency level based on transcript evidence"
                 },
+                "sub_skill_score": {
+                  "type": "number",
+                  "description": "Numerical score (0-100) representing the candidate's proficiency in this specific sub-skill"
+                },
+                "sub_skill_justification": {
+                  "type": "object",
+                  "properties": {
+                    "proficiency_reasoning": {
+                      "type": "string",
+                      "description": "Detailed explanation of why this proficiency level was assigned for this specific sub-skill"
+                    },
+                    "demonstration_reasoning": {
+                      "type": "string",
+                      "description": "Explanation of whether this sub-skill was clearly demonstrated or inferred, and the basis for this assessment"
+                    },
+                    "confidence_reasoning": {
+                      "type": "string",
+                      "description": "Justification for the confidence level in this sub-skill assessment"
+                    }
+                  },
+                  "required": ["proficiency_reasoning", "demonstration_reasoning", "confidence_reasoning"],
+                  "additionalProperties": false
+                },
                 "demonstrated": {
                   "type": "boolean",
                   "description": "Whether this sub-skill was clearly demonstrated or inferred from the interview"
@@ -71,12 +127,12 @@
                   "description": "Specific knowledge gaps or areas for improvement identified"
                 }
               },
-              "required": ["name", "proficiency", "demonstrated", "confidence", "evidence", "gaps_identified"],
+              "required": ["name", "proficiency", "sub_skill_score", "sub_skill_justification", "demonstrated", "confidence", "evidence", "gaps_identified"],
               "additionalProperties": false
             }
           }
         },
-        "required": ["skill_area", "overall_assessment", "meets_requirements", "confidence", "assessment_notes", "sub_skills"],
+        "required": ["skill_area", "overall_assessment", "skill_score", "assessment_justification", "meets_requirements", "confidence", "assessment_notes", "sub_skills"],
         "additionalProperties": false
       }
     },
