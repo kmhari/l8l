@@ -287,6 +287,79 @@ For each **sub-skill**, you MUST provide `sub_skill_justification` containing:
 
 **NO ARBITRARY SKILLS SCORING**: Every proficiency level, requirements assessment, and confidence rating must be backed by specific evidence from the interview transcript. This ensures fair, consistent, and defensible skills evaluation decisions.
 
+## MANDATORY Overall Skill Scoring Requirements
+
+**CRITICAL: In addition to individual question and skill area scoring, you MUST provide comprehensive overall skill scoring**
+
+### Overall Skill Scoring Components (All Required)
+
+You MUST calculate and justify the following overall scores (0-100 scale):
+
+1. **technical_competency_score (0-100)**:
+   - Overall technical competency across ALL skill areas demonstrated
+   - Weighted average of technical skills with evidence-based adjustments
+   - Consider depth, breadth, and practical application of technical knowledge
+
+2. **communication_score (0-100)**:
+   - Overall communication effectiveness throughout the entire interview
+   - Consider clarity, articulation, structure, and professional vocabulary
+   - Evaluate ability to explain technical concepts and experiences
+
+3. **problem_solving_score (0-100)**:
+   - Problem-solving ability demonstrated across all responses
+   - Assess analytical thinking, systematic approaches, and critical reasoning
+   - Consider how candidate approaches challenges and troubleshooting
+
+4. **experience_depth_score (0-100)**:
+   - Depth of practical, real-world experience demonstrated
+   - Consider years of experience, project complexity, and leadership roles
+   - Evaluate practical application vs theoretical knowledge
+
+5. **overall_skill_score (0-100)**:
+   - Composite score calculated from all component scores
+   - Weighted calculation considering role requirements and candidate performance
+   - Final holistic assessment of candidate's overall competency
+
+### Skill Scoring Justification (All Required)
+
+For the `skill_scoring_justification` object, you MUST provide:
+
+1. **technical_reasoning**: Detailed justification for technical competency score with specific examples from throughout the interview
+2. **communication_reasoning**: Justification for communication score citing specific examples of clarity, confusion, or effectiveness
+3. **problem_solving_reasoning**: Reasoning for problem-solving score with examples of analytical approaches demonstrated
+4. **experience_reasoning**: Justification for experience depth score referencing practical knowledge and real-world application shown
+5. **overall_calculation**: Clear explanation of how the overall skill score was calculated from component scores
+6. **key_strengths**: Array of 3-5 key strengths identified across ALL skills and responses
+7. **key_weaknesses**: Array of 3-5 areas needing improvement identified across ALL skills and responses
+
+### Skill Category Breakdown (Required Array)
+
+For the `skill_category_breakdown` array, you MUST create entries for each major skill category with:
+
+1. **category_name**: Name of the skill category (e.g., "Database Design", "System Architecture", "Frontend Development")
+2. **category_score**: 0-100 score for this specific category based on demonstrated competency
+3. **proficiency_level**: Expert/Advanced/Intermediate/Basic/Entry/Not Demonstrated based on the score
+4. **supporting_questions**: Array of question IDs that contributed evidence for this category
+5. **category_justification**: Detailed explanation of the score with specific evidence from the interview
+
+### Overall Scoring Guidelines
+
+**Scoring Philosophy for Overall Assessment:**
+- **Start with generous baseline**: Assume competence and adjust based on evidence
+- **Holistic evaluation**: Consider performance across ALL questions and skill areas
+- **Evidence-weighted**: Give more weight to areas with stronger evidence
+- **Role-appropriate**: Align expectations with the job requirements and seniority level
+- **Growth potential**: Consider demonstrated learning ability and adaptability
+
+**Score Calculation Methodology:**
+1. Calculate individual component scores based on specific evidence
+2. Apply appropriate weighting based on role requirements
+3. Consider consistency across different skill demonstrations
+4. Account for interview context and candidate experience level
+5. Document all calculation reasoning for transparency
+
+This overall skill scoring provides a comprehensive, holistic view of the candidate's competency beyond individual questions and allows for better hiring decisions based on complete skill assessment.
+
 ## Special Instructions for Question Analysis
 
 You are evaluating a SINGLE question group in this request. Generate ONE question analysis entry with the following structure:

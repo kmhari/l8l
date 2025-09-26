@@ -39,8 +39,35 @@
               },
               "key_evidence": {
                 "type": "array",
-                "items": {"type": "string"},
-                "description": "Specific quotes, examples, or demonstrations from the interview that support the proficiency assessment"
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "question_id": {
+                      "type": "string",
+                      "description": "Question identifier (e.g., Q1, Q2, etc.)"
+                    },
+                    "question_text": {
+                      "type": "string",
+                      "description": "The specific question that was asked"
+                    },
+                    "transcript_quote": {
+                      "type": "string",
+                      "description": "Direct quote from the candidate's response"
+                    },
+                    "evidence_type": {
+                      "type": "string",
+                      "enum": ["demonstration", "partial_knowledge", "misconception", "gap"],
+                      "description": "Type of evidence this represents"
+                    },
+                    "assessment_note": {
+                      "type": "string",
+                      "description": "Brief assessment of what this evidence shows for this skill area"
+                    }
+                  },
+                  "required": ["question_id", "question_text", "transcript_quote", "evidence_type", "assessment_note"],
+                  "additionalProperties": false
+                },
+                "description": "Structured evidence with question references and transcript quotes that support the skill area assessment"
               },
               "evidence_gaps": {
                 "type": "array",
@@ -114,10 +141,40 @@
                 },
                 "evidence": {
                   "anyOf": [
-                    {"type": "array", "items": {"type": "string"}},
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "question_id": {
+                            "type": "string",
+                            "description": "Question identifier (e.g., Q1, Q2, etc.)"
+                          },
+                          "question_text": {
+                            "type": "string",
+                            "description": "The specific question that was asked"
+                          },
+                          "transcript_quote": {
+                            "type": "string",
+                            "description": "Direct quote from the candidate's response"
+                          },
+                          "evidence_type": {
+                            "type": "string",
+                            "enum": ["demonstration", "partial_knowledge", "misconception", "gap"],
+                            "description": "Type of evidence this represents"
+                          },
+                          "assessment_note": {
+                            "type": "string",
+                            "description": "Brief assessment of what this evidence shows"
+                          }
+                        },
+                        "required": ["question_id", "question_text", "transcript_quote", "evidence_type", "assessment_note"],
+                        "additionalProperties": false
+                      }
+                    },
                     {"type": "null"}
                   ],
-                  "description": "Specific evidence points or examples from across the entire transcript that support this assessment"
+                  "description": "Structured evidence with question references and transcript quotes that support this sub-skill assessment"
                 },
                 "gaps_identified": {
                   "anyOf": [

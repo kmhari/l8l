@@ -54,7 +54,7 @@ def prepare_known_questions(questions: List[QuestionData]) -> List[Dict]:
     for i, q in enumerate(questions, 1):
         known_questions.append({
             "id": f"Q{i}",
-            "title": f"Question {i}",
+            "title": q.question,  # Use actual question text instead of generic "Question {i}"
             "text": q.question,
             "greenFlags": q.green_flags,
             "redFlags": q.red_flags

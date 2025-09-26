@@ -712,6 +712,430 @@
             background: #dc3545;
             color: white;
         }
+
+        /* Overall Skill Scoring Styles */
+        .overall-scores-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .overall-score-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e9ecef;
+            text-align: center;
+        }
+
+        .overall-score-card.composite-score {
+            border: 2px solid #4a90e2;
+            background: #f8fbff;
+        }
+
+        .score-label {
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .overall-score-card .score-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            display: inline-block;
+            min-width: 80px;
+        }
+
+        .skill-scoring-justification {
+            background: #f8fbff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border: 1px solid #d6e7ff;
+            border-left: 4px solid #4a90e2;
+        }
+
+        .skill-scoring-justification h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 0.5rem;
+        }
+
+        .justification-section {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #e9ecef;
+        }
+
+        .justification-section h4 {
+            color: #4a90e2;
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+        }
+
+        .justification-section p {
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+
+        .justification-section ul {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .justification-section li {
+            line-height: 1.5;
+            margin-bottom: 0.3rem;
+        }
+
+        .skill-category-breakdown {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+
+        .skill-category-breakdown h3 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 0.5rem;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e9ecef;
+            overflow: hidden;
+        }
+
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .category-name {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+
+        .category-score {
+            font-weight: bold;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+
+        .category-content {
+            padding: 1rem;
+        }
+
+        .proficiency-level {
+            font-weight: 500;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            display: inline-block;
+            margin-bottom: 0.75rem;
+            font-size: 0.85rem;
+        }
+
+        .proficiency-expert {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .proficiency-advanced {
+            background: #cce7ff;
+            color: #004085;
+        }
+
+        .proficiency-intermediate {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .proficiency-basic {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .proficiency-entry {
+            background: #e2e3e5;
+            color: #383d41;
+        }
+
+        .proficiency-not-demonstrated {
+            background: #f5c6cb;
+            color: #721c24;
+        }
+
+        .supporting-questions {
+            margin: 0.75rem 0;
+            padding: 0.5rem;
+            background: #f8f9fa;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        .category-justification {
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .category-justification p {
+            margin-bottom: 0;
+            line-height: 1.5;
+            font-size: 0.9rem;
+        }
+
+        /* Accordion Styles */
+        .accordion-header {
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            margin-bottom: 0;
+            transition: all 0.2s ease;
+        }
+
+        .accordion-header:hover {
+            background: #e9ecef;
+        }
+
+        .accordion-header.active {
+            background: #4a90e2;
+            color: white;
+            border-color: #4a90e2;
+        }
+
+        .accordion-toggle {
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: transform 0.2s ease;
+        }
+
+        .accordion-header.active .accordion-toggle {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            border: 0px solid #dee2e6;
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+        }
+
+        .accordion-content.active {
+            max-height: none;
+            border-width: 1px;
+            border-top: none;
+        }
+
+        .accordion-content-inner {
+            padding: 1rem;
+            background: white;
+        }
+
+        .question-analysis.accordion {
+            margin-bottom: 1rem;
+        }
+
+        .question-analysis.accordion .question-header {
+            margin-bottom: 0;
+            border-radius: 6px 6px 0 0;
+        }
+
+        .question-analysis.accordion .question-content {
+            margin-top: 0;
+            padding: 0;
+        }
+
+        .question-info {
+            flex-grow: 1;
+        }
+
+        .question-info .question-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: inherit;
+        }
+
+        .question-info .question-score {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            font-weight: 500;
+        }
+
+        .accordion-header.active .question-info .question-title,
+        .accordion-header.active .question-info .question-score {
+            color: white;
+        }
+
+        .accordion-controls {
+            margin-left: auto;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .accordion-control-btn {
+            padding: 0.4rem 0.8rem;
+            background: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+        }
+
+        .accordion-control-btn:hover {
+            background: #357abd;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+
+        /* Structured Evidence Styles */
+        .evidence-container {
+            margin-top: 0.5rem;
+        }
+
+        .evidence-item {
+            margin: 0.75rem 0;
+            padding: 0.75rem;
+            border-radius: 6px;
+            border-left: 4px solid #ccc;
+        }
+
+        .legacy-evidence {
+            background: #f8f9fa;
+            border-left-color: #6c757d;
+        }
+
+        .structured-evidence {
+            background: #f8fff9;
+            border: 1px solid #d4edda;
+        }
+
+        .evidence-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .question-ref {
+            background: #495057;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .evidence-type {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: capitalize;
+        }
+
+        .evidence-demonstration .evidence-type {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .evidence-partial-knowledge .evidence-type {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .evidence-misconception .evidence-type {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .evidence-gap .evidence-type {
+            background: #f1f3f4;
+            color: #5f6368;
+        }
+
+        .evidence-question {
+            font-style: italic;
+            color: #6c757d;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .evidence-quote {
+            background: #e9ecef;
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .evidence-assessment {
+            color: #495057;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .evidence-demonstration {
+            border-left-color: #28a745;
+        }
+
+        .evidence-partial-knowledge {
+            border-left-color: #ffc107;
+        }
+
+        .evidence-misconception {
+            border-left-color: #dc3545;
+        }
+
+        .evidence-gap {
+            border-left-color: #6c757d;
+        }
     </style>
 </head>
 <body>
@@ -782,6 +1206,49 @@
             container.style.display = 'block';
         }
 
+        function toggleAccordion(index) {
+            const header = event.target.closest('.accordion-header');
+            const content = document.getElementById(`accordion-${index}`);
+
+            if (!header || !content) return;
+
+            const isActive = header.classList.contains('active');
+
+            if (isActive) {
+                // Close accordion
+                header.classList.remove('active');
+                content.classList.remove('active');
+                content.style.maxHeight = '0';
+            } else {
+                // Open accordion
+                header.classList.add('active');
+                content.classList.add('active');
+                content.style.maxHeight = content.scrollHeight + 'px';
+            }
+        }
+
+        function expandAllAccordions() {
+            const headers = document.querySelectorAll('.accordion-header');
+            const contents = document.querySelectorAll('.accordion-content');
+
+            headers.forEach(header => header.classList.add('active'));
+            contents.forEach(content => {
+                content.classList.add('active');
+                content.style.maxHeight = content.scrollHeight + 'px';
+            });
+        }
+
+        function collapseAllAccordions() {
+            const headers = document.querySelectorAll('.accordion-header');
+            const contents = document.querySelectorAll('.accordion-content');
+
+            headers.forEach(header => header.classList.remove('active'));
+            contents.forEach(content => {
+                content.classList.remove('active');
+                content.style.maxHeight = '0';
+            });
+        }
+
         function displayReport(data) {
             const container = document.getElementById('reportContainer');
             let html = '';
@@ -826,18 +1293,39 @@
             // Overall Score
             const overallScore = evaluationReport.overall_assessment?.overall_score ||
                                evaluationReport.overall_score;
-            if (overallScore !== undefined) {
-                const score = overallScore;
-                let scoreClass = 'score-low';
-                if (score >= 70) scoreClass = 'score-high';
-                else if (score >= 50) scoreClass = 'score-medium';
+            const overallSkillScore = evaluationReport.overall_skill_scoring?.overall_skill_score;
 
-                const displayScore = score > 10 ? `${score}%` : `${score}/10`;
+            if (overallScore !== undefined || overallSkillScore !== undefined) {
+                let scoreClass = 'score-low';
+                let displayContent = '';
+
+                // Determine score class based on available scores
+                if (overallScore !== undefined) {
+                    const score = overallScore;
+                    if (score >= 70) scoreClass = 'score-high';
+                    else if (score >= 50) scoreClass = 'score-medium';
+
+                    const displayScore = score > 10 ? `${score}%` : `${score}/10`;
+                    displayContent += `Overall Score: ${displayScore}`;
+                }
+
+                // Add overall skill score if available
+                if (overallSkillScore !== undefined) {
+                    if (displayContent) displayContent += '<br>';
+                    displayContent += `Overall Skill Score: ${overallSkillScore}/100`;
+
+                    // Update score class based on skill score if no overall score
+                    if (overallScore === undefined) {
+                        if (overallSkillScore >= 80) scoreClass = 'score-high';
+                        else if (overallSkillScore >= 60) scoreClass = 'score-medium';
+                    }
+                }
+
                 const recommendation = evaluationReport.overall_assessment?.recommendation || '';
 
                 html += `
                     <div class="overall-score ${scoreClass}">
-                        Overall Score: ${displayScore}
+                        ${displayContent}
                         ${recommendation ? `<br><small style="font-size: 1.2rem; opacity: 0.9;">Recommendation: ${recommendation}</small>` : ''}
                     </div>
                 `;
@@ -877,67 +1365,18 @@
                 `;
             }
 
-            // Question Groups Analysis
-            if (questionGroups.groups && questionGroups.groups.length > 0) {
-                html += `
-                    <div class="section">
-                        <div class="section-title">Question-by-Question Analysis</div>
-                        <div class="section-content">
-                `;
-
-                questionGroups.groups.forEach((group, index) => {
-                    html += `
-                        <div class="question-group">
-                            <div class="question-header">
-                                <div class="question-title">${group.question_id}: ${group.question_text || 'Question text not available'}</div>
-                                <div class="question-score">Score: ${group.score || 'N/A'}/10</div>
-                            </div>
-                            <div class="question-content">
-                    `;
-
-                    // Conversation snippet
-                    if (group.conversation && group.conversation.length > 0) {
-                        html += '<h4>Conversation:</h4><div class="conversation-snippet">';
-                        group.conversation.slice(0, 6).forEach(msg => {
-                            const roleClass = msg.role === 'interviewer' ? 'interviewer' : 'candidate';
-                            html += `
-                                <div class="message ${roleClass}">
-                                    <div class="message-role">${msg.role === 'interviewer' ? 'Interviewer' : 'Candidate'}:</div>
-                                    ${msg.message}
-                                </div>
-                            `;
-                        });
-                        html += '</div>';
-                    }
-
-                    // Analysis details
-                    if (group.analysis) {
-                        html += '<div class="analysis-grid">';
-                        Object.entries(group.analysis).forEach(([key, value]) => {
-                            if (typeof value === 'string' && value.length > 0) {
-                                const title = key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-                                html += `
-                                    <div class="analysis-item">
-                                        <div class="analysis-title">${title}</div>
-                                        <div>${value}</div>
-                                    </div>
-                                `;
-                            }
-                        });
-                        html += '</div>';
-                    }
-
-                    html += '</div></div>';
-                });
-
-                html += '</div></div>';
-            }
 
             // Question Analysis with Score Justifications
             if (evaluationReport.question_analysis && evaluationReport.question_analysis.length > 0) {
                 html += `
                     <div class="section">
-                        <div class="section-title">Detailed Question Analysis</div>
+                        <div class="section-title">
+                            Detailed Question Analysis
+                            <div class="accordion-controls">
+                                <button onclick="expandAllAccordions()" class="accordion-control-btn">Expand All</button>
+                                <button onclick="collapseAllAccordions()" class="accordion-control-btn">Collapse All</button>
+                            </div>
+                        </div>
                         <div class="section-content">
                 `;
 
@@ -946,12 +1385,16 @@
                     const scoreJustification = answerQuality.score_justification || {};
 
                     html += `
-                        <div class="question-analysis">
-                            <div class="question-header">
-                                <div class="question-title">${analysis.question_id}: ${analysis.question_text || 'Question text not available'}</div>
-                                <div class="question-score">Relevance Score: ${answerQuality.relevance_score || 'N/A'}/100</div>
+                        <div class="question-analysis accordion">
+                            <div class="accordion-header" onclick="toggleAccordion(${index})">
+                                <div class="question-info">
+                                    <div class="question-title">${analysis.question_id}: ${analysis.question_text || 'Question text not available'}</div>
+                                    <div class="question-score">Relevance Score: ${answerQuality.relevance_score || 'N/A'}/100</div>
+                                </div>
+                                <div class="accordion-toggle">▼</div>
                             </div>
-                            <div class="question-content">
+                            <div class="accordion-content" id="accordion-${index}">
+                                <div class="accordion-content-inner">
                                 <div class="quality-assessment">
                                     <div class="assessment-grid">
                                         <div class="assessment-item">
@@ -971,6 +1414,7 @@
                                             <span class="assessment-value">${answerQuality.evidence_provided ? 'Yes' : 'No'}</span>
                                         </div>
                                     </div>
+                                </div>
                                 </div>
                     `;
 
@@ -1064,7 +1508,7 @@
                         `;
                     }
 
-                    html += '</div></div></div>'; // Close analysis-details, question-content, question-analysis
+                    html += '</div></div></div>'; // Close accordion-content-inner, accordion-content, question-analysis
                 });
 
                 html += '</div></div>'; // Close section-content, section
@@ -1135,9 +1579,30 @@
                                     <div class="justification-item">
                                         <div class="justification-title">Key Evidence:</div>
                                         <div class="justification-content">
-                                            <ul>
-                                                ${assessmentJustification.key_evidence.map(evidence => `<li>${evidence}</li>`).join('')}
-                                            </ul>
+                                            ${assessmentJustification.key_evidence.map(evidence => {
+                                                if (typeof evidence === 'string') {
+                                                    // Legacy format - simple string
+                                                    return `<div class="evidence-item legacy-evidence"><p>${evidence}</p></div>`;
+                                                } else if (typeof evidence === 'object' && evidence.question_id) {
+                                                    // New structured format
+                                                    const evidenceTypeClass = `evidence-${evidence.evidence_type}`;
+                                                    const evidenceTypeLabel = evidence.evidence_type.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
+                                                    return `
+                                                        <div class="evidence-item structured-evidence ${evidenceTypeClass}">
+                                                            <div class="evidence-header">
+                                                                <span class="question-ref">${evidence.question_id}</span>
+                                                                <span class="evidence-type">${evidenceTypeLabel}</span>
+                                                            </div>
+                                                            <div class="evidence-question">${evidence.question_text}</div>
+                                                            <div class="evidence-quote">"${evidence.transcript_quote}"</div>
+                                                            <div class="evidence-assessment">${evidence.assessment_note}</div>
+                                                        </div>
+                                                    `;
+                                                } else {
+                                                    // Fallback for unexpected format
+                                                    return `<div class="evidence-item legacy-evidence"><p>${JSON.stringify(evidence)}</p></div>`;
+                                                }
+                                            }).join('')}
                                         </div>
                                     </div>
                                 ` : ''}
@@ -1190,9 +1655,32 @@
                                         ${subSkill.evidence && subSkill.evidence.length > 0 ? `
                                             <div class="sub-skill-evidence">
                                                 <strong>Evidence:</strong>
-                                                <ul>
-                                                    ${subSkill.evidence.map(ev => `<li>${ev}</li>`).join('')}
-                                                </ul>
+                                                <div class="evidence-container">
+                                                    ${subSkill.evidence.map(ev => {
+                                                        if (typeof ev === 'string') {
+                                                            // Legacy format - simple string
+                                                            return `<div class="evidence-item legacy-evidence"><p>${ev}</p></div>`;
+                                                        } else if (typeof ev === 'object' && ev.question_id) {
+                                                            // New structured format
+                                                            const evidenceTypeClass = `evidence-${ev.evidence_type}`;
+                                                            const evidenceTypeLabel = ev.evidence_type.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
+                                                            return `
+                                                                <div class="evidence-item structured-evidence ${evidenceTypeClass}">
+                                                                    <div class="evidence-header">
+                                                                        <span class="question-ref">${ev.question_id}</span>
+                                                                        <span class="evidence-type">${evidenceTypeLabel}</span>
+                                                                    </div>
+                                                                    <div class="evidence-question">${ev.question_text}</div>
+                                                                    <div class="evidence-quote">"${ev.transcript_quote}"</div>
+                                                                    <div class="evidence-assessment">${ev.assessment_note}</div>
+                                                                </div>
+                                                            `;
+                                                        } else {
+                                                            // Fallback for unexpected format
+                                                            return `<div class="evidence-item legacy-evidence"><p>${JSON.stringify(ev)}</p></div>`;
+                                                        }
+                                                    }).join('')}
+                                                </div>
                                             </div>
                                         ` : ''}
                                         ${subSkill.gaps_identified && subSkill.gaps_identified.length > 0 ? `
@@ -1271,6 +1759,139 @@
                 }
 
                 html += '</div></div>';
+            }
+
+            // Overall Skill Scoring Section
+            const overallSkillScoring = evaluationReport.overall_skill_scoring;
+            if (overallSkillScoring) {
+                html += `
+                    <div class="section">
+                        <div class="section-title">Overall Skill Scoring Analysis</div>
+                        <div class="section-content">
+                            <div class="overall-scores-grid">
+                                <div class="overall-score-card">
+                                    <div class="score-label">Technical Competency</div>
+                                    <div class="score-value ${overallSkillScoring.technical_competency_score >= 80 ? 'score-high' : overallSkillScoring.technical_competency_score >= 60 ? 'score-medium' : 'score-low'}">${overallSkillScoring.technical_competency_score}/100</div>
+                                </div>
+                                <div class="overall-score-card">
+                                    <div class="score-label">Communication</div>
+                                    <div class="score-value ${overallSkillScoring.communication_score >= 80 ? 'score-high' : overallSkillScoring.communication_score >= 60 ? 'score-medium' : 'score-low'}">${overallSkillScoring.communication_score}/100</div>
+                                </div>
+                                <div class="overall-score-card">
+                                    <div class="score-label">Problem Solving</div>
+                                    <div class="score-value ${overallSkillScoring.problem_solving_score >= 80 ? 'score-high' : overallSkillScoring.problem_solving_score >= 60 ? 'score-medium' : 'score-low'}">${overallSkillScoring.problem_solving_score}/100</div>
+                                </div>
+                                <div class="overall-score-card">
+                                    <div class="score-label">Experience Depth</div>
+                                    <div class="score-value ${overallSkillScoring.experience_depth_score >= 80 ? 'score-high' : overallSkillScoring.experience_depth_score >= 60 ? 'score-medium' : 'score-low'}">${overallSkillScoring.experience_depth_score}/100</div>
+                                </div>
+                                <div class="overall-score-card composite-score">
+                                    <div class="score-label">Overall Skill Score</div>
+                                    <div class="score-value ${overallSkillScoring.overall_skill_score >= 80 ? 'score-high' : overallSkillScoring.overall_skill_score >= 60 ? 'score-medium' : 'score-low'}">${overallSkillScoring.overall_skill_score}/100</div>
+                                </div>
+                            </div>
+                `;
+
+                // Skill Scoring Justification
+                const justification = overallSkillScoring.skill_scoring_justification;
+                if (justification) {
+                    html += `
+                        <div class="skill-scoring-justification">
+                            <h3>Scoring Justification</h3>
+                            ${justification.technical_reasoning ? `
+                                <div class="justification-section">
+                                    <h4>Technical Competency Reasoning</h4>
+                                    <p>${justification.technical_reasoning}</p>
+                                </div>
+                            ` : ''}
+                            ${justification.communication_reasoning ? `
+                                <div class="justification-section">
+                                    <h4>Communication Reasoning</h4>
+                                    <p>${justification.communication_reasoning}</p>
+                                </div>
+                            ` : ''}
+                            ${justification.problem_solving_reasoning ? `
+                                <div class="justification-section">
+                                    <h4>Problem Solving Reasoning</h4>
+                                    <p>${justification.problem_solving_reasoning}</p>
+                                </div>
+                            ` : ''}
+                            ${justification.experience_reasoning ? `
+                                <div class="justification-section">
+                                    <h4>Experience Depth Reasoning</h4>
+                                    <p>${justification.experience_reasoning}</p>
+                                </div>
+                            ` : ''}
+                            ${justification.overall_calculation ? `
+                                <div class="justification-section">
+                                    <h4>Overall Score Calculation</h4>
+                                    <p>${justification.overall_calculation}</p>
+                                </div>
+                            ` : ''}
+                            ${justification.key_strengths && justification.key_strengths.length > 0 ? `
+                                <div class="justification-section">
+                                    <h4>Key Strengths</h4>
+                                    <ul>
+                                        ${justification.key_strengths.map(strength => `<li>${strength}</li>`).join('')}
+                                    </ul>
+                                </div>
+                            ` : ''}
+                            ${justification.key_weaknesses && justification.key_weaknesses.length > 0 ? `
+                                <div class="justification-section">
+                                    <h4>Key Weaknesses</h4>
+                                    <ul>
+                                        ${justification.key_weaknesses.map(weakness => `<li>${weakness}</li>`).join('')}
+                                    </ul>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                }
+
+                // Skill Category Breakdown
+                if (overallSkillScoring.skill_category_breakdown && overallSkillScoring.skill_category_breakdown.length > 0) {
+                    html += `
+                        <div class="skill-category-breakdown">
+                            <h3>Skill Category Breakdown</h3>
+                            <div class="category-grid">
+                    `;
+
+                    overallSkillScoring.skill_category_breakdown.forEach(category => {
+                        const categoryScoreClass = category.category_score >= 80 ? 'score-high' :
+                                                 category.category_score >= 60 ? 'score-medium' : 'score-low';
+                        const proficiencyClass = `proficiency-${category.proficiency_level.toLowerCase().replace(/\s+/g, '-')}`;
+
+                        html += `
+                            <div class="category-card">
+                                <div class="category-header">
+                                    <div class="category-name">${category.category_name}</div>
+                                    <div class="category-score ${categoryScoreClass}">${category.category_score}/100</div>
+                                </div>
+                                <div class="category-content">
+                                    <div class="proficiency-level ${proficiencyClass}">${category.proficiency_level}</div>
+                                    ${category.supporting_questions && category.supporting_questions.length > 0 ? `
+                                        <div class="supporting-questions">
+                                            <strong>Supporting Questions:</strong> ${category.supporting_questions.join(', ')}
+                                        </div>
+                                    ` : ''}
+                                    ${category.category_justification ? `
+                                        <div class="category-justification">
+                                            <strong>Justification:</strong>
+                                            <p>${category.category_justification}</p>
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    html += `
+                            </div>
+                        </div>
+                    `;
+                }
+
+                html += '</div></div>'; // Close section-content, section
             }
 
             // Metadata

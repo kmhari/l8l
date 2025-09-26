@@ -169,6 +169,45 @@ For each skill area, provide 3-5 bullet points that:
 
 **IMPORTANT**: All scores must be justified in the assessment_justification and sub_skill_justification fields with specific evidence from the transcript.
 
+## CRITICAL: Evidence Collection Requirements
+
+### Structured Evidence Format
+
+**MANDATORY: All evidence must include specific question references and transcript quotes**
+
+For both `key_evidence` in skill areas and `evidence` in sub-skills, you MUST provide structured evidence objects with:
+
+1. **question_id**: The specific question identifier (e.g., "Q1", "Q2", "Q3", etc.)
+2. **question_text**: The exact question that was asked
+3. **transcript_quote**: Direct quote from the candidate's actual response
+4. **evidence_type**: Classification of the evidence:
+   - `"demonstration"`: Clear demonstration of competency
+   - `"partial_knowledge"`: Shows some understanding but incomplete
+   - `"misconception"`: Shows misunderstanding or incorrect knowledge
+   - `"gap"`: Reveals knowledge gap or inability to address the topic
+
+5. **assessment_note**: Brief analysis of what this evidence shows for the skill
+
+### Evidence Collection Example:
+```json
+{
+  "question_id": "Q2",
+  "question_text": "Explain how you would ensure time-travel functionality in this context",
+  "transcript_quote": "we have started the our three scheme of parted there. Like, first is staging. Second one is data invested. And third one is the, uh, curate layer",
+  "evidence_type": "partial_knowledge",
+  "assessment_note": "Correctly described time-travel for data recovery but didn't connect to GDPR use case"
+}
+```
+
+### Evidence Requirements:
+- **Minimum 2-3 evidence items per skill area** with question references
+- **At least 1 evidence item per sub-skill** where demonstrated
+- **Direct transcript quotes** - not paraphrases or summaries
+- **Question context** to understand what was being tested
+- **Clear assessment** of what the evidence proves or disproves
+
+This provides complete traceability from skills assessment back to specific interview moments and candidate responses.
+
 ## Expected Response Structure
 
 Your response must be valid JSON following the skills assessment schema. Focus on:
