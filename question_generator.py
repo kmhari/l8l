@@ -70,19 +70,11 @@ QUESTION_SCHEMA = {
                     },
                     "difficultyLevel": {
                         "type": "string",
-                        "enum": ["low", "medium", "high"],
-                        "description": "Question difficulty level"
+                        "description": "Question difficulty level (low, medium, high)"
                     },
                     "questionType": {
                         "type": "string",
-                        "enum": [
-                            "experience",
-                            "tradeoff",
-                            "concept-application",
-                            "concept-definition",
-                            "concept"
-                        ],
-                        "description": "Type of question"
+                        "description": "Type of question (experience, tradeoff, concept-application, concept-definition, concept)"
                     },
                     "greenFlags": {
                         "type": "array",
