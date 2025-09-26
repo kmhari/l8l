@@ -65,3 +65,7 @@ test_results.json
 /output
 /output
 /database_responses
+
+# Debug files
+api_request_debug.json
+evaluation_json_debug.json
