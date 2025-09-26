@@ -53,6 +53,9 @@ Output
 	•	misc_or_unclear: indices that don't fit any group
 	•	pre_inferred_facts_global: key–value facts from the entire conversation
 
-IMPORTANT: For each group, only return the turn_indices array. DO NOT include the full conversation messages - they will be reconstructed programmatically from the indices for performance optimization.
+IMPORTANT:
+1. For each group, only return the turn_indices array. DO NOT include the full conversation messages - they will be reconstructed programmatically from the indices for performance optimization.
+
+2. For question_title in Qn groups: ALWAYS use the actual question text from the corresponding known_questions entry (the "text" field), NOT generic titles like "Question 1". For example, if Q1.text is "Explain how you would implement caching in a Node.js application", then question_title should be "Explain how you would implement caching in a Node.js application".
 
 Return JSON that matches the schema below.
