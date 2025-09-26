@@ -45,7 +45,8 @@ async def evaluate_question_group(group: Dict[str, Any], resume: Dict[str, Any],
                 "overall_assessment": {
                     "recommendation": "No Hire",
                     "confidence": "Low",
-                    "overall_score": 0,
+                    "overall_answer_score": 0,
+                    "overall_key_skill_score": 0,
                     "summary": "Failed to parse evaluation response"
                 },
                 "question_analysis": [],
@@ -182,7 +183,8 @@ async def merge_evaluations(evaluations: List[Dict[str, Any]],
         "overall_assessment": {
             "recommendation": "No Hire",
             "confidence": "Medium",
-            "overall_score": 0,
+            "overall_answer_score": 0,
+            "overall_key_skill_score": 0,
             "summary": ""
         },
         "competency_mapping": [],
@@ -267,7 +269,7 @@ async def merge_evaluations(evaluations: List[Dict[str, Any]],
 
     if valid_question_analyses:
         avg_score = sum(qa["answer_quality"]["relevance_score"] for qa in valid_question_analyses) / len(valid_question_analyses)
-        merged_report["overall_assessment"]["overall_score"] = round(avg_score, 1)
+        merged_report["overall_assessment"]["overall_answer_score"] = round(avg_score, 1)
         print(f"📊 Overall score calculated from {len(valid_question_analyses)} Q-numbered questions: {avg_score:.1f}")
 
         if avg_score >= 75:
@@ -285,7 +287,115 @@ async def merge_evaluations(evaluations: List[Dict[str, Any]],
         merged_report["overall_assessment"]["summary"] = f"Evaluation based on {successful_evaluations} Q-numbered questions. Custom questions are filtered out before processing."
     else:
         print("⚠️ No valid Q-numbered questions found for overall score calculation")
-        merged_report["overall_assessment"]["overall_score"] = 0
+        merged_report["overall_assessment"]["overall_answer_score"] = 0
+
+    # Calculate overall_key_skill_score from competency mapping
+    overall_key_skill_score = calculate_overall_key_skill_score(merged_report.get("competency_mapping", []))
+    if overall_key_skill_score is not None:
+        merged_report["overall_assessment"]["overall_key_skill_score"] = overall_key_skill_score
+        print(f"✅ Overall key skill score calculated: {overall_key_skill_score}")
+    else:
+        merged_report["overall_assessment"]["overall_key_skill_score"] = 0
+        print("⚠️ No skill data available for overall key skill score")
+
+    # Calculate overall skill scoring from skills assessment
+    if skills_assessment and "competency_mapping" in skills_assessment:
+        print("🔄 Calculating overall skill scoring from skills assessment...")
+        print(f"📊 Skills assessment structure: {list(skills_assessment.keys())}")
+        print(f"📋 Competency mapping has {len(skills_assessment['competency_mapping'])} skill areas")
+
+        # Debug: show first skill area structure
+        if skills_assessment["competency_mapping"]:
+            first_skill = skills_assessment["competency_mapping"][0]
+            print(f"🔍 First skill area structure: {list(first_skill.keys())}")
+
+    else:
+        print("⚠️ No skills assessment data available")
 
     print("✅ Evaluation merging completed")
     return merged_report
+
+
+def convert_qualitative_to_score(assessment: str) -> int:
+    """Convert qualitative skill assessment to numerical score (0-100)"""
+    if not assessment:
+        return 0
+
+    assessment_lower = assessment.lower()
+
+    # Map qualitative levels to numerical scores
+    if "expert" in assessment_lower:
+        return 90
+    elif "advanced" in assessment_lower:
+        return 80
+    elif "intermediate" in assessment_lower:
+        return 70
+    elif "basic" in assessment_lower:
+        return 60
+    elif "entry" in assessment_lower:
+        return 50
+    elif "not demonstrated" in assessment_lower or "none" in assessment_lower:
+        return 20
+    else:
+        return 50  # Default fallback
+
+
+def calculate_overall_skill_scoring(competency_mapping: List[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
+    """Calculate overall skill scoring from competency mapping"""
+    if not competency_mapping:
+        return None
+
+    try:
+        overall_skill_score = calculate_overall_key_skill_score(competency_mapping)
+        if overall_skill_score is None:
+            return None
+
+        return {
+            "overall_skill_score": overall_skill_score,
+            "total_skills_assessed": len(competency_mapping),
+            "calculation_method": "Average of all skill and sub-skill scores"
+        }
+    except Exception as e:
+        print(f"❌ Error calculating overall skill scoring: {str(e)}")
+        return None
+
+
+def calculate_overall_key_skill_score(competency_mapping: List[Dict[str, Any]]) -> Optional[float]:
+    """Calculate overall key skill score as average of all skills and sub-skills"""
+    if not competency_mapping:
+        return None
+
+    all_scores = []
+
+    for skill in competency_mapping:
+        # Get main skill score
+        if "skill_score" in skill and isinstance(skill["skill_score"], (int, float)):
+            all_scores.append(skill["skill_score"])
+        else:
+            # Convert qualitative assessment to score
+            overall_assessment = skill.get("overall_assessment", "")
+            if overall_assessment:
+                score = convert_qualitative_to_score(overall_assessment)
+                all_scores.append(score)
+
+        # Get sub-skills scores if available
+        if "sub_skills" in skill and isinstance(skill["sub_skills"], list):
+            for sub_skill in skill["sub_skills"]:
+                if isinstance(sub_skill, dict):
+                    if "skill_score" in sub_skill and isinstance(sub_skill["skill_score"], (int, float)):
+                        all_scores.append(sub_skill["skill_score"])
+                    else:
+                        # Try proficiency level for sub-skills
+                        proficiency = sub_skill.get("proficiency", "")
+                        if proficiency:
+                            score = convert_qualitative_to_score(proficiency)
+                            all_scores.append(score)
+
+    if not all_scores:
+        return None
+
+    overall_score = sum(all_scores) / len(all_scores)
+    print(f"🔢 Calculated overall key skill score from {len(all_scores)} individual scores: {overall_score:.1f}")
+    return round(overall_score, 1)
+
+

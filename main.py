@@ -21,6 +21,7 @@ from utils import (
 )
 from prompt_loader import load_prompts, load_evaluation_prompts
 from evaluation import evaluate_question_group, evaluate_skills_holistically, merge_evaluations
+from question_generator import router as question_generator_router
 
 load_dotenv(override=True)
 
@@ -29,6 +30,9 @@ app = FastAPI(
     description="API for processing interview transcripts and generating structured reports",
     version="1.0.0"
 )
+
+# Include question generator router
+app.include_router(question_generator_router, prefix="/api/v1", tags=["Question Generation"])
 
 
 @app.post("/gather", response_model=GatherResponse)

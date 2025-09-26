@@ -16,12 +16,20 @@
           "enum": ["High", "Medium", "Low"],
           "description": "Confidence level in the assessment"
         },
+        "overall_answer_score": {
+          "type": "number",
+          "description": "Average score (0-100) based on answer quality from all Q-numbered questions"
+        },
+        "overall_key_skill_score": {
+          "type": "number",
+          "description": "Average score (0-100) calculated from all skills and sub-skills assessments"
+        },
         "summary": {
           "type": "string",
           "description": "Brief summary of candidate performance"
         }
       },
-      "required": ["recommendation", "confidence", "summary"],
+      "required": ["recommendation", "confidence", "overall_answer_score", "overall_key_skill_score", "summary"],
       "additionalProperties": false
     },
     "question_analysis": {
@@ -186,103 +194,6 @@
       "required": ["problem_solving_approach"],
       "additionalProperties": false
     },
-    "overall_skill_scoring": {
-      "type": "object",
-      "properties": {
-        "technical_competency_score": {
-          "type": "number",
-          "description": "Overall technical competency score (0-100) based on all technical skill demonstrations"
-        },
-        "communication_score": {
-          "type": "number",
-          "description": "Communication effectiveness score (0-100) based on explanation clarity and technical articulation"
-        },
-        "problem_solving_score": {
-          "type": "number",
-          "description": "Problem-solving ability score (0-100) based on analytical thinking and solution approaches"
-        },
-        "experience_depth_score": {
-          "type": "number",
-          "description": "Experience depth score (0-100) based on practical knowledge and real-world application"
-        },
-        "overall_skill_score": {
-          "type": "number",
-          "description": "Composite overall skill score (0-100) calculated from all skill dimensions"
-        },
-        "skill_scoring_justification": {
-          "type": "object",
-          "properties": {
-            "technical_reasoning": {
-              "type": "string",
-              "description": "Detailed justification for the technical competency score with specific examples"
-            },
-            "communication_reasoning": {
-              "type": "string",
-              "description": "Justification for communication score citing specific examples of clarity or confusion"
-            },
-            "problem_solving_reasoning": {
-              "type": "string",
-              "description": "Reasoning for problem-solving score with examples of analytical approaches"
-            },
-            "experience_reasoning": {
-              "type": "string",
-              "description": "Justification for experience depth score referencing practical knowledge demonstrated"
-            },
-            "overall_calculation": {
-              "type": "string",
-              "description": "Explanation of how the overall skill score was calculated from component scores"
-            },
-            "key_strengths": {
-              "type": "array",
-              "items": {"type": "string"},
-              "description": "Top 3-5 key strengths identified across all skills"
-            },
-            "key_weaknesses": {
-              "type": "array",
-              "items": {"type": "string"},
-              "description": "Top 3-5 areas needing improvement across all skills"
-            }
-          },
-          "required": ["technical_reasoning", "communication_reasoning", "problem_solving_reasoning", "experience_reasoning", "overall_calculation", "key_strengths", "key_weaknesses"],
-          "additionalProperties": false
-        },
-        "skill_category_breakdown": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "category_name": {
-                "type": "string",
-                "description": "Name of the skill category (e.g., 'Database Design', 'System Architecture')"
-              },
-              "category_score": {
-                "type": "number",
-                "description": "Score for this skill category (0-100)"
-              },
-              "proficiency_level": {
-                "type": "string",
-                "enum": ["Expert", "Advanced", "Intermediate", "Basic", "Entry", "Not Demonstrated"],
-                "description": "Overall proficiency level for this category"
-              },
-              "supporting_questions": {
-                "type": "array",
-                "items": {"type": "string"},
-                "description": "Question IDs that contributed to this category score"
-              },
-              "category_justification": {
-                "type": "string",
-                "description": "Explanation of the score for this category with specific evidence"
-              }
-            },
-            "required": ["category_name", "category_score", "proficiency_level", "supporting_questions", "category_justification"],
-            "additionalProperties": false
-          },
-          "description": "Breakdown of scores by skill categories derived from question responses"
-        }
-      },
-      "required": ["technical_competency_score", "communication_score", "problem_solving_score", "experience_depth_score", "overall_skill_score", "skill_scoring_justification", "skill_category_breakdown"],
-      "additionalProperties": false
-    },
     "improvement_recommendations": {
       "type": "array",
       "items": {"type": "string"},
@@ -294,7 +205,6 @@
     "question_analysis",
     "communication_assessment",
     "critical_analysis",
-    "overall_skill_scoring",
     "improvement_recommendations"
   ],
   "additionalProperties": false

@@ -1291,33 +1291,33 @@
             `;
 
             // Overall Score
-            const overallScore = evaluationReport.overall_assessment?.overall_score ||
-                               evaluationReport.overall_score;
-            const overallSkillScore = evaluationReport.overall_skill_scoring?.overall_skill_score;
-
-            if (overallScore !== undefined || overallSkillScore !== undefined) {
+            const overallAnswerScore = evaluationReport.overall_assessment?.overall_answer_score ||
+                                      evaluationReport.overall_score; // fallback for old reports
+            const overallKeySkillScore = evaluationReport.overall_assessment?.overall_key_skill_score;
+            if (overallAnswerScore !== undefined || overallKeySkillScore !== undefined) {
                 let scoreClass = 'score-low';
                 let displayContent = '';
 
                 // Determine score class based on available scores
-                if (overallScore !== undefined) {
-                    const score = overallScore;
+                if (overallAnswerScore !== undefined) {
+                    const score = overallAnswerScore;
                     if (score >= 70) scoreClass = 'score-high';
                     else if (score >= 50) scoreClass = 'score-medium';
 
                     const displayScore = score > 10 ? `${score}%` : `${score}/10`;
-                    displayContent += `Overall Score: ${displayScore}`;
+                    displayContent += `Answer Score: ${displayScore}`;
                 }
 
-                // Add overall skill score if available
-                if (overallSkillScore !== undefined) {
+                // Add overall key skill score if available
+                if (overallKeySkillScore !== undefined) {
                     if (displayContent) displayContent += '<br>';
-                    displayContent += `Overall Skill Score: ${overallSkillScore}/100`;
+                    displayContent += `Key Skill Score: ${overallKeySkillScore}/100`;
 
-                    // Update score class based on skill score if no overall score
-                    if (overallScore === undefined) {
-                        if (overallSkillScore >= 80) scoreClass = 'score-high';
-                        else if (overallSkillScore >= 60) scoreClass = 'score-medium';
+                    // Update score class based on skill score if no answer score or if skill score is higher
+                    if (overallAnswerScore === undefined || overallKeySkillScore > overallAnswerScore) {
+                        if (overallKeySkillScore >= 80) scoreClass = 'score-high';
+                        else if (overallKeySkillScore >= 60) scoreClass = 'score-medium';
+                        else scoreClass = 'score-low';
                     }
                 }
 
@@ -1761,138 +1761,6 @@
                 html += '</div></div>';
             }
 
-            // Overall Skill Scoring Section
-            const overallSkillScoring = evaluationReport.overall_skill_scoring;
-            if (overallSkillScoring) {
-                html += `
-                    <div class="section">
-                        <div class="section-title">Overall Skill Scoring Analysis</div>
-                        <div class="section-content">
-                            <div class="overall-scores-grid">
-                                <div class="overall-score-card">
-                                    <div class="score-label">Technical Competency</div>
-                                    <div class="score-value ${overallSkillScoring.technical_competency_score >= 80 ? 'score-high' : overallSkillScoring.technical_competency_score >= 60 ? 'score-medium' : 'score-low'}">${overallSkillScoring.technical_competency_score}/100</div>
-                                </div>
-                                <div class="overall-score-card">
-                                    <div class="score-label">Communication</div>
-                                    <div class="score-value ${overallSkillScoring.communication_score >= 80 ? 'score-high' : overallSkillScoring.communication_score >= 60 ? 'score-medium' : 'score-low'}">${overallSkillScoring.communication_score}/100</div>
-                                </div>
-                                <div class="overall-score-card">
-                                    <div class="score-label">Problem Solving</div>
-                                    <div class="score-value ${overallSkillScoring.problem_solving_score >= 80 ? 'score-high' : overallSkillScoring.problem_solving_score >= 60 ? 'score-medium' : 'score-low'}">${overallSkillScoring.problem_solving_score}/100</div>
-                                </div>
-                                <div class="overall-score-card">
-                                    <div class="score-label">Experience Depth</div>
-                                    <div class="score-value ${overallSkillScoring.experience_depth_score >= 80 ? 'score-high' : overallSkillScoring.experience_depth_score >= 60 ? 'score-medium' : 'score-low'}">${overallSkillScoring.experience_depth_score}/100</div>
-                                </div>
-                                <div class="overall-score-card composite-score">
-                                    <div class="score-label">Overall Skill Score</div>
-                                    <div class="score-value ${overallSkillScoring.overall_skill_score >= 80 ? 'score-high' : overallSkillScoring.overall_skill_score >= 60 ? 'score-medium' : 'score-low'}">${overallSkillScoring.overall_skill_score}/100</div>
-                                </div>
-                            </div>
-                `;
-
-                // Skill Scoring Justification
-                const justification = overallSkillScoring.skill_scoring_justification;
-                if (justification) {
-                    html += `
-                        <div class="skill-scoring-justification">
-                            <h3>Scoring Justification</h3>
-                            ${justification.technical_reasoning ? `
-                                <div class="justification-section">
-                                    <h4>Technical Competency Reasoning</h4>
-                                    <p>${justification.technical_reasoning}</p>
-                                </div>
-                            ` : ''}
-                            ${justification.communication_reasoning ? `
-                                <div class="justification-section">
-                                    <h4>Communication Reasoning</h4>
-                                    <p>${justification.communication_reasoning}</p>
-                                </div>
-                            ` : ''}
-                            ${justification.problem_solving_reasoning ? `
-                                <div class="justification-section">
-                                    <h4>Problem Solving Reasoning</h4>
-                                    <p>${justification.problem_solving_reasoning}</p>
-                                </div>
-                            ` : ''}
-                            ${justification.experience_reasoning ? `
-                                <div class="justification-section">
-                                    <h4>Experience Depth Reasoning</h4>
-                                    <p>${justification.experience_reasoning}</p>
-                                </div>
-                            ` : ''}
-                            ${justification.overall_calculation ? `
-                                <div class="justification-section">
-                                    <h4>Overall Score Calculation</h4>
-                                    <p>${justification.overall_calculation}</p>
-                                </div>
-                            ` : ''}
-                            ${justification.key_strengths && justification.key_strengths.length > 0 ? `
-                                <div class="justification-section">
-                                    <h4>Key Strengths</h4>
-                                    <ul>
-                                        ${justification.key_strengths.map(strength => `<li>${strength}</li>`).join('')}
-                                    </ul>
-                                </div>
-                            ` : ''}
-                            ${justification.key_weaknesses && justification.key_weaknesses.length > 0 ? `
-                                <div class="justification-section">
-                                    <h4>Key Weaknesses</h4>
-                                    <ul>
-                                        ${justification.key_weaknesses.map(weakness => `<li>${weakness}</li>`).join('')}
-                                    </ul>
-                                </div>
-                            ` : ''}
-                        </div>
-                    `;
-                }
-
-                // Skill Category Breakdown
-                if (overallSkillScoring.skill_category_breakdown && overallSkillScoring.skill_category_breakdown.length > 0) {
-                    html += `
-                        <div class="skill-category-breakdown">
-                            <h3>Skill Category Breakdown</h3>
-                            <div class="category-grid">
-                    `;
-
-                    overallSkillScoring.skill_category_breakdown.forEach(category => {
-                        const categoryScoreClass = category.category_score >= 80 ? 'score-high' :
-                                                 category.category_score >= 60 ? 'score-medium' : 'score-low';
-                        const proficiencyClass = `proficiency-${category.proficiency_level.toLowerCase().replace(/\s+/g, '-')}`;
-
-                        html += `
-                            <div class="category-card">
-                                <div class="category-header">
-                                    <div class="category-name">${category.category_name}</div>
-                                    <div class="category-score ${categoryScoreClass}">${category.category_score}/100</div>
-                                </div>
-                                <div class="category-content">
-                                    <div class="proficiency-level ${proficiencyClass}">${category.proficiency_level}</div>
-                                    ${category.supporting_questions && category.supporting_questions.length > 0 ? `
-                                        <div class="supporting-questions">
-                                            <strong>Supporting Questions:</strong> ${category.supporting_questions.join(', ')}
-                                        </div>
-                                    ` : ''}
-                                    ${category.category_justification ? `
-                                        <div class="category-justification">
-                                            <strong>Justification:</strong>
-                                            <p>${category.category_justification}</p>
-                                        </div>
-                                    ` : ''}
-                                </div>
-                            </div>
-                        `;
-                    });
-
-                    html += `
-                            </div>
-                        </div>
-                    `;
-                }
-
-                html += '</div></div>'; // Close section-content, section
-            }
 
             // Metadata
             html += `

@@ -160,9 +160,9 @@ For transparency and accountability, you MUST provide clear evidence-based reaso
 
 **NO ARBITRARY SCORING**: Every numerical score and categorical rating must be backed by specific evidence from the conversation transcript. This ensures fair, consistent, and defensible evaluation decisions.
 
-## Overall Score Calculation Rules
+## Overall Answer Score Calculation Rules
 
-**MANDATORY: When calculating the final overall_score (0-100), follow these guidelines:**
+**MANDATORY: When calculating the final overall_answer_score (0-100), follow these guidelines:**
 
 - **Minimum 70 points**: Any candidate showing basic competency in required skills
 - **75-79 points**: Demonstrates adequate knowledge with some practical experience
@@ -177,6 +177,8 @@ For transparency and accountability, you MUST provide clear evidence-based reaso
 3. Add 3-5 points for relevant industry experience
 4. Add 2-3 points for good communication and problem-solving approach
 5. Subtract points only for major red flags or complete lack of knowledge
+
+**NOTE:** The overall_key_skill_score will be automatically calculated as the average of all skill and sub-skill scores from your competency_mapping evaluations. Focus on thorough and accurate skill assessments as these feed into the overall score calculation.
 
 - Apply categorical ratings with positive bias: "Exceptional", "Strong", "Satisfactory", "Below Expectations", "Poor"
 - For skill proficiency levels use generous interpretation: "Expert", "Advanced", "Intermediate", "Basic", "Entry", "Not Demonstrated"
