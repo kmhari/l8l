@@ -564,15 +564,18 @@
             font-weight: 600;
         }
 
-        .sub-skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 0.75rem;
+        .sub-skills-list {
             margin-top: 0.75rem;
         }
 
+        .sub-skills-list .sub-skill-card {
+            margin-bottom: 1rem;
+            border-left: 3px solid #ddd;
+            padding-left: 1rem;
+        }
+
         .sub-skill-card {
-            background: white;
+            background: #f8f9fa;
             border-radius: 6px;
             padding: 0.75rem;
             border: 1px solid #e9ecef;
@@ -1250,14 +1253,24 @@
         }
 
         function displayReport(data) {
-            const container = document.getElementById('reportContainer');
-            let html = '';
+            try {
+                console.log('Raw data received:', data);
+                const container = document.getElementById('reportContainer');
+                let html = '';
 
             // Extract candidate information
             const requestData = data.request_data || {};
             const evaluationReport = data.evaluation_report || {};
             const questionGroups = data.question_groups || {};
             const skillsAssessment = data.skills_assessment || {};
+
+            console.log('Extracted data:', {
+                requestData,
+                evaluationReport,
+                questionGroups,
+                skillsAssessment,
+                overallAssessment: evaluationReport.overall_assessment
+            });
 
             // Handle the new format where skills_assessment may be in evaluation_report
             const competencyMapping = skillsAssessment.competency_mapping ||
@@ -1625,7 +1638,7 @@
                         html += `
                             <div class="sub-skills-section">
                                 <h4>Sub-Skills Assessment</h4>
-                                <div class="sub-skills-grid">
+                                <div class="sub-skills-list">
                         `;
 
                         skill.sub_skills.forEach(subSkill => {
@@ -1720,7 +1733,7 @@
                             html += '</div></div>'; // Close sub-skill-content, sub-skill-card
                         });
 
-                        html += '</div></div>'; // Close sub-skills-grid, sub-skills-section
+                        html += '</div></div>'; // Close sub-skills-list, sub-skills-section
                     }
 
                     // Legacy fields
@@ -1783,6 +1796,23 @@
 
             container.innerHTML = html;
             container.style.display = 'block';
+            console.log('Report rendered successfully');
+        } catch (error) {
+            console.error('Error displaying report:', error);
+            const container = document.getElementById('reportContainer');
+            container.innerHTML = `
+                <div style="padding: 20px; color: red; background: #fee; border: 1px solid #fcc; border-radius: 4px;">
+                    <h3>Error Loading Report</h3>
+                    <p><strong>Error:</strong> ${error.message}</p>
+                    <p><strong>Check the browser console for more details.</strong></p>
+                    <details>
+                        <summary>Click to view raw data structure</summary>
+                        <pre style="background: #f5f5f5; padding: 10px; max-height: 300px; overflow: auto; font-size: 12px;">${JSON.stringify(data, null, 2)}</pre>
+                    </details>
+                </div>
+            `;
+            container.style.display = 'block';
+        }
         }
     </script>
 </body>
